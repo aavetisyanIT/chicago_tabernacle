@@ -1,14 +1,16 @@
 import React from 'react';
-import styled from 'styled-components/native';
-
-const Header = styled.Text`
-  padding: ${props => props.theme.sizes[1]};
-  color: ${props => props.theme.colors.text.primary};
-  font-family: ${props => props.theme.fonts.heading};
-  font-size: ${props => props.theme.sizes[2]};
-};
-`;
+import {StyleSheet, Text} from 'react-native';
 
 export default function Title() {
-  return <Header>Chicago Tabernacle</Header>;
+  return <Text style={styles.headerText}>CHICAGO TABERNACLE</Text>;
 }
+
+const styles = StyleSheet.create({
+  headerText: {
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    color: '#555555',
+    fontFamily: 'Roboto-Light',
+    fontSize: 27,
+  },
+});
