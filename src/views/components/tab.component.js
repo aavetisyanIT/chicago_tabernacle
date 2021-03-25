@@ -22,7 +22,6 @@ const LazyPlaceholder = ({route}) => (
 const renderTabBar = props => (
   <TabBar
     {...props}
-    indicatorStyle={{backgroundColor: 'white'}}
     style={styles.tabBar}
     indicatorStyle={{
       backgroundColor: '#bc9665',
