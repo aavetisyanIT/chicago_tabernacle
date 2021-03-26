@@ -1,13 +1,13 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import HomeScreen from './../views/screens/home.screen';
+import HomeScreen from '../views/screens/home.screen';
 import SideMenuButton from '../views/components/side-menu-button';
 
-const HomeStack = createStackNavigator();
+const {Navigator, Screen} = createStackNavigator();
 
-const HomeStackScreen = ({navigation}) => (
-  <HomeStack.Navigator
+const HomeStack = ({navigation}) => (
+  <Navigator
     initialRouteName="Home"
     screenOptions={{
       headerStyle: {backgroundColor: '#fff'},
@@ -22,7 +22,7 @@ const HomeStackScreen = ({navigation}) => (
         marginRight: '15%',
       },
     }}>
-    <HomeStack.Screen
+    <Screen
       name="Home"
       component={HomeScreen}
       options={{
@@ -30,7 +30,7 @@ const HomeStackScreen = ({navigation}) => (
         headerLeft: () => <SideMenuButton navigation={navigation} />,
       }}
     />
-  </HomeStack.Navigator>
+  </Navigator>
 );
 
-export default HomeStackScreen;
+export default HomeStack;

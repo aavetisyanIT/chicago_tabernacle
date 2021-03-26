@@ -1,17 +1,15 @@
 import * as React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {StyleSheet, Dimensions} from 'react-native';
+import {TabView, SceneMap} from 'react-native-tab-view';
 
 import HomeScreenTabBar from './home-screen-tab-bar.component';
 import LazyPlaceholder from './lazy-placeholder.component';
+import SermonsTab from './../screens/sermons.tab.screen';
+import NewsTab from './../screens/news.tab.screen';
 
-const FirstRoute = () => (
-  <View style={[styles.scene, {backgroundColor: '#f2f2f2'}]} />
-);
+const FirstRoute = () => <NewsTab />;
 
-const SecondRoute = () => (
-  <View style={[styles.scene, {backgroundColor: '#f2f2f2'}]} />
-);
+const SecondRoute = () => <SermonsTab />;
 
 export default class TabComponent extends React.Component {
   state = {
@@ -29,15 +27,16 @@ export default class TabComponent extends React.Component {
   render() {
     return (
       <TabView
-        renderTabBar={HomeScreenTabBar}
-        lazy
         navigationState={this.state}
+        onIndexChange={this._handleIndexChange}
         renderScene={SceneMap({
           first: FirstRoute,
           second: SecondRoute,
         })}
+        renderTabBar={HomeScreenTabBar}
+        lazy
+        swipeEnabled
         renderLazyPlaceholder={this._renderLazyPlaceholder}
-        onIndexChange={this._handleIndexChange}
         initialLayout={{width: Dimensions.get('window').width}}
         style={styles.container}
       />

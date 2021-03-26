@@ -4,10 +4,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import PrayerRequestScreen from '../views/screens/prayer-request.screen';
 import SideMenuButton from '../views/components/side-menu-button';
 
-const PrayerRequestStack = createStackNavigator();
+const {Navigator, Screen} = createStackNavigator();
 
-const PrayerRequestStackScreen = ({navigation}) => (
-  <PrayerRequestStack.Navigator
+const PrayerRequestStack = ({navigation}) => (
+  <Navigator
     initialRouteName="Home"
     screenOptions={{
       headerStyle: {backgroundColor: '#fff'},
@@ -22,7 +22,7 @@ const PrayerRequestStackScreen = ({navigation}) => (
         marginRight: '15%',
       },
     }}>
-    <PrayerRequestStack.Screen
+    <Screen
       name="PrayerRequest"
       component={PrayerRequestScreen}
       options={{
@@ -30,7 +30,7 @@ const PrayerRequestStackScreen = ({navigation}) => (
         headerLeft: () => <SideMenuButton navigation={navigation} />,
       }}
     />
-  </PrayerRequestStack.Navigator>
+  </Navigator>
 );
 
-export default PrayerRequestStackScreen;
+export default PrayerRequestStack;
