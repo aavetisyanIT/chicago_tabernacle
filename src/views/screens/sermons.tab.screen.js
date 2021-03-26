@@ -1,13 +1,11 @@
 import React from 'react';
-import TabComponent from '../components/tab.component';
 import {Text, View} from 'react-native';
 
-export default function HomeScreen() {
+export default function SermonsTab() {
   return (
     <>
-      <TabComponent />
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Home Screen</Text>
+        <Text>Sermons</Text>
       </View>
     </>
   );
