@@ -1,18 +1,18 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import HomeScreen from './../views/screens/home.screen';
+import PrayerRequestScreen from '../views/screens/prayer-request.screen';
 import SideMenuButton from '../views/components/side-menu-button';
 
-const HomeStack = createStackNavigator();
+const PrayerRequestStack = createStackNavigator();
 
-const HomeStackScreen = ({navigation}) => (
-  <HomeStack.Navigator
+const PrayerRequestStackScreen = ({navigation}) => (
+  <PrayerRequestStack.Navigator
     initialRouteName="Home"
     screenOptions={{
       headerStyle: {backgroundColor: '#fff'},
       headerLeftContainerStyle: {
-        marginLeft: '1%',
+        marginLeft: '2%',
       },
       headerTitleStyle: {
         display: 'flex',
@@ -22,15 +22,15 @@ const HomeStackScreen = ({navigation}) => (
         marginRight: '15%',
       },
     }}>
-    <HomeStack.Screen
-      name="Home"
-      component={HomeScreen}
+    <PrayerRequestStack.Screen
+      name="PrayerRequest"
+      component={PrayerRequestScreen}
       options={{
-        title: 'CHICAGO TABERNCLE',
+        title: 'PRAYER REQUEST',
         headerLeft: () => <SideMenuButton navigation={navigation} />,
       }}
     />
-  </HomeStack.Navigator>
+  </PrayerRequestStack.Navigator>
 );
 
-export default HomeStackScreen;
+export default PrayerRequestStackScreen;
