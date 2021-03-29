@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from '../views/screens/home.screen';
 import PrayerRequestScreen from '../views/screens/prayer-request.screen';
 import DrawerContent from './DrawerContent';
 import TopTabsStack from './TopTabsStack';
