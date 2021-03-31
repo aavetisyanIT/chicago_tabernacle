@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import announcementsData from './../../assets/announcementsData';
 
 export default function NewsTab() {
   return (
