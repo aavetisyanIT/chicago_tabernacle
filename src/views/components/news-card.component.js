@@ -2,21 +2,19 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Card, Title, Paragraph} from 'react-native-paper';
 
-export default function NewsCard({data}) {
+export default function NewsCard({post}) {
   return (
     <>
       <Card elevation={10} style={styles.card}>
         <Card.Cover
           source={{
-            uri: `${data['items'][0]['mediaObject']['url']}`,
+            uri: `${post.item.mediaObject.url}`,
           }}
           style={styles.cover}
         />
         <Card.Content style={styles.content}>
-          <Title style={styles.title}>{data['items'][0]['title']}</Title>
-          <Paragraph style={styles.description}>
-            {data['items'][0]['desc']}
-          </Paragraph>
+          <Title style={styles.title}>{post.item.title}</Title>
+          <Paragraph style={styles.description}>{post.item.desc}</Paragraph>
         </Card.Content>
       </Card>
     </>
@@ -26,7 +24,7 @@ export default function NewsCard({data}) {
 const styles = StyleSheet.create({
   card: {marginVertical: 12, backgroundColor: '#fff'},
   cover: {
-    height: 220,
+    height: 215,
     backgroundColor: '#fff',
   },
   content: {

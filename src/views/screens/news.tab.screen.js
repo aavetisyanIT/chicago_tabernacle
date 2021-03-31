@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import NewsCard from '../components/news-card.component';
 
 import announcementsData from './../../assets/announcementsData';
@@ -7,10 +7,19 @@ import announcementsData from './../../assets/announcementsData';
 const data = announcementsData;
 
 export default function NewsTab() {
+  const renderNewsCard = post => {
+    return <NewsCard post={post} />;
+  };
   return (
     <>
       <View style={styles.container}>
-        <NewsCard data={data} />
+        <FlatList
+          data={data.items}
+          renderItem={renderNewsCard}
+          keyExtractor={post => {
+            return post.id;
+          }}
+        />
       </View>
     </>
   );

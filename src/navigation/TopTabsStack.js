@@ -12,16 +12,13 @@ const TopTabsStack = () => {
   return (
     <Navigator tabBar={props => <HomeScreenTabBar {...props} />}>
       <Screen
-        name="News"
+        name="WHAT'S NEW"
         component={NewsTab}
-        options={{
-          title: "What's new",
-        }}
         lazy
         lazyPlaceholder={() => <LazyPlaceholder />}
       />
       <Screen
-        name="Sermons"
+        name="SERMONS"
         component={SermonsTab}
         lazy
         lazyPlaceholder={() => <LazyPlaceholder />}

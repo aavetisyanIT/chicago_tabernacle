@@ -11,10 +11,9 @@ const HomeScreenTabBar = props => {
         backgroundColor: '#bc9665',
         height: 2.5,
       }}
-      renderLabel={({route}) => {
-        const tabLabel = route.name === 'News' ? "What's new" : 'Sermons';
-        return <Text style={styles.tabBarText}>{tabLabel}</Text>;
-      }}
+      renderLabel={({route}) => (
+        <Text style={styles.tabBarText}>{route.name}</Text>
+      )}
     />
   );
 };

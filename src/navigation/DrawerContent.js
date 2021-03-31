@@ -27,13 +27,13 @@ const DrawerContent = props => {
         </ImageBackground> */}
         <Drawer.Section style={styles.drawerSection}>
           <DrawerItem
-            label="What's new"
-            onPress={() => RootNavigation.navigate('News')}
+            label="WHAT'S NEW"
+            onPress={() => RootNavigation.navigate("WHAT'S NEW")}
           />
           <DrawerItem
-            label="Sermons"
+            label="SERMONS"
             onPress={() => {
-              RootNavigation.navigate('Sermons');
+              RootNavigation.navigate('SERMONS');
             }}
           />
         </Drawer.Section>
