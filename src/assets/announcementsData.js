@@ -194,7 +194,6 @@ const announcementsData = {
       },
     },
   ],
-  page: {index: 1, size: 20, total: 8},
 };
 
 export default announcementsData;
