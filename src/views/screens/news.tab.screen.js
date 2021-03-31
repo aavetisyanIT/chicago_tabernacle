@@ -28,7 +28,6 @@ export default function NewsTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 12,
     backgroundColor: '#f2f2f2',
   },
 });

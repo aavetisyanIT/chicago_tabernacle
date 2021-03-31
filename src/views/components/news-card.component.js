@@ -5,7 +5,7 @@ import {Card, Title, Paragraph} from 'react-native-paper';
 export default function NewsCard({post}) {
   return (
     <>
-      <Card elevation={10} style={styles.card}>
+      <Card elevation={10} style={styles.card} onPress={null}>
         <Card.Cover
           source={{
             uri: `${post.item.mediaObject.url}`,
@@ -22,7 +22,7 @@ export default function NewsCard({post}) {
 }
 
 const styles = StyleSheet.create({
-  card: {marginVertical: 12, backgroundColor: '#fff'},
+  card: {margin: 12, backgroundColor: '#fff'},
   cover: {
     height: 215,
     backgroundColor: '#fff',
