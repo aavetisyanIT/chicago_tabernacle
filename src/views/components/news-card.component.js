@@ -6,12 +6,20 @@ import CustomCard from './custom-card.component';
 export default function NewsCard({post}) {
   return (
     <CustomCard>
-      <Image
-        source={{uri: `${post.item.mediaObject.url}`}}
-        style={styles.image}
-      />
-      <Text style={styles.title}>{post.item.title}</Text>
-      <Text style={styles.description}>{post.item.desc}</Text>
+      <TouchableRipple
+        borderless={true}
+        centered={true}
+        onPress={() => console.log('Pressed')}
+        rippleColor="rgba(0, 0, 0, .32)">
+        <>
+          <Image
+            source={{uri: `${post.item.mediaObject.url}`}}
+            style={styles.image}
+          />
+          <Text style={styles.title}>{post.item.title}</Text>
+          <Text style={styles.description}>{post.item.desc}</Text>
+        </>
+      </TouchableRipple>
     </CustomCard>
   );
 }
