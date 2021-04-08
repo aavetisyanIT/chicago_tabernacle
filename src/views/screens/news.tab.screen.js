@@ -14,6 +14,7 @@ export default function NewsTab() {
     <>
       <View style={styles.container}>
         <FlatList
+          ItemSeparatorComponent={() => <View style={{height: 8}} />}
           data={data.items}
           renderItem={renderNewsCard}
           keyExtractor={post => {
