@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-export default function SideMenuButton({navigation}) {
+const SideMenuButton = ({navigation}) => {
   return (
     <Icon.Button
       color="#bc9665"
@@ -14,4 +14,6 @@ export default function SideMenuButton({navigation}) {
       }}
     />
   );
-}
+};
+
+export default SideMenuButton;
