@@ -1,15 +1,20 @@
 import React from 'react';
-import {Image, StyleSheet, Text} from 'react-native';
+import {Image, Linking, StyleSheet, Text} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
 import CustomCard from './custom-card.component';
 
 export default function NewsCard({post}) {
+  const handlePress = () => {
+    const postLink = post.item.ref?.link;
+    if (postLink) return Linking.openURL(postLink);
+    console.log('Navigation');
+  };
   return (
     <CustomCard>
       <TouchableRipple
         borderless={true}
         centered={true}
-        onPress={() => {}}
+        onPress={handlePress}
         rippleColor="rgba(0, 0, 0, .32)">
         <>
           <Image
