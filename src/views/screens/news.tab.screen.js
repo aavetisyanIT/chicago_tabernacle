@@ -6,10 +6,10 @@ import announcementsData from './../../assets/announcementsData';
 
 const data = announcementsData;
 
-const NewsTab = () => {
+const NewsTab = ({navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
   const renderNewsCard = post => {
-    return <NewsCard post={post} />;
+    return <NewsCard post={post} navigation={navigation} />;
   };
   return (
     <>

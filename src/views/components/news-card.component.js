@@ -1,12 +1,16 @@
 import React from 'react';
 import {Image, Linking, StyleSheet, Text} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
+
 import CustomCard from './custom-card.component';
 
-export default function NewsCard({post}) {
+export default function NewsCard({post, navigation}) {
   const postLink = post.item.ref?.link;
   const handlePress = () => {
     if (postLink) return Linking.openURL(postLink);
+    navigation.navigate('TopTabsSermonStack', {
+      screen: 'SERMON NOTES',
+    });
   };
   return (
     <CustomCard>
