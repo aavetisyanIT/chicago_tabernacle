@@ -66,6 +66,9 @@ const DrawerContent = props => {
             }
           />
         </Drawer.Section>
+        <Drawer.Section>
+          <DrawerItem label="Log Out" onPress={() => {}} />
+        </Drawer.Section>
       </View>
     </DrawerContentScrollView>
   );

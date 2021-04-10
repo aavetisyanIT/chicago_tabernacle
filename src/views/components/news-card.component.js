@@ -9,7 +9,7 @@ export default function NewsCard({post}) {
       <TouchableRipple
         borderless={true}
         centered={true}
-        onPress={() => console.log('Pressed')}
+        onPress={() => {}}
         rippleColor="rgba(0, 0, 0, .32)">
         <>
           <Image

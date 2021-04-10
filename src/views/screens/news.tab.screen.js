@@ -1,12 +1,13 @@
-import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 import NewsCard from '../components/news-card.component';
 
 import announcementsData from './../../assets/announcementsData';
 
 const data = announcementsData;
 
-export default function NewsTab() {
+const NewsTab = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const renderNewsCard = post => {
     return <NewsCard post={post} />;
   };
@@ -20,11 +21,20 @@ export default function NewsTab() {
           keyExtractor={post => {
             return post.id;
           }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {}}
+              colors={['#bc9665']}
+            />
+          }
         />
       </View>
     </>
   );
-}
+};
+
+export default NewsTab;
 
 const styles = StyleSheet.create({
   container: {
