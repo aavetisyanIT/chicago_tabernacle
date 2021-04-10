@@ -4,10 +4,9 @@ import {TouchableRipple} from 'react-native-paper';
 import CustomCard from './custom-card.component';
 
 export default function NewsCard({post}) {
+  const postLink = post.item.ref?.link;
   const handlePress = () => {
-    const postLink = post.item.ref?.link;
     if (postLink) return Linking.openURL(postLink);
-    console.log('Navigation');
   };
   return (
     <CustomCard>
