@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image, ImageBackground} from 'react-native';
+import {View, StyleSheet, Image, ImageBackground, Linking} from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer} from 'react-native-paper';
 
@@ -42,14 +42,29 @@ const DrawerContent = props => {
             label="Prayer Request"
             onPress={() => RootNavigation.navigate('PrayrRequest')}
           />
-          <DrawerItem label="Give" onPress={() => {}} />
+          <DrawerItem
+            label="Give"
+            onPress={() =>
+              Linking.openURL('https://www.chicagotabernacle.org/give/')
+            }
+          />
           <DrawerItem label="Ministries" onPress={() => {}} />
           <DrawerItem label="Serve" onPress={() => {}} />
           <DrawerItem label="About" onPress={() => {}} />
         </Drawer.Section>
         <Drawer.Section>
-          <DrawerItem label="Facebook" onPress={() => {}} />
-          <DrawerItem label="Instagram" onPress={() => {}} />
+          <DrawerItem
+            label="Facebook"
+            onPress={() =>
+              Linking.openURL('https://www.facebook.com/chicagotab/')
+            }
+          />
+          <DrawerItem
+            label="Instagram"
+            onPress={() =>
+              Linking.openURL('https://www.instagram.com/chicagotab/')
+            }
+          />
         </Drawer.Section>
       </View>
     </DrawerContentScrollView>
