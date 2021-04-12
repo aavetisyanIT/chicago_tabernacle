@@ -1,18 +1,44 @@
-import React from 'react';
-import {FlatList, Text, View, StyleSheet, Image} from 'react-native';
+import React, {useState} from 'react';
+import {
+  FlatList,
+  RefreshControl,
+  View,
+  StyleSheet,
+  Image,
+  Text,
+} from 'react-native';
+
 import articles from '../../assets/articles';
 import SermonCard from '../components/sermon-card.component';
 
 const data = articles;
 
-const SermonsTab = () => {
+const SermonsTab = ({navigation}) => {
+  const [refreshing, setRefreshing] = useState(false);
+  const renderSermon = sermon => {
+    return <SermonCard sermon={sermon} navigation={navigation} />;
+  };
   const imageUrl = data.items[0].image.url;
   return (
     <>
       <View style={styles.container}>
         <Image source={{uri: `${imageUrl}`}} style={styles.image} />
-        <SermonCard />
-        {/* <FlatList>Sermonsss</FlatList> */}
+
+        <FlatList
+          ItemSeparatorComponent={() => <View style={{height: 1.5}} />}
+          data={data.items}
+          renderItem={renderSermon}
+          keyExtractor={sermon => {
+            return sermon.id;
+          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {}}
+              colors={['#bc9665']}
+            />
+          }
+        />
       </View>
     </>
   );
