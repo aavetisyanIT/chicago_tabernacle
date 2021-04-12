@@ -1,14 +1,28 @@
 import * as React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
+
 import PrayerRequestScreen from '../views/screens/prayer-request.screen';
 import DrawerContent from './DrawerContent';
 import TopTabsStack from './TopTabsStack';
 import SideMenuButton from './../views/components/side-menu-button';
+import TopTabsSermonStack from './TopTabsSermonStack';
 
 const {Navigator, Screen} = createStackNavigator();
 
-const DrawerStack = ({navigation}) => {
+const DrawerStack = ({route}) => {
+  const getHeaderTitle = route => {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+    switch (routeName) {
+      case 'Home':
+        return 'CHICAGO TABERNCLE';
+      case 'PrayrRequest':
+        return 'PRAYER REQUEST';
+      case 'TopTabsSermonStack':
+        return 'SERMON NOTES';
+    }
+  };
   return (
     <Navigator
       initialRouteName="Home"
@@ -29,16 +43,24 @@ const DrawerStack = ({navigation}) => {
         name="Home"
         component={TopTabsStack}
         options={{
-          title: 'CHICAGO TABERNCLE',
-          headerLeft: () => <SideMenuButton navigation={navigation} />,
+          title: getHeaderTitle(route),
+          headerLeft: () => <SideMenuButton />,
         }}
       />
       <Screen
         name="PrayrRequest"
         component={PrayerRequestScreen}
         options={{
-          title: 'PRAYER REQUEST',
-          headerLeft: () => <SideMenuButton navigation={navigation} />,
+          title: getHeaderTitle(route),
+          headerLeft: () => <SideMenuButton />,
+        }}
+      />
+      <Screen
+        name="TopTabsSermonStack"
+        component={TopTabsSermonStack}
+        options={{
+          title: getHeaderTitle(route),
+          headerLeft: () => <SideMenuButton />,
         }}
       />
     </Navigator>

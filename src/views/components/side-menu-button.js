@@ -1,7 +1,9 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import {useNavigation} from '@react-navigation/native';
 
-const SideMenuButton = ({navigation}) => {
+const SideMenuButton = () => {
+  const navigation = useNavigation();
   return (
     <Icon.Button
       color="#bc9665"
