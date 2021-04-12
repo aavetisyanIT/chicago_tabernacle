@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  FlatList,
-  RefreshControl,
-  View,
-  StyleSheet,
-  Image,
-  Text,
-} from 'react-native';
+import {FlatList, RefreshControl, View, StyleSheet, Image} from 'react-native';
 
 import articles from '../../assets/articles';
 import SermonCard from '../components/sermon-card.component';
@@ -20,27 +13,29 @@ const SermonsTab = ({navigation}) => {
   };
   const imageUrl = data.items[0].image.url;
   return (
-    <>
-      <View style={styles.container}>
-        <Image source={{uri: `${imageUrl}`}} style={styles.image} />
-
-        <FlatList
-          ItemSeparatorComponent={() => <View style={{height: 1.5}} />}
-          data={data.items}
-          renderItem={renderSermon}
-          keyExtractor={sermon => {
-            return sermon.id;
-          }}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={() => {}}
-              colors={['#bc9665']}
-            />
-          }
-        />
-      </View>
-    </>
+    <View style={styles.container}>
+      <FlatList
+        ItemSeparatorComponent={() => <View style={{height: 1.5}} />}
+        ListHeaderComponent={
+          <>
+            <Image source={{uri: `${imageUrl}`}} style={styles.image} />
+          </>
+        }
+        ListHeaderComponentStyle={styles.imageContainer}
+        data={data.items}
+        renderItem={renderSermon}
+        keyExtractor={sermon => {
+          return sermon.id;
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => {}}
+            colors={['#bc9665']}
+          />
+        }
+      />
+    </View>
   );
 };
 
@@ -48,12 +43,9 @@ export default SermonsTab;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'flex-start',
+    flex: 1,
   },
-  image: {height: '45%', width: '100%', resizeMode: 'cover'},
+  imageContainer: {width: '100%', height: 250},
+
+  image: {flex: 1},
 });
