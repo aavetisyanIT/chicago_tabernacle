@@ -3,19 +3,19 @@ const announcementsData = {
     {
       id: '96e3e330-536d-11eb-95ab-4530fe5daeb1',
       entity: 'announcement',
-      title: 'Devotional: Palm Sunday Service',
+      title: 'Devotional: Jesus Will Build His Church',
       desc: "Devotional Thoughts from Today's Message! ",
-      datePublished: '2021-03-28 14:30:34',
-      dateModified: '2021-03-28 14:21:21',
+      datePublished: '2021-04-04 14:30:34',
+      dateModified: '2021-04-11 14:53:44',
       type: 'devo',
       ref: {
-        objectId: '0e35c0f0-8ff7-11eb-b47e-553d1ef8c82d',
+        objectId: 'b9cf5c30-9afd-11eb-806f-dd81e47475c1',
         link: '',
         id: '96e3e331-536d-11eb-95ab-4530fe5daeb1',
       },
       mediaObject: {
         url:
-          'https://chitab.org/wp-content/uploads/2021/03/palm-sunday-2021brand.png',
+          'https://chitab.org/wp-content/uploads/2020/10/ct-devo-slide-fall20.png',
         width: 0,
         height: 0,
         duration: 0,
@@ -27,20 +27,19 @@ const announcementsData = {
     {
       id: '3a15bac0-534a-11eb-91d2-6bef847be051',
       entity: 'announcement',
-      title: 'Palm Sunday Service',
+      title: 'Jesus Will Build His Church',
       desc:
-        "Sunday, March 28th  / Join us for today's message from Pastor Al Toledo!",
+        "Sunday, April 11th  / Join us for today's message from Pastor Al Toledo!",
       datePublished: '2021-03-28 09:00:30',
-      dateModified: '2021-03-28 09:01:30',
+      dateModified: '2021-04-11 14:55:32',
       type: 'article',
       ref: {
-        objectId: '82de2d20-8fc5-11eb-ae45-cf00703c1779',
+        objectId: 'd512bff0-9ac6-11eb-8867-ffd1e30f3978',
         link: '',
         id: '3a15bac1-534a-11eb-91d2-6bef847be051',
       },
       mediaObject: {
-        url:
-          'https://chitab.org/wp-content/uploads/2021/03/Resurrection21_Brand_Round2_210217-06-1.jpg',
+        url: 'https://chitab.org/wp-content/uploads/2020/09/CT-blank-slide.png',
         width: 0,
         height: 0,
         duration: 0,
@@ -194,6 +193,7 @@ const announcementsData = {
       },
     },
   ],
+  page: {index: 1, size: 20, total: 8},
 };
 
 export default announcementsData;

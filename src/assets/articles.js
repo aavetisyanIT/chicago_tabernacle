@@ -5,7 +5,7 @@ const articles = {
       entity: 'article',
       headline: 'Jesus Will Build His Church',
       datePublished: '2021-04-11 09:02:09',
-      dateModified: '2021-04-11 14:51:45',
+      dateModified: '2021-04-12 11:48:09',
       desc: 'April 11, 2021 - Pastor Al Toledo',
       alternativeHeadline: '',
       author: '',
@@ -21,14 +21,32 @@ const articles = {
         type: 'image',
         id: 'f0f0ff20-9ac6-11eb-8867-ffd1e30f3978',
       },
-      video: null,
-      audio: null,
+      video: {
+        url:
+          'https://player.vimeo.com/external/535955445.m3u8?s=9b15c3f1d9565e47615953db6c46c27b79c686fb',
+        width: 0,
+        height: 0,
+        duration: 0,
+        placeholder: '',
+        type: 'video',
+        id: 'd719d020-9bae-11eb-83f9-5930cb867b7f',
+      },
+      audio: {
+        url:
+          'https://www.chicagotabernacle.org/wp-content/uploads/2021/04/SundayService_WEB_210411.mp3',
+        width: 0,
+        height: 0,
+        duration: 0,
+        placeholder: '',
+        type: 'audio',
+        id: 'db014380-9bae-11eb-83f9-5930cb867b7f',
+      },
       paragraphs: [
         {
           type: 'attributedText',
           actionType: 'button',
           text:
-            '<h2><span style="background-color: transparent; color: rgb(0, 0, 0);">Jesus Will Build in the Context of Spiritual Opposition</span></h2><h2><br></h2><h2><span style="background-color: transparent; color: rgb(0, 0, 0);">Satan Will Oppose in the Context of Kingdom Progress</span></h2><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
+            '<h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Jesus Will Build in the Context of Spiritual Opposition</span></h2><h2><br></h2><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Satan Will Oppose in the Context of Kingdom Progress</span></h2><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
           actionString: '',
           mediaObject: null,
           allowNotes: true,
@@ -48,7 +66,7 @@ const articles = {
           type: 'attributedText',
           actionType: 'button',
           text:
-            '<h2><span style="background-color: transparent; color: rgb(0, 0, 0);">If you want to be on the side that cannot be overcome by darkness, believe in Jesus and build with Jesus</span></h2><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
+            '<h2><span style="color: rgb(0, 0, 0); background-color: transparent;">If you want to be on the side that cannot be overcome by darkness, believe in Jesus and build with Jesus</span></h2><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
           actionString: '',
           mediaObject: null,
           allowNotes: true,
@@ -106,7 +124,7 @@ const articles = {
           type: 'attributedText',
           actionType: 'button',
           text:
-            '<p><strong>How Jesus Built the Church in Phillipi:&nbsp;</strong></p><p><br></p><p><br></p><ol><li>A businesswoman (Acts 16:14)</li><li>A demon-possessed slave girl (Acts 16:18)</li><li>A pagan city employee (Acts 16:25)</li></ol><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
+            '<p><strong>How Jesus Built the Church in Phillipi:&nbsp;</strong></p><p><br></p><p><br></p><p><br></p><p><br></p><ol><li>A businesswoman (Acts 16:14)</li><li>A demon-possessed slave girl (Acts 16:18)</li><li>A pagan city employee (Acts 16:25)</li></ol><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
           actionString: '',
           mediaObject: null,
           allowNotes: true,
@@ -116,7 +134,7 @@ const articles = {
           type: 'attributedText',
           actionType: 'button',
           text:
-            '<p><em style="color: rgb(51, 51, 51); background-color: transparent;">"Unbelief says: Some other time, but not now; some other place, but not here; some other people, but not us.&nbsp;Faith says: Anything He did anywhere else He will do here; anything He did any other time He is willing to do now; anything He ever did for other people He is willing to do for us!&nbsp;With our feet on the ground, and our head cool, but with our heart ablaze with the love of God, we walk out in this fullness of the Spirit, if we will yield and obey. God wants to work through you!"</em></p><p><em style="color: rgb(51, 51, 51); background-color: transparent;">- A.W. Tozer</em></p><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
+            '<p><em style="background-color: transparent; color: rgb(51, 51, 51);">"Unbelief says: Some other time, but not now; some other place, but not here; some other people, but not us.&nbsp;Faith says: Anything He did anywhere else He will do here; anything He did any other time He is willing to do now; anything He ever did for other people He is willing to do for us!&nbsp;With our feet on the ground, and our head cool, but with our heart ablaze with the love of God, we walk out in this fullness of the Spirit, if we will yield and obey. God wants to work through you!"</em></p><p><em style="background-color: transparent; color: rgb(51, 51, 51);">- A.W. Tozer</em></p><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
           actionString: '',
           mediaObject: null,
           allowNotes: false,
