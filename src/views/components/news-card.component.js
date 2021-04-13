@@ -3,22 +3,49 @@ import {Image, Linking, StyleSheet, Text} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
 
 import CustomCard from './custom-card.component';
+import articles from './../../assets/articles';
 
-export default function NewsCard({post, navigation}) {
-  const postType = post.item.type;
-  const postLink = post.item.ref?.link;
+export default function NewsCard({announcement, navigation, announcementData}) {
+  const findArticleByAnnouncementObjectId = (announcementData, articles) => {
+    let articleId = announcementData.id;
+    let foundArticle = null;
+    if (announcementData.type === 'devo') {
+      return (foundArticle = articles.items.find(
+        article => article.devoContent[0].id === articleId,
+      ));
+    } else if (announcementData.type === 'article') {
+      return (foundArticle = articles.items.find(
+        article => article.id === articleId,
+      ));
+    }
+    console.log(foundArticle);
+  };
+
   const handlePress = () => {
-    switch (postType) {
+    const currentArticle = findArticleByAnnouncementObjectId(
+      announcementData,
+      articles,
+    );
+    switch (announcementData.type) {
       case 'link':
-        return Linking.openURL(postLink);
+        Linking.openURL(announcement.item.ref.link);
+        break;
       case 'devo':
-        return navigation.navigate('TopTabsSermonStack', {
+        navigation.navigate('TopTabsSermonStack', {
           screen: 'SERMON NOTES',
+          params: {
+            article: currentArticle,
+          },
         });
+        break;
       case 'article':
-        return navigation.navigate('TopTabsSermonStack', {
+        navigation.navigate('TopTabsSermonStack', {
           screen: 'SERMON NOTES',
+          params: {
+            article: currentArticle,
+          },
         });
+        break;
     }
   };
   return (
@@ -30,11 +57,11 @@ export default function NewsCard({post, navigation}) {
         rippleColor="rgba(0, 0, 0, .32)">
         <>
           <Image
-            source={{uri: `${post.item.mediaObject.url}`}}
+            source={{uri: `${announcement.item.mediaObject.url}`}}
             style={styles.image}
           />
-          <Text style={styles.title}>{post.item.title}</Text>
-          <Text style={styles.description}>{post.item.desc}</Text>
+          <Text style={styles.title}>{announcement.item.title}</Text>
+          <Text style={styles.description}>{announcement.item.desc}</Text>
         </>
       </TouchableRipple>
     </CustomCard>

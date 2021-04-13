@@ -8,8 +8,33 @@ const data = announcementsData;
 
 const NewsTab = ({navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
-  const renderNewsCard = post => {
-    return <NewsCard post={post} navigation={navigation} />;
+  const renderNewsCard = announcement => {
+    let announcementData = null;
+    switch (announcement.item.type) {
+      case 'devo':
+        announcementData = {
+          type: 'devo',
+          id: announcement.item.ref.objectId,
+        };
+        break;
+      case 'article':
+        announcementData = {
+          type: 'article',
+          id: announcement.item.ref.objectId,
+        };
+        break;
+      case 'link':
+        announcementData = {type: 'link', id: null};
+        break;
+    }
+
+    return (
+      <NewsCard
+        announcement={announcement}
+        announcementData={announcementData}
+        navigation={navigation}
+      />
+    );
   };
   return (
     <>
@@ -18,8 +43,8 @@ const NewsTab = ({navigation}) => {
           ItemSeparatorComponent={() => <View style={{height: 8}} />}
           data={data.items}
           renderItem={renderNewsCard}
-          keyExtractor={post => {
-            return post.id;
+          keyExtractor={announcement => {
+            return announcement.id;
           }}
           refreshControl={
             <RefreshControl
