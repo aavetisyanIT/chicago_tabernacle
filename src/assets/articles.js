@@ -45,8 +45,22 @@ const articles = {
         {
           type: 'attributedText',
           actionType: 'button',
-          text:
-            '<h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Jesus Will Build in the Context of Spiritual Opposition</span></h2><h2><br></h2><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Satan Will Oppose in the Context of Kingdom Progress</span></h2><style>* { font-family: Proxima Nova; } p, ul, li, ol { font-size: 16px; } em { font-style: italic; }</style>',
+          text: `<h2>
+            <span style="color: rgb(0, 0, 0); background-color: transparent;">
+              Jesus Will Build in the Context of Spiritual Opposition
+            </span>
+            </h2>
+            <h2><br></h2>
+            <h2>
+              <span style="color: rgb(0, 0, 0); background-color: transparent;">
+                Satan Will Oppose in the Context of Kingdom Progress
+              </span>
+            </h2>
+            <style>
+            * { font-family: Proxima Nova; } 
+            p, ul, li, ol { font-size: 16px; } 
+            em { font-style: italic; }
+            </style>`,
           actionString: '',
           mediaObject: null,
           allowNotes: true,
