@@ -1,10 +1,10 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import SermonsListTab from '../views/sermons-list-tab-screen/sermons-list.tab.screen';
-import HomeScreenTabBar from './../views/components/home-screen-tab-bar.component';
-import LazyPlaceholder from './../views/components/lazy-placeholder.component';
-import NewsTab from './../views/news-tab-screen/news.tab.screen';
+import SermonsListTab from '../screens/sermons-list-tab-screen/sermons-list.tab.screen';
+import HomeScreenTabBar from './../screens/components/home-screen-tab-bar.component';
+import LazyPlaceholder from './../screens/components/lazy-placeholder.component';
+import NewsTab from './../screens/news-tab-screen/news.tab.screen';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 
