@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {FlatList, RefreshControl, View, StyleSheet, Image} from 'react-native';
 
 import articles from '../../assets/articles';
-import SermonCard from '../components/sermon-card.component';
+import SermonCard from './components/sermon-card.component';
 
 const data = articles;
 

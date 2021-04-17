@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
-import NewsCard from '../components/news-card.component';
 
 import announcementsData from './../../assets/announcementsData';
+import NewsCard from './components/news-card.component';
 
 const data = announcementsData;
 

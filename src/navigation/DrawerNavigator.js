@@ -5,7 +5,7 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
 
 import DrawerContent from './DrawerContent';
 import TopTabsStack from './TopTabsStack';
-import SideMenuButton from './../screens/components/side-menu-button';
+import SideMenuButton from './components/side-menu-button';
 import TopTabsSermonStack from './TopTabsSermonStack';
 import PrayerRequestScreen from './../screens/prayer-request-screen/prayer-request.screen';
 import DevotionalTab from './../screens/devotional-tab-screen/devotional.tab.screen';

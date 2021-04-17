@@ -1,10 +1,10 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import LazyPlaceholder from './../screens/components/lazy-placeholder.component';
 import DevotionalTab from '../screens/devotional-tab-screen/devotional.tab.screen';
-import SermonTabBar from './../screens/components/sermon-tab-bar.component';
 import SermonNotesTab from './../screens/sernom-notes-tab-screen/sermon-notes.tab.screen';
+import SermonTabBar from './components/sermon-tab-bar.component';
+import LazyPlaceholder from './components/lazy-placeholder.component';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 

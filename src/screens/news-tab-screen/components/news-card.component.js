@@ -2,8 +2,8 @@ import React from 'react';
 import {Image, Linking, StyleSheet, Text} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
 
+import articles from './../../../assets/articles';
 import CustomCard from './custom-card.component';
-import articles from './../../assets/articles';
 
 export default function NewsCard({announcement, navigation, announcementData}) {
   const findArticleByAnnouncementObjectId = (announcementData, articles) => {
@@ -18,7 +18,6 @@ export default function NewsCard({announcement, navigation, announcementData}) {
         article => article.id === articleId,
       ));
     }
-    console.log(foundArticle);
   };
 
   const handlePress = () => {

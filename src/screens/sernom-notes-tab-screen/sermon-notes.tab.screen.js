@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 
-import SermonNotesParagraph from '../components/sermon-notes-paragraph';
+import SermonNotesParagraph from './components/sermon-notes-paragraph';
 
 const SermonNotesTab = ({route}) => {
   const {article} = route.params;
