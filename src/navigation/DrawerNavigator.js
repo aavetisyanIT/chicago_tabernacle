@@ -74,11 +74,6 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator drawerContent={() => <DrawerContent />}>
       <Drawer.Screen name="Home" component={DrawerStack} headerMode="none" />
-      <Drawer.Screen
-        name="Devotional"
-        component={DevotionalTab}
-        headerMode="none"
-      />
     </Drawer.Navigator>
   );
 };

@@ -30,8 +30,11 @@ export default function NewsCard({announcement, navigation, announcementData}) {
         Linking.openURL(announcement.item.ref.link);
         break;
       case 'devo':
-        navigation.navigate('Devotional', {
-          article: currentArticle,
+        navigation.navigate('CustomPushScreensStack', {
+          screen: 'Devotional',
+          params: {
+            article: currentArticle,
+          },
         });
         break;
       case 'article':
