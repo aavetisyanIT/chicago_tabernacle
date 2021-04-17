@@ -3,12 +3,12 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
 
-import PrayerRequestScreen from '../views/screens/prayer-request.screen';
 import DrawerContent from './DrawerContent';
 import TopTabsStack from './TopTabsStack';
 import SideMenuButton from './../views/components/side-menu-button';
 import TopTabsSermonStack from './TopTabsSermonStack';
-import DevotionalTab from './../views/screens/devotional.tab.component';
+import PrayerRequestScreen from './../views/prayer-request-screen/prayer-request.screen';
+import DevotionalTab from './../views/devotional-tab-screen/devotional.tab.screen';
 
 const {Navigator, Screen} = createStackNavigator();
 

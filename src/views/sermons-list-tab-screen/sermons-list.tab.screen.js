@@ -6,7 +6,7 @@ import SermonCard from '../components/sermon-card.component';
 
 const data = articles;
 
-const SermonsTab = ({navigation}) => {
+const SermonsListTab = ({navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
   const renderSermon = sermon => {
     return <SermonCard sermon={sermon} navigation={navigation} />;
@@ -39,7 +39,7 @@ const SermonsTab = ({navigation}) => {
   );
 };
 
-export default SermonsTab;
+export default SermonsListTab;
 
 const styles = StyleSheet.create({
   container: {
