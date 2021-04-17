@@ -15,8 +15,9 @@ const RootStack = () => {
         component={DrawerNavigator}
         options={{headerShown: false}}
       />
-      <Screen name="TopTabsSermonStack" component={TopTabsSermonStack} />
       <Screen name="TopTabsStack" component={TopTabsStack} />
+      <Screen name="TopTabsSermonStack" component={TopTabsSermonStack} />
+      {/* <Screen name="CustomPushStack" component={CustomPushStack} /> */}
     </Navigator>
   );
 };

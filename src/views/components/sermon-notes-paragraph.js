@@ -1,16 +1,24 @@
 import React from 'react';
-import {Text, View, useWindowDimensions} from 'react-native';
+import {View, useWindowDimensions, StyleSheet} from 'react-native';
 import HTML from 'react-native-render-html';
 
-export default function SermonNotesParagraph({item}) {
+const SermonNotesParagraph = ({item}) => {
   const PARAGRAPHHTML = item.text;
 
   const contentWidth = useWindowDimensions().width;
   return (
-    <>
-      <Text>
-        <HTML source={{html: PARAGRAPHHTML}} contentWidth={contentWidth} />;
-      </Text>
-    </>
+    <View style={styles.container}>
+      <HTML source={{html: PARAGRAPHHTML}} contentWidth={contentWidth} />
+    </View>
   );
-}
+};
+
+export default SermonNotesParagraph;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 15,
+  },
+  text: {},
+});

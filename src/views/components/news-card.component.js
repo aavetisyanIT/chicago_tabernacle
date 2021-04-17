@@ -31,11 +31,8 @@ export default function NewsCard({announcement, navigation, announcementData}) {
         Linking.openURL(announcement.item.ref.link);
         break;
       case 'devo':
-        navigation.navigate('TopTabsSermonStack', {
-          screen: 'SERMON NOTES',
-          params: {
-            article: currentArticle,
-          },
+        navigation.navigate('Devotional', {
+          article: currentArticle,
         });
         break;
       case 'article':

@@ -8,6 +8,7 @@ import DrawerContent from './DrawerContent';
 import TopTabsStack from './TopTabsStack';
 import SideMenuButton from './../views/components/side-menu-button';
 import TopTabsSermonStack from './TopTabsSermonStack';
+import DevotionalTab from './../views/screens/devotional.tab.component';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -73,6 +74,11 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator drawerContent={() => <DrawerContent />}>
       <Drawer.Screen name="Home" component={DrawerStack} headerMode="none" />
+      <Drawer.Screen
+        name="Devotional"
+        component={DevotionalTab}
+        headerMode="none"
+      />
     </Drawer.Navigator>
   );
 };
