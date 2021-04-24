@@ -3,6 +3,7 @@ import {View, StyleSheet, Button} from 'react-native';
 
 import HiddenText from './hidden-text';
 import SermonNoteParagraphText from './sermon-note-paragraph-text';
+import CustomButton from './custom-button';
 
 const SermonNote = ({item, showModal}) => {
   const PARAGRAPHHTML = item.text;
@@ -20,7 +21,12 @@ const SermonNote = ({item, showModal}) => {
     <View style={styles.container}>
       {paragraphContent}
       {item.allowNotes ? (
-        <Button title="Add Note" onPress={showModal} color="#bc9665" />
+        <CustomButton
+          title="Add note"
+          onPress={showModal}
+          style={styles.button}
+          textStyle={styles.buttonText}
+        />
       ) : null}
     </View>
   );
@@ -33,4 +39,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 15,
   },
+  button: {backgroundColor: '#fff'},
+  buttonText: {color: '#bc9665'},
 });
