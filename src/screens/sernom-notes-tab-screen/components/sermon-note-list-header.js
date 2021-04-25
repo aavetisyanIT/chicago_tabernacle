@@ -23,6 +23,6 @@ export default SermonNoteListHeader;
 const styles = StyleSheet.create({
   image: {height: 250, width: '100%'},
   headerContent: {padding: 13},
-  audioPlayer: {margin: 15, color: '#bc9665', fontFamily: 'Roboto-Medium'},
+  audioPlayer: {margin: 12, color: '#bc9665', fontFamily: 'Roboto-Medium'},
   description: {fontFamily: 'Roboto-Thin'},
 });

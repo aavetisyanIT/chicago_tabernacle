@@ -26,7 +26,12 @@ const AddNoteModal = ({modalVisible, hideModal}) => {
           value={userNote}
           onChangeText={text => handleChangeText(text)}
         />
-        <CustomButton onPress={hideModal} title={'DONE'} />
+        <CustomButton
+          onPress={hideModal}
+          title={'DONE'}
+          style={styles.button}
+          textStyle={styles.buttonText}
+        />
       </View>
     </Modal>
   );
@@ -42,5 +47,21 @@ const styles = StyleSheet.create({
     opacity: 1,
     padding: 20,
     borderRadius: 2,
+  },
+  button: {
+    display: 'flex',
+    width: '90%',
+    height: 45,
+    borderRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    backgroundColor: '#bc9665',
+    margin: 15,
+  },
+  buttonText: {
+    fontSize: 16,
+    textTransform: 'uppercase',
+    color: '#fff',
   },
 });
