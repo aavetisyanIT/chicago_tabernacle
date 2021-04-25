@@ -15,7 +15,9 @@ const SermonNote = ({item, showModal}) => {
       <SermonNoteParagraphText PARAGRAPHHTML={PARAGRAPHHTML} />
     );
   } else if (item.actionType === 'hiddenText') {
-    paragraphContent = <HiddenText />;
+    paragraphContent = (
+      <HiddenText text={item.text} hiddenText={item.actionString} />
+    );
   }
   return (
     <View style={styles.container}>
@@ -27,6 +29,7 @@ const SermonNote = ({item, showModal}) => {
           style={styles.button}
           textStyle={styles.buttonText}
           icon="md-pencil"
+          iconSize={18}
         />
       ) : null}
     </View>
@@ -45,5 +48,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     margin: 12,
   },
-  buttonText: {color: '#bc9665', fontSize: 16},
+  buttonText: {color: '#bc9665', fontSize: 14},
 });
