@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const CustomButton = ({title, style, textStyle, onPress, icon}) => {
   const myIcon = <Icon name={icon} size={20} color="#bc9665" />;

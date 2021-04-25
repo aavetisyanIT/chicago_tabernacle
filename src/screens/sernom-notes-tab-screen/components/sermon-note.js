@@ -26,7 +26,7 @@ const SermonNote = ({item, showModal}) => {
           onPress={showModal}
           style={styles.button}
           textStyle={styles.buttonText}
-          icon="pencil"
+          icon="md-pencil"
         />
       ) : null}
     </View>
