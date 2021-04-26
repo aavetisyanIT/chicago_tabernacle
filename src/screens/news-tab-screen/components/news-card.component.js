@@ -5,7 +5,7 @@ import {TouchableRipple} from 'react-native-paper';
 import articles from './../../../assets/articles';
 import CustomCard from './custom-card.component';
 
-export default function NewsCard({announcement, navigation, announcementData}) {
+const NewsCard = ({announcement, navigation, announcementData}) => {
   const findArticleByAnnouncementObjectId = (announcementData, articles) => {
     let articleId = announcementData.id;
     let foundArticle = null;
@@ -65,7 +65,9 @@ export default function NewsCard({announcement, navigation, announcementData}) {
       </TouchableRipple>
     </CustomCard>
   );
-}
+};
+
+export default NewsCard;
 
 const styles = StyleSheet.create({
   image: {
