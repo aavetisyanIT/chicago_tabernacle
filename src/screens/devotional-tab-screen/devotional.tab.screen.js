@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 
 import DevotionalParagraph from './components/devotional-paragraph';
+import DevotionalHeader from './components/devotional-header';
 
 const DevotionalTab = ({route}) => {
   const {article} = route.params;
@@ -14,9 +15,10 @@ const DevotionalTab = ({route}) => {
     <View style={styles.container}>
       <FlatList
         ListHeaderComponent={
-          <View>
-            <Text>Header</Text>
-          </View>
+          <DevotionalHeader
+            headLine={devoContent[0].headline}
+            imageUrl={devoContent[0].image.url}
+          />
         }
         data={PARAGRAPHSDATA}
         renderItem={renderItem}

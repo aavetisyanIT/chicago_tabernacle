@@ -9,7 +9,7 @@ const SermonNoteListHeader = ({article}) => {
         style={styles.image}
       />
       <View style={styles.headerContent}>
-        <Text style={styles.headLine}>{article.article.headline}</Text>
+        <Text>{article.article.headline}</Text>
         <Text style={styles.description}>{article.article.desc}</Text>
         {/* Need to create audio component */}
         <Text style={styles.audioPlayer}>AUDIO COMPONENT</Text>
