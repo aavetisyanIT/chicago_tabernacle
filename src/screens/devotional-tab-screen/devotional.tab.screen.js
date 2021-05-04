@@ -1,15 +1,15 @@
 import React from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 
-import DevotionalParagraph from './components/devotional-paragraph';
 import DevotionalHeader from './components/devotional-header';
+import DevotionalContent from './components/devotional-content';
 
 const DevotionalTab = ({route}) => {
   const {article} = route.params;
   const {devoContent} = article;
   const PARAGRAPHSDATA = devoContent[0].paragraphs;
 
-  const renderItem = props => <DevotionalParagraph {...props} />;
+  const renderItem = props => <DevotionalContent {...props} />;
 
   return (
     <View style={styles.container}>
