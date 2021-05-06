@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 
 import HiddenText from './hidden-text';
 import SermonNoteParagraphText from './sermon-note-paragraph-text';
-import CustomButton from './../../../custom-comonents/custom-button';
+import CustomButton from './../../../custom-components/custom-button';
 
 const SermonNote = ({item, showModal}) => {
   const PARAGRAPHHTML = item.text;
