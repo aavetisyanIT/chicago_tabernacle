@@ -2,8 +2,8 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
 
-import CustomButton from './custom-button';
 import ModalTextInput from './modal-text-input';
+import CustomButton from './../../../custom-comonents/custom-button';
 
 const AddNoteModal = ({modalVisible, hideModal}) => {
   const [userNote, setUserNote] = React.useState('');

@@ -8,7 +8,6 @@ import TopTabsStack from './TopTabsStack';
 import SideMenuButton from './components/side-menu-button';
 import TopTabsSermonStack from './TopTabsSermonStack';
 import PrayerRequestScreen from './../screens/prayer-request-screen/prayer-request.screen';
-import DevotionalTab from './../screens/devotional-tab-screen/devotional.tab.screen';
 
 const {Navigator, Screen} = createStackNavigator();
 

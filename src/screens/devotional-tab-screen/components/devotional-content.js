@@ -1,16 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
-import HTML from 'react-native-render-html';
+import {StyleSheet, View} from 'react-native';
 
 import DevotionalParagraphText from './devotional-paragraph-text';
 
 const DevotionalContent = ({item}) => {
-  const contentWidth = useWindowDimensions().width;
-
   return (
     <View style={styles.container}>
       <DevotionalParagraphText itemText={item.text} />
-      <HTML source={{html: item.text}} contentWidth={contentWidth} />
     </View>
   );
 };

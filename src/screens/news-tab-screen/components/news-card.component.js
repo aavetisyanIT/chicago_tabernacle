@@ -3,7 +3,7 @@ import {Image, Linking, StyleSheet, Text} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
 
 import articles from './../../../assets/articles';
-import CustomCard from './custom-card.component';
+import CustomCard from '../../../custom-comonents/custom-card';
 
 const NewsCard = ({announcement, navigation, announcementData}) => {
   const findArticleByAnnouncementObjectId = (announcementData, articles) => {
