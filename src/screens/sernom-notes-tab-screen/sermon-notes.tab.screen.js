@@ -1,34 +1,30 @@
 import React from 'react';
-import {View, StyleSheet, FlatList, Text} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import AddNoteModal from './components/add-note-modal';
 
 import SermonNote from './components/sermon-note';
 import SermonNoteListHeader from './components/sermon-note-list-header';
 
 const SermonNotesTab = ({route}) => {
-  console.log('====================================');
-  console.log('SermonNotesTab', route);
-  console.log('====================================');
-  // const {article} = route.params;
-  // const PARAGRAPHDATA = article.paragraphs;
+  const {article} = route.params;
+  const PARAGRAPHDATA = article.paragraphs;
 
-  // const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
-  // const showModal = () => setModalVisible(true);
-  // const hideModal = () => setModalVisible(false);
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
 
-  // const renderItem = props => <SermonNote {...props} showModal={showModal} />;
+  const renderItem = props => <SermonNote {...props} showModal={showModal} />;
 
   return (
     <View style={styles.container}>
-      <Text>SermonNotesTab</Text>
-      {/* <AddNoteModal modalVisible={modalVisible} hideModal={hideModal} />
+      <AddNoteModal modalVisible={modalVisible} hideModal={hideModal} />
       <FlatList
         ListHeaderComponent={<SermonNoteListHeader article={route.params} />}
         data={PARAGRAPHDATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-      /> */}
+      />
     </View>
   );
 };

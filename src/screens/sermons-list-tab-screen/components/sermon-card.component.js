@@ -5,8 +5,11 @@ import {Text, View, StyleSheet} from 'react-native';
 const SermonCard = ({sermon, navigation}) => {
   const handlePress = () => {
     navigation.navigate('TopTabsSermonStack', {
-      article: sermon.item,
-      sermonCardParams: true,
+      screen: 'SERMON NOTES',
+      params: {
+        article: sermon.item,
+        sermonCardParams: true,
+      },
     });
   };
   return (
