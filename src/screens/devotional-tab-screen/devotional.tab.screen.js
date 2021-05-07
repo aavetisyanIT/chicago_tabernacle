@@ -4,6 +4,7 @@ import {useNavigationState} from '@react-navigation/native';
 
 import DevotionalHeader from './components/devotional-header';
 import DevotionalContent from './components/devotional-content';
+import CustomAddNoteModal from '../../custom-components/custom-add-note-modal';
 
 const DevotionalTab = () => {
   //making use of useNavigation hook to retrive current acticle
@@ -14,10 +15,22 @@ const DevotionalTab = () => {
   const {devoContent} = article;
   const PARAGRAPHSDATA = devoContent[0].paragraphs;
 
-  const renderItem = props => <DevotionalContent {...props} />;
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
+
+  const renderItem = props => (
+    <DevotionalContent {...props} showModal={showModal} />
+  );
 
   return (
     <View style={styles.container}>
+      <CustomAddNoteModal
+        modalVisible={modalVisible}
+        hideModal={hideModal}
+        placeholder="Your Note"
+      />
       <FlatList
         ListHeaderComponent={
           <DevotionalHeader

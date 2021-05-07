@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
-import AddNoteModal from './components/add-note-modal';
 
 import SermonNote from './components/sermon-note';
 import SermonNoteListHeader from './components/sermon-note-list-header';
+import CustomAddNoteModal from './../../custom-components/custom-add-note-modal';
 
 const SermonNotesTab = ({route}) => {
   const {article} = route.params;
@@ -18,7 +18,11 @@ const SermonNotesTab = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <AddNoteModal modalVisible={modalVisible} hideModal={hideModal} />
+      <CustomAddNoteModal
+        modalVisible={modalVisible}
+        hideModal={hideModal}
+        placeholder="Your Note"
+      />
       <FlatList
         ListHeaderComponent={<SermonNoteListHeader article={route.params} />}
         data={PARAGRAPHDATA}
