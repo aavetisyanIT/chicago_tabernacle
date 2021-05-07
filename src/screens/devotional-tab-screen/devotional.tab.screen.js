@@ -10,9 +10,6 @@ const DevotionalTab = () => {
   //It wasn't possible to pass it down as a prop(route.params)
   const routes = useNavigationState(state => state.routes);
 
-  console.log('====================================');
-  console.log('DevotionalTab', routes[0].params);
-  console.log('====================================');
   const {article} = routes[0].params;
   const {devoContent} = article;
   const PARAGRAPHSDATA = devoContent[0].paragraphs;
