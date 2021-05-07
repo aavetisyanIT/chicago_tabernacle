@@ -3,9 +3,9 @@ import {Text, View, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
 
 import ModalTextInput from './modal-text-input';
-import CustomButton from './../../../custom-components/custom-button';
+import CustomButton from './custom-button';
 
-const AddNoteModal = ({modalVisible, hideModal}) => {
+const CustomAddNoteModal = ({modalVisible, hideModal, placeholder}) => {
   const [userNote, setUserNote] = React.useState('');
   const handleChangeText = text => {
     console.log(text);
@@ -22,7 +22,7 @@ const AddNoteModal = ({modalVisible, hideModal}) => {
         {/* Need to add text of a current paragraph */}
         <Text>Dynamic text from sermon paragraph</Text>
         <ModalTextInput
-          placeholder="Your Note"
+          placeholder={placeholder}
           value={userNote}
           onChangeText={text => handleChangeText(text)}
         />
@@ -37,7 +37,7 @@ const AddNoteModal = ({modalVisible, hideModal}) => {
   );
 };
 
-export default AddNoteModal;
+export default CustomAddNoteModal;
 
 const styles = StyleSheet.create({
   modal: {
