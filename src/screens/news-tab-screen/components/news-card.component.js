@@ -1,6 +1,7 @@
 import React from 'react';
-import {Image, Linking, StyleSheet, Text} from 'react-native';
+import {Linking, StyleSheet, Text} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
+import FastImage from 'react-native-fast-image';
 
 import articles from './../../../assets/articles';
 import CustomCard from '../../../custom-components/custom-card';
@@ -55,9 +56,13 @@ const NewsCard = ({announcement, navigation, announcementData}) => {
         onPress={handlePress}
         rippleColor="rgba(0, 0, 0, .32)">
         <>
-          <Image
-            source={{uri: `${announcement.item.mediaObject.url}`}}
+          <FastImage
+            source={{
+              uri: `${announcement.item.mediaObject.url}`,
+              priority: FastImage.priority.normal,
+            }}
             style={styles.image}
+            resizeMode={FastImage.resizeMode.contain}
           />
           <Text style={styles.title}>{announcement.item.title}</Text>
           <Text style={styles.description}>{announcement.item.desc}</Text>

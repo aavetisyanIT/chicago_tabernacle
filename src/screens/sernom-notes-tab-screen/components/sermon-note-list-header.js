@@ -1,13 +1,18 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import CustomAudioPlayer from './../../../custom-components/custom-audio-player';
+import FastImage from 'react-native-fast-image';
 
 const SermonNoteListHeader = ({article}) => {
   return (
     <>
-      <Image
-        source={{uri: `${article.article.image.url}`}}
+      <FastImage
+        source={{
+          uri: `${article.article.image.url}`,
+          priority: FastImage.priority.normal,
+        }}
         style={styles.image}
+        resizeMode={FastImage.resizeMode.contain}
       />
       <View style={styles.headerContent}>
         <Text>{article.article.headline}</Text>

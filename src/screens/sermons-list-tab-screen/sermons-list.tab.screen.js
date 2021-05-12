@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {FlatList, RefreshControl, View, StyleSheet, Image} from 'react-native';
+import {FlatList, RefreshControl, View, StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import articles from '../../assets/articles';
 import SermonCard from './components/sermon-card.component';
@@ -18,7 +19,11 @@ const SermonsListTab = ({navigation}) => {
         ItemSeparatorComponent={() => <View style={{height: 1.5}} />}
         ListHeaderComponent={
           <>
-            <Image source={{uri: `${imageUrl}`}} style={styles.image} />
+            <FastImage
+              source={{uri: `${imageUrl}`, priority: FastImage.priority.normal}}
+              style={styles.image}
+              resizeMode={FastImage.resizeMode.contain}
+            />
           </>
         }
         ListHeaderComponentStyle={styles.imageContainer}
