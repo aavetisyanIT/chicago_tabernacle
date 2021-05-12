@@ -8,5 +8,5 @@ const CustomAudioPlayer = () => {
 export default CustomAudioPlayer;
 
 const styles = StyleSheet.create({
-  audioPlayer: {margin: 12, color: '#bc9665', fontFamily: 'Roboto-Medium'},
+  audioPlayer: {margin: 25, color: '#bc9665', fontFamily: 'Roboto-Medium'},
 });
