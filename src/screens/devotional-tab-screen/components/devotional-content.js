@@ -34,5 +34,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     margin: 12,
   },
-  buttonText: {color: '#bc9665', fontSize: 14},
+  buttonText: {color: '#bc9665', fontSize: 15, marginHorizontal: 5},
 });
