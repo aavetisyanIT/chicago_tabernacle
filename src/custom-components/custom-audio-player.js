@@ -2,7 +2,9 @@ import React from 'react';
 import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Sound from 'react-native-sound';
 
-const CustomAudioPlayer = ({url}) => {
+import CustomButton from './custom-button';
+
+const CustomAudioPlayer = ({url, audioPlayerVisible, showAudioPlayer}) => {
   const playRemoteURLSoundFile = () => {
     Sound.setCategory('Playback');
 
@@ -22,7 +24,7 @@ const CustomAudioPlayer = ({url}) => {
     myRemoteSound.setVolume(0.9);
     myRemoteSound.release();
   };
-  return (
+  return audioPlayerVisible ? (
     <View>
       <View style={{marginTop: 10}}>
         <TouchableOpacity
@@ -41,6 +43,15 @@ const CustomAudioPlayer = ({url}) => {
         </TouchableOpacity>
       </View>
     </View>
+  ) : (
+    <CustomButton
+      style={styles.audioButton}
+      title="AUDIO PLAYER"
+      textStyle={styles.audioButtonText}
+      icon="volume-high-outline"
+      iconSize={20}
+      onPress={showAudioPlayer}
+    />
   );
 };
 
@@ -48,4 +59,11 @@ export default CustomAudioPlayer;
 
 const styles = StyleSheet.create({
   audioPlayer: {margin: 25, color: '#bc9665', fontFamily: 'Roboto-Medium'},
+  audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
+  audioButtonText: {
+    color: '#bc9665',
+    fontSize: 14,
+    fontFamily: 'Roboto-Medium',
+    marginHorizontal: 5,
+  },
 });

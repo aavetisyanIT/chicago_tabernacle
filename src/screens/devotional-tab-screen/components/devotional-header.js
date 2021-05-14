@@ -2,13 +2,13 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import CustomAudioPlayer from '../../../custom-components/custom-audio-player';
-import CustomButton from './../../../custom-components/custom-button';
+//import CustomAudioPlayer from '../../../custom-components/custom-audio-player';
+//import CustomButton from './../../../custom-components/custom-button';
 
 const DevotionalHeader = ({headLine, imageUrl}) => {
-  const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
-  const showAudioPlayer = () => setAudioPlayerVisible(true);
-  const hideAudioPlayer = () => setAudioPlayerVisible(false);
+  // const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
+  // const showAudioPlayer = () => setAudioPlayerVisible(true);
+  // const hideAudioPlayer = () => setAudioPlayerVisible(false);
   return (
     <View>
       <FastImage
@@ -17,8 +17,7 @@ const DevotionalHeader = ({headLine, imageUrl}) => {
         resizeMode={FastImage.resizeMode.contain}
       />
       <Text style={styles.headLine}>{headLine}</Text>
-      {/* CustomAudioPlayer is not working  */}
-      {audioPlayerVisible ? (
+      {/* {audioPlayerVisible ? (
         <CustomAudioPlayer />
       ) : (
         <CustomButton
@@ -29,7 +28,7 @@ const DevotionalHeader = ({headLine, imageUrl}) => {
           iconSize={20}
           onPress={showAudioPlayer}
         />
-      )}
+      )} */}
     </View>
   );
 };

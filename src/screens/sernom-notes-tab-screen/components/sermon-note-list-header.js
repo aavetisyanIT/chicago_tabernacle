@@ -24,19 +24,12 @@ const SermonNoteListHeader = ({article}) => {
       <View style={styles.headerContent}>
         <Text>{article.article.headline}</Text>
         <Text style={styles.description}>{article.article.desc}</Text>
-        {/* CustomAudioPlayer is not working  */}
-        {audioPlayerVisible ? (
-          <CustomAudioPlayer url={url} />
-        ) : (
-          <CustomButton
-            style={styles.audioButton}
-            title="AUDIO PLAYER"
-            textStyle={styles.audioButtonText}
-            icon="volume-high-outline"
-            iconSize={20}
-            onPress={showAudioPlayer}
-          />
-        )}
+
+        <CustomAudioPlayer
+          url={url}
+          audioPlayerVisible={audioPlayerVisible}
+          showAudioPlayer={showAudioPlayer}
+        />
       </View>
     </>
   );
@@ -48,11 +41,4 @@ const styles = StyleSheet.create({
   image: {height: 250, width: '100%'},
   headerContent: {padding: 13},
   description: {fontFamily: 'Roboto-Thin'},
-  audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
-  audioButtonText: {
-    color: '#bc9665',
-    fontSize: 14,
-    fontFamily: 'Roboto-Medium',
-    marginHorizontal: 5,
-  },
 });
