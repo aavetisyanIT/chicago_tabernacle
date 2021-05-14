@@ -10,6 +10,10 @@ const SermonNoteListHeader = ({article}) => {
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
 
   const url = article.article.audio.url;
+  let articleHasAudio = null;
+  article.article.audio.type === 'audio'
+    ? (articleHasAudio = true)
+    : (articleHasAudio = false);
 
   return (
     <>
@@ -24,12 +28,13 @@ const SermonNoteListHeader = ({article}) => {
       <View style={styles.headerContent}>
         <Text>{article.article.headline}</Text>
         <Text style={styles.description}>{article.article.desc}</Text>
-
-        <CustomAudioPlayer
-          url={url}
-          audioPlayerVisible={audioPlayerVisible}
-          showAudioPlayer={showAudioPlayer}
-        />
+        {articleHasAudio ? (
+          <CustomAudioPlayer
+            url={url}
+            audioPlayerVisible={audioPlayerVisible}
+            showAudioPlayer={showAudioPlayer}
+          />
+        ) : null}
       </View>
     </>
   );
