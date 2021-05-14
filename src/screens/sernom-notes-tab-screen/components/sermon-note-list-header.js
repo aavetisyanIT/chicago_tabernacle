@@ -8,6 +8,9 @@ const SermonNoteListHeader = ({article}) => {
   const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
   const showAudioPlayer = () => setAudioPlayerVisible(true);
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
+
+  const url = article.article.audio.url;
+
   return (
     <>
       <FastImage
@@ -23,7 +26,7 @@ const SermonNoteListHeader = ({article}) => {
         <Text style={styles.description}>{article.article.desc}</Text>
         {/* CustomAudioPlayer is not working  */}
         {audioPlayerVisible ? (
-          <CustomAudioPlayer />
+          <CustomAudioPlayer url={url} />
         ) : (
           <CustomButton
             style={styles.audioButton}
