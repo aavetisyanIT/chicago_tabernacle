@@ -5,6 +5,9 @@ import FastImage from 'react-native-fast-image';
 import CustomButton from './../../../custom-components/custom-button';
 
 const SermonNoteListHeader = ({article}) => {
+  const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
+  const showAudioPlayer = () => setAudioPlayerVisible(true);
+  const hideAudioPlayer = () => setAudioPlayerVisible(false);
   return (
     <>
       <FastImage
@@ -19,15 +22,18 @@ const SermonNoteListHeader = ({article}) => {
         <Text>{article.article.headline}</Text>
         <Text style={styles.description}>{article.article.desc}</Text>
         {/* CustomAudioPlayer is not working  */}
-        <CustomAudioPlayer />
-        <CustomButton
-          style={styles.audioButton}
-          title="AUDIO PLAYER"
-          textStyle={styles.audioButtonText}
-          icon="volume-high-outline"
-          iconSize={20}
-          onPress={() => null}
-        />
+        {audioPlayerVisible ? (
+          <CustomAudioPlayer />
+        ) : (
+          <CustomButton
+            style={styles.audioButton}
+            title="AUDIO PLAYER"
+            textStyle={styles.audioButtonText}
+            icon="volume-high-outline"
+            iconSize={20}
+            onPress={showAudioPlayer}
+          />
+        )}
       </View>
     </>
   );
