@@ -3,8 +3,12 @@ import {View, Text, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import CustomAudioPlayer from '../../../custom-components/custom-audio-player';
+import CustomButton from './../../../custom-components/custom-button';
 
 const DevotionalHeader = ({headLine, imageUrl}) => {
+  const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
+  const showAudioPlayer = () => setAudioPlayerVisible(true);
+  const hideAudioPlayer = () => setAudioPlayerVisible(false);
   return (
     <View>
       <FastImage
@@ -14,7 +18,18 @@ const DevotionalHeader = ({headLine, imageUrl}) => {
       />
       <Text style={styles.headLine}>{headLine}</Text>
       {/* CustomAudioPlayer is not working  */}
-      <CustomAudioPlayer />
+      {audioPlayerVisible ? (
+        <CustomAudioPlayer />
+      ) : (
+        <CustomButton
+          style={styles.audioButton}
+          title="AUDIO PLAYER"
+          textStyle={styles.audioButtonText}
+          icon="volume-high-outline"
+          iconSize={20}
+          onPress={showAudioPlayer}
+        />
+      )}
     </View>
   );
 };
@@ -24,4 +39,11 @@ export default DevotionalHeader;
 const styles = StyleSheet.create({
   image: {height: 250, width: '100%'},
   headLine: {margin: 15, fontFamily: 'Roboto-Light', fontSize: 20},
+  audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
+  audioButtonText: {
+    color: '#bc9665',
+    fontSize: 14,
+    fontFamily: 'Roboto-Medium',
+    marginHorizontal: 5,
+  },
 });
