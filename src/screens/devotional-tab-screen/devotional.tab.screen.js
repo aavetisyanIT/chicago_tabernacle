@@ -16,12 +16,17 @@ const DevotionalTab = () => {
   const PARAGRAPHSDATA = devoContent[0].paragraphs;
 
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [currentParagraphHTML, setCurrentParagraphHTML] = React.useState('');
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
 
   const renderItem = props => (
-    <DevotionalContent {...props} showModal={showModal} />
+    <DevotionalContent
+      {...props}
+      showModal={showModal}
+      setCurrentParagraphHTML={setCurrentParagraphHTML}
+    />
   );
 
   return (
@@ -30,6 +35,7 @@ const DevotionalTab = () => {
         modalVisible={modalVisible}
         hideModal={hideModal}
         placeholder="Your Note"
+        HTML={currentParagraphHTML}
       />
       <FlatList
         ListHeaderComponent={

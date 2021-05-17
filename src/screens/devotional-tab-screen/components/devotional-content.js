@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import DevotionalParagraphText from './devotional-paragraph-text';
 import CustomButton from './../../../custom-components/custom-button';
 
-const DevotionalContent = ({item, showModal}) => {
+const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
   return (
     <View style={styles.container}>
       <DevotionalParagraphText itemText={item.text} />
@@ -12,6 +12,8 @@ const DevotionalContent = ({item, showModal}) => {
         <CustomButton
           title="Add Note"
           onPress={showModal}
+          setCurrentHTML={setCurrentParagraphHTML}
+          currentHTML={item.text}
           style={styles.button}
           textStyle={styles.buttonText}
           icon="md-pencil"
