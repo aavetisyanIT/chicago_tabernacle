@@ -5,7 +5,7 @@ import HiddenText from './hidden-text';
 import SermonNoteParagraphText from './sermon-note-paragraph-text';
 import CustomButton from './../../../custom-components/custom-button';
 
-const SermonNote = ({item, showModal}) => {
+const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
   const PARAGRAPHHTML = item.text;
 
   let paragraphContent = null;
@@ -26,6 +26,8 @@ const SermonNote = ({item, showModal}) => {
         <CustomButton
           title="Add Note"
           onPress={showModal}
+          setCurrentHTML={setCurrentSermonHTML}
+          currentHTML={PARAGRAPHHTML}
           style={styles.button}
           textStyle={styles.buttonText}
           icon="md-pencil"

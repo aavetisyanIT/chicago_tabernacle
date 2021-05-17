@@ -9,9 +9,9 @@ const SermonNoteListHeader = ({article}) => {
   const showAudioPlayer = () => setAudioPlayerVisible(true);
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
 
-  const url = article.article.audio.url;
+  const url = article.audio.url;
   let articleHasAudio = null;
-  article.article.audio.type === 'audio'
+  article.audio.type === 'audio'
     ? (articleHasAudio = true)
     : (articleHasAudio = false);
 
@@ -19,15 +19,15 @@ const SermonNoteListHeader = ({article}) => {
     <>
       <FastImage
         source={{
-          uri: `${article.article.image.url}`,
+          uri: `${article.image.url}`,
           priority: FastImage.priority.normal,
         }}
         style={styles.image}
         resizeMode={FastImage.resizeMode.contain}
       />
       <View style={styles.headerContent}>
-        <Text>{article.article.headline}</Text>
-        <Text style={styles.description}>{article.article.desc}</Text>
+        <Text>{article.headline}</Text>
+        <Text style={styles.description}>{article.desc}</Text>
         {articleHasAudio ? (
           <CustomAudioPlayer
             url={url}

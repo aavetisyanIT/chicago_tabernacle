@@ -10,11 +10,18 @@ const SermonNotesTab = ({route}) => {
   const PARAGRAPHDATA = article.paragraphs;
 
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [currentSermonHTML, setCurrentSermonHTML] = React.useState('');
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
 
-  const renderItem = props => <SermonNote {...props} showModal={showModal} />;
+  const renderItem = props => (
+    <SermonNote
+      {...props}
+      showModal={showModal}
+      setCurrentSermonHTML={setCurrentSermonHTML}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -22,9 +29,10 @@ const SermonNotesTab = ({route}) => {
         modalVisible={modalVisible}
         hideModal={hideModal}
         placeholder="Your Note"
+        HTML={currentSermonHTML}
       />
       <FlatList
-        ListHeaderComponent={<SermonNoteListHeader article={route.params} />}
+        ListHeaderComponent={<SermonNoteListHeader article={article} />}
         data={PARAGRAPHDATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
