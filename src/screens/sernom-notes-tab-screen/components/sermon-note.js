@@ -6,7 +6,7 @@ import SermonNoteParagraphText from './sermon-note-paragraph-text';
 import CustomButton from './../../../custom-components/custom-button';
 
 const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
-  const PARAGRAPHHTML = item.text;
+  let PARAGRAPHHTML = item.text;
 
   let paragraphContent = null;
   //doublecheck with Andrei on actionType === null
@@ -18,6 +18,8 @@ const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
     paragraphContent = (
       <HiddenText text={item.text} hiddenText={item.actionString} />
     );
+    //remove "%@" and add hidden text when open custom-add-note-modal for hidden-text component
+    PARAGRAPHHTML = `${PARAGRAPHHTML.slice(0, -2)} ${item.actionString}`;
   }
   return (
     <View style={styles.container}>
