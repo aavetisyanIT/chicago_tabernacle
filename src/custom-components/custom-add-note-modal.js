@@ -15,7 +15,29 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
 
   //convert html to plain text
   //with new line at 120 character
-  const text = htmlToText(HTML, {wordwrap: 120});
+  const text = htmlToText(HTML, {
+    wordwrap: 120,
+    formatters: {
+      // Create a formatter for sup tag.
+      supBlockFormatter: function (elem, walk, builder, formatOptions) {
+        console.log(formatOptions);
+        builder.openBlock({
+          leadingLineBreaks: formatOptions.leadingLineBreaks || 1,
+        });
+        walk(elem.children, builder);
+        builder.addInline('*');
+        builder.closeBlock({
+          trailingLineBreaks: formatOptions.trailingLineBreaks || 0,
+        });
+      },
+    },
+    tags: {
+      sup: {
+        format: 'supBlockFormatter',
+        options: {leadingLineBreaks: 0, trailingLineBreaks: 0},
+      },
+    },
+  });
 
   return (
     <Modal
