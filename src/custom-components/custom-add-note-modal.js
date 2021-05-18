@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
-import HTML from 'react-native-render-html';
+import {htmlToText} from 'html-to-text';
 
 import ModalTextInput from './modal-text-input';
 import CustomButton from './custom-button';
@@ -19,12 +13,9 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
     console.log(text);
   };
 
-  const contentWidth = useWindowDimensions().width;
-  const renderers = {
-    sup: ({__rawHtml}, children, convertedCSSStyles, passProps) => {
-      return <Text style={null} key={passProps.key} html={__rawHtml} />;
-    },
-  };
+  //convert html to plain text
+  //with new line at 120 character
+  const text = htmlToText(HTML, {wordwrap: 120});
 
   return (
     <Modal
@@ -35,20 +26,7 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
       animationInTiming={700}
       backdropTransitionOutTiming={0}>
       <View style={styles.modal}>
-        {/* Need to add text of a current paragraph */}
-        <Text>{HTML}</Text>
-        {/* <Text>
-          <ScrollView style={{flex: 1}}>
-            <HTML
-              source={{
-                html: HTML,
-              }}
-              contentWidth={contentWidth}
-              renderers={renderers}
-            />
-          </ScrollView>
-        </Text> */}
-
+        <Text>{text}</Text>
         <ModalTextInput
           placeholder={placeholder}
           value={userNote}
