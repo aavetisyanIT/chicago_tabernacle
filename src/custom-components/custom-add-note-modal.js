@@ -20,12 +20,11 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
     formatters: {
       // Create a formatter for sup tag.
       supBlockFormatter: function (elem, walk, builder, formatOptions) {
-        console.log(formatOptions);
         builder.openBlock({
           leadingLineBreaks: formatOptions.leadingLineBreaks || 1,
         });
         walk(elem.children, builder);
-        builder.addInline('*');
+        builder.addInline(' ');
         builder.closeBlock({
           trailingLineBreaks: formatOptions.trailingLineBreaks || 0,
         });

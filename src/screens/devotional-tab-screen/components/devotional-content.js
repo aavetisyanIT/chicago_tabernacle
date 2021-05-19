@@ -1,13 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import DevotionalParagraphText from './devotional-paragraph-text';
 import CustomButton from './../../../custom-components/custom-button';
+import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
 
 const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
   return (
     <View style={styles.container}>
-      <DevotionalParagraphText itemText={item.text} />
+      <CustomParagraphHtmlToText paragraphHtml={item.text} />
       {item.allowNotes ? (
         <CustomButton
           title="Add Note"

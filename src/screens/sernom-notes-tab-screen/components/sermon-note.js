@@ -2,8 +2,8 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import HiddenText from './hidden-text';
-import SermonNoteParagraphText from './sermon-note-paragraph-text';
 import CustomButton from './../../../custom-components/custom-button';
+import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
 
 const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
   let PARAGRAPHHTML = item.text;
@@ -12,7 +12,7 @@ const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
   //doublecheck with Andrei on actionType === null
   if (item.actionType === 'button' || item.actionType === null) {
     paragraphContent = (
-      <SermonNoteParagraphText PARAGRAPHHTML={PARAGRAPHHTML} />
+      <CustomParagraphHtmlToText paragraphHtml={PARAGRAPHHTML} />
     );
   } else if (item.actionType === 'hiddenText') {
     paragraphContent = (
