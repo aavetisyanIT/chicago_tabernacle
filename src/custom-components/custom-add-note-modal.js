@@ -14,7 +14,7 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
   };
 
   //convert html to plain text
-  //with new line at 120 character
+  //with new line at 120th character
   const text = htmlToText(HTML, {
     wordwrap: 120,
     formatters: {
@@ -24,7 +24,8 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
           leadingLineBreaks: formatOptions.leadingLineBreaks || 1,
         });
         walk(elem.children, builder);
-        builder.addInline(' ');
+        //add a space after sup tag's text
+        builder.addInline('\u00a0');
         builder.closeBlock({
           trailingLineBreaks: formatOptions.trailingLineBreaks || 0,
         });

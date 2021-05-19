@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, useWindowDimensions, Text} from 'react-native';
+import {View, useWindowDimensions, Text, StyleSheet} from 'react-native';
 import HTML from 'react-native-render-html';
 
 const CustomParagraphHtmlToText = ({paragraphHtml}) => {
@@ -9,15 +9,11 @@ const CustomParagraphHtmlToText = ({paragraphHtml}) => {
     sup: (htmlAttribs, children, convertedCSSStyles, passProps) => {
       const supTagText = passProps.domNode.children[0].data;
       return (
-        <View style={null} key={passProps.key} html={htmlAttribs}>
-          <Text
-            style={{
-              fontSize: 11,
-              lineHeight: 14,
-              textAlignVertical: 'top',
-            }}>
-            {supTagText}{' '}
-          </Text>
+        <View
+          style={styles.supContainer}
+          key={passProps.key}
+          html={htmlAttribs}>
+          <Text style={styles.supText}>{supTagText} </Text>
         </View>
       );
     },
@@ -37,3 +33,12 @@ const CustomParagraphHtmlToText = ({paragraphHtml}) => {
 };
 
 export default CustomParagraphHtmlToText;
+
+const styles = StyleSheet.create({
+  supContainer: {flexDirection: 'row', alignItems: 'flex-start'},
+  supText: {
+    fontSize: 11,
+    lineHeight: 14,
+    textAlignVertical: 'top',
+  },
+});
