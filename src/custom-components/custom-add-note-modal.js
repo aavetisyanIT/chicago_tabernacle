@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
-import {htmlToText} from 'html-to-text';
 
 import ModalTextInput from './modal-text-input';
 import CustomButton from './custom-button';
+import CustomParagraphHtmlToText from './custom-paragraph-html-to-text-component';
 
 const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
   const [userNote, setUserNote] = React.useState('');
@@ -12,32 +12,6 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
   const handleChangeText = text => {
     console.log(text);
   };
-
-  //convert html to plain text
-  //with new line at 120th character
-  const text = htmlToText(HTML, {
-    wordwrap: 120,
-    formatters: {
-      // Create a formatter for sup tag.
-      supBlockFormatter: function (elem, walk, builder, formatOptions) {
-        builder.openBlock({
-          leadingLineBreaks: formatOptions.leadingLineBreaks || 1,
-        });
-        walk(elem.children, builder);
-        //add a space after sup tag's text
-        builder.addInline('\u00a0');
-        builder.closeBlock({
-          trailingLineBreaks: formatOptions.trailingLineBreaks || 0,
-        });
-      },
-    },
-    tags: {
-      sup: {
-        format: 'supBlockFormatter',
-        options: {leadingLineBreaks: 0, trailingLineBreaks: 0},
-      },
-    },
-  });
 
   return (
     <Modal
@@ -48,7 +22,7 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
       animationInTiming={700}
       backdropTransitionOutTiming={0}>
       <View style={styles.modal}>
-        <Text>{text}</Text>
+        <CustomParagraphHtmlToText paragraphHtml={HTML} />
         <ModalTextInput
           placeholder={placeholder}
           value={userNote}
