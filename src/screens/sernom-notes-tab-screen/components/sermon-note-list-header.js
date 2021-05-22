@@ -3,6 +3,7 @@ import {Text, View, StyleSheet} from 'react-native';
 import CustomAudioPlayer from './../../../custom-components/custom-audio-player';
 import FastImage from 'react-native-fast-image';
 import CustomButton from './../../../custom-components/custom-button';
+import CustomTrackPlayer from '../../../custom-components/custom-track-player';
 
 const SermonNoteListHeader = ({article}) => {
   const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
@@ -29,12 +30,17 @@ const SermonNoteListHeader = ({article}) => {
         <Text>{article.headline}</Text>
         <Text style={styles.description}>{article.desc}</Text>
         {articleHasAudio ? (
-          <CustomAudioPlayer
+          <CustomTrackPlayer
             url={url}
-            audioPlayerVisible={audioPlayerVisible}
-            showAudioPlayer={showAudioPlayer}
+            trackPlayerVisible={audioPlayerVisible}
+            showTrackPlayer={showAudioPlayer}
           />
-        ) : null}
+        ) : // <CustomAudioPlayer
+        //   url={url}
+        //   audioPlayerVisible={audioPlayerVisible}
+        //   showAudioPlayer={showAudioPlayer}
+        // />
+        null}
       </View>
     </>
   );
