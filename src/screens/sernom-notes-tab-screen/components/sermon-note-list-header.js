@@ -1,8 +1,7 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import CustomAudioPlayer from './../../../custom-components/custom-audio-player';
+
 import FastImage from 'react-native-fast-image';
-import CustomButton from './../../../custom-components/custom-button';
 import CustomTrackPlayer from '../../../custom-components/custom-track-player';
 
 const SermonNoteListHeader = ({article}) => {
@@ -35,12 +34,7 @@ const SermonNoteListHeader = ({article}) => {
             trackPlayerVisible={audioPlayerVisible}
             showTrackPlayer={showAudioPlayer}
           />
-        ) : // <CustomAudioPlayer
-        //   url={url}
-        //   audioPlayerVisible={audioPlayerVisible}
-        //   showAudioPlayer={showAudioPlayer}
-        // />
-        null}
+        ) : null}
       </View>
     </>
   );
