@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/slider": "^3.0.3",
     "@react-navigation/drawer": "^5.12.4",
     "@react-navigation/material-top-tabs": "^6.0.0-next.1",
     "@react-navigation/native": "^5.9.3",
@@ -28,6 +29,7 @@
     "react-native-screens": "^2.18.1",
     "react-native-sound": "^0.11.0",
     "react-native-tab-view": "^3.0.0",
+    "react-native-track-player": "^1.2.7",
     "react-native-vector-icons": "^8.1.0"
   },
   "devDependencies": {
