@@ -2,13 +2,13 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-//import CustomAudioPlayer from '../../../custom-components/custom-audio-player';
-//import CustomButton from './../../../custom-components/custom-button';
+//import CustomTrackPlayer from './../../../custom-components/custom-track-player';
 
 const DevotionalHeader = ({headLine, imageUrl}) => {
   // const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
   // const showAudioPlayer = () => setAudioPlayerVisible(true);
   // const hideAudioPlayer = () => setAudioPlayerVisible(false);
+
   return (
     <View>
       <FastImage
@@ -18,7 +18,7 @@ const DevotionalHeader = ({headLine, imageUrl}) => {
       />
       <Text style={styles.headLine}>{headLine}</Text>
       {/* {audioPlayerVisible ? (
-        <CustomAudioPlayer />
+        <CustomTrackPlayer url={null} trackPlayerVisible={null} showTrackPlayer={null} />
       ) : (
         <CustomButton
           style={styles.audioButton}

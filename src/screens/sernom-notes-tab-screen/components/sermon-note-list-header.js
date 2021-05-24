@@ -10,6 +10,7 @@ const SermonNoteListHeader = ({article}) => {
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
 
   const url = article.audio.url;
+  const audioId = article.audio.id;
   let articleHasAudio = null;
   article.audio.type === 'audio'
     ? (articleHasAudio = true)
@@ -30,6 +31,7 @@ const SermonNoteListHeader = ({article}) => {
         <Text style={styles.description}>{article.desc}</Text>
         {articleHasAudio ? (
           <CustomTrackPlayer
+            trackId={audioId}
             url={url}
             trackPlayerVisible={audioPlayerVisible}
             showTrackPlayer={showAudioPlayer}
