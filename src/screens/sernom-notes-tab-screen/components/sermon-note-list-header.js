@@ -11,6 +11,9 @@ const SermonNoteListHeader = ({article}) => {
 
   const url = article.audio.url;
   const audioId = article.audio.id;
+  const sermonTitle = article.headline;
+  const sermonImage = article.image.url;
+
   let articleHasAudio = null;
   article.audio.type === 'audio'
     ? (articleHasAudio = true)
@@ -20,7 +23,7 @@ const SermonNoteListHeader = ({article}) => {
     <>
       <FastImage
         source={{
-          uri: `${article.image.url}`,
+          uri: `${sermonImage}`,
           priority: FastImage.priority.normal,
         }}
         style={styles.image}
@@ -31,8 +34,10 @@ const SermonNoteListHeader = ({article}) => {
         <Text style={styles.description}>{article.desc}</Text>
         {articleHasAudio ? (
           <CustomTrackPlayer
+            title={sermonTitle}
             trackId={audioId}
             url={url}
+            image={sermonImage}
             trackPlayerVisible={audioPlayerVisible}
             showTrackPlayer={showAudioPlayer}
           />

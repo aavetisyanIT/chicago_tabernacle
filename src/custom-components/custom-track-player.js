@@ -1,16 +1,27 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import TrackPlayer from 'react-native-track-player';
-import {useTrackPlayerProgress} from 'react-native-track-player/lib/hooks';
+import TrackPlayer, {
+  TrackPlayerEvents,
+  STATE_PLAYING,
+} from 'react-native-track-player';
+import {
+  useTrackPlayerProgress,
+  useTrackPlayerEvents,
+} from 'react-native-track-player/lib/hooks';
 import Slider from '@react-native-community/slider';
 
 import CustomButton from './custom-button';
 
+//We get the total duration of the song every 250ms
+//even though the duration doesn’t change – need to be optimized later).
+
 const CustomTrackPlayer = ({
+  title,
   url,
   trackPlayerVisible,
   showTrackPlayer,
   trackId,
+  image,
 }) => {
   //state to manage whether track player is initialized or not
   //The play button stays disabled if the Track Player isn't initialized.
@@ -31,15 +42,22 @@ const CustomTrackPlayer = ({
   //function to initialize the Track Player
   const trackPlayerInit = async url => {
     await TrackPlayer.setupPlayer();
+    //Controlling The Music From Outside
+    TrackPlayer.updateOptions({
+      stopWithApp: true,
+      capabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_JUMP_FORWARD,
+        TrackPlayer.CAPABILITY_JUMP_BACKWARD,
+      ],
+    });
     await TrackPlayer.add({
       id: trackId,
       url: url,
       type: 'default',
-      title: 'My Test Title',
-      // album: 'My Album',
-      // artist: 'Rohan Bhatia',
-      //image for notification bar. Neet to set another one
-      artwork: 'https://picsum.photos/100',
+      title: title,
+      artwork: image,
     });
     return true;
   };
@@ -60,6 +78,14 @@ const CustomTrackPlayer = ({
       setSliderValue(position / duration);
     }
   }, [position, duration]);
+
+  useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], event => {
+    if (event.state === STATE_PLAYING) {
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(false);
+    }
+  });
 
   //start playing the TrackPlayer when the button is pressed
   const onPlayButtonPressed = () => {
