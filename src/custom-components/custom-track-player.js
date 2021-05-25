@@ -9,6 +9,7 @@ import {
   useTrackPlayerEvents,
 } from 'react-native-track-player/lib/hooks';
 import Slider from '@react-native-community/slider';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import CustomButton from './custom-button';
 
@@ -110,27 +111,53 @@ const CustomTrackPlayer = ({
     setIsSeeking(false);
   };
 
+  // let currentTrackTimeSeconds = position;
+  // let minutes = Math.floor(currentTrackTimeSeconds / 60);
+  // let seconds = Math.floor(currentTrackTimeSeconds - minutes * 60);
+
+  // const timeFormat = duration => {
+  //   // Hours, minutes and seconds
+  //   var hrs = ~~(duration / 3600);
+  //   var mins = ~~((duration % 3600) / 60);
+  //   var secs = ~~duration % 60;
+
+  //   // Output like "1:01" or "4:03:59" or "123:03:59"
+  //   var ret = '';
+
+  //   if (hrs > 0) {
+  //     ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
+  //   }
+
+  //   ret += '' + mins + ':' + (secs < 10 ? '0' : '');
+  //   ret += '' + secs;
+  //   return ret;
+  // };
+
+  // console.log(
+  //   `Position: ${timeFormat(position)} Duration: ${timeFormat(duration)}`,
+  // );
+
+  const playIcon = <Icon name="play-arrow" size={30} color="#fff" />;
+  const pauseIcon = <Icon name="pause" size={30} color="#fff" />;
+
   return trackPlayerVisible ? (
-    <>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={onPlayButtonPressed}
-        // works on Button not TouchableOpacity
-        // disabled={!isTrackPlayerInit}
-      >
-        <Text style={styles.trackPlayer}>{isPlaying ? 'Pause' : 'Play'}</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.text}>00:00</Text>
       <Slider
-        style={{width: 400, height: 40}}
+        style={styles.slider}
         minimumValue={0}
         maximumValue={1}
         value={sliderValue}
-        minimumTrackTintColor="#111000"
-        maximumTrackTintColor="#000000"
+        minimumTrackTintColor="black"
+        maximumTrackTintColor="#fff"
         onSlidingStart={slidingStarted}
         onSlidingComplete={slidingCompleted}
       />
-    </>
+      <Text style={styles.text}>00:00</Text>
+      <TouchableOpacity style={styles.buttons} onPress={onPlayButtonPressed}>
+        {isPlaying ? pauseIcon : playIcon}
+      </TouchableOpacity>
+    </View>
   ) : (
     <CustomButton
       style={styles.audioButton}
@@ -146,13 +173,21 @@ const CustomTrackPlayer = ({
 export default CustomTrackPlayer;
 
 const styles = StyleSheet.create({
-  container: {marginTop: 10, backgroundColor: 'grey', justifyContent: 'center'},
-  trackPlayer: {
-    margin: 15,
-    color: '#bc9665',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 20,
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    backgroundColor: '#bc9665',
+    justifyContent: 'center',
   },
+  text: {
+    marginHorizontal: 10,
+    color: '#fff',
+    fontFamily: 'Roboto-Medium',
+    fontSize: 14,
+  },
+  slider: {width: '55%', height: 40},
+  buttons: {marginLeft: 15},
   audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
   audioButtonText: {
     color: '#bc9665',
