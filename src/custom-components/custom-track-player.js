@@ -111,49 +111,49 @@ const CustomTrackPlayer = ({
     setIsSeeking(false);
   };
 
-  // let currentTrackTimeSeconds = position;
-  // let minutes = Math.floor(currentTrackTimeSeconds / 60);
-  // let seconds = Math.floor(currentTrackTimeSeconds - minutes * 60);
+  //Build timestamp
+  const timeFormat = duration => {
+    var date = new Date(duration * 1000);
+    var hh = date.getUTCHours();
+    var mm = date.getUTCMinutes();
+    var ss = date.getSeconds();
 
-  // const timeFormat = duration => {
-  //   // Hours, minutes and seconds
-  //   var hrs = ~~(duration / 3600);
-  //   var mins = ~~((duration % 3600) / 60);
-  //   var secs = ~~duration % 60;
+    // Ensure there are two-digits
+    if (hh < 10) hh = '0' + hh;
+    if (mm < 10) mm = '0' + mm;
+    if (ss < 10) ss = '0' + ss;
 
-  //   // Output like "1:01" or "4:03:59" or "123:03:59"
-  //   var ret = '';
-
-  //   if (hrs > 0) {
-  //     ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
-  //   }
-
-  //   ret += '' + mins + ':' + (secs < 10 ? '0' : '');
-  //   ret += '' + secs;
-  //   return ret;
-  // };
-
-  // console.log(
-  //   `Position: ${timeFormat(position)} Duration: ${timeFormat(duration)}`,
-  // );
+    let timeStamp = '';
+    if (hh !== 0) {
+      // Format HH:MM:SS
+      timeStamp = hh + ':' + mm + ':' + ss;
+    }
+    // Format MM:SS
+    timeStamp = mm + ':' + ss;
+    return timeStamp;
+  };
 
   const playIcon = <Icon name="play-arrow" size={30} color="#fff" />;
   const pauseIcon = <Icon name="pause" size={30} color="#fff" />;
 
+  const timeStamp = timeFormat(position);
+  const trackTime = timeFormat(duration);
+
   return trackPlayerVisible ? (
     <View style={styles.container}>
-      <Text style={styles.text}>00:00</Text>
+      <Text style={styles.text}>{timeStamp}</Text>
       <Slider
         style={styles.slider}
         minimumValue={0}
         maximumValue={1}
         value={sliderValue}
         minimumTrackTintColor="black"
-        maximumTrackTintColor="#fff"
+        maximumTrackTintColor="white"
+        thumbTintColor="black"
         onSlidingStart={slidingStarted}
         onSlidingComplete={slidingCompleted}
       />
-      <Text style={styles.text}>00:00</Text>
+      <Text style={styles.text}>{trackTime}</Text>
       <TouchableOpacity style={styles.buttons} onPress={onPlayButtonPressed}>
         {isPlaying ? pauseIcon : playIcon}
       </TouchableOpacity>
@@ -176,9 +176,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 10,
     backgroundColor: '#bc9665',
-    justifyContent: 'center',
+    height: 60,
   },
   text: {
     marginHorizontal: 10,
@@ -186,8 +187,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     fontSize: 14,
   },
-  slider: {width: '55%', height: 40},
-  buttons: {marginLeft: 15},
+  slider: {width: '55%', height: 5, backgroundColor: '#bc9665'},
+  buttons: {marginLeft: 0},
   audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
   audioButtonText: {
     color: '#bc9665',
