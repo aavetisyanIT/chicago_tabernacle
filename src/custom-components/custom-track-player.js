@@ -12,6 +12,7 @@ import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import CustomButton from './custom-button';
+import timeFormat from './../utils/trackPlayerUtils';
 
 //We get the total duration of the song every 250ms
 //even though the duration doesn’t change – need to be optimized later).
@@ -99,6 +100,11 @@ const CustomTrackPlayer = ({
     }
   };
 
+  //Trackplayer starts player when "AUDIO PLAYER" is clicked
+  useEffect(() => {
+    if (trackPlayerVisible) onPlayButtonPressed();
+  }, [trackPlayerVisible]);
+
   //this function is called when the user starts to slide the seekbar
   const slidingStarted = () => {
     setIsSeeking(true);
@@ -109,28 +115,6 @@ const CustomTrackPlayer = ({
     await TrackPlayer.seekTo(value * duration);
     setSliderValue(value);
     setIsSeeking(false);
-  };
-
-  //Build timestamp
-  const timeFormat = duration => {
-    var date = new Date(duration * 1000);
-    var hh = date.getUTCHours();
-    var mm = date.getUTCMinutes();
-    var ss = date.getSeconds();
-
-    // Ensure there are two-digits
-    if (hh < 10) hh = '0' + hh;
-    if (mm < 10) mm = '0' + mm;
-    if (ss < 10) ss = '0' + ss;
-
-    let timeStamp = '';
-    if (hh !== 0) {
-      // Format HH:MM:SS
-      timeStamp = hh + ':' + mm + ':' + ss;
-    }
-    // Format MM:SS
-    timeStamp = mm + ':' + ss;
-    return timeStamp;
   };
 
   const playIcon = <Icon name="play-arrow" size={30} color="#fff" />;
