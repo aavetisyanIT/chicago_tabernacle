@@ -52,6 +52,11 @@ const CustomTrackPlayer = ({
         TrackPlayer.CAPABILITY_PAUSE,
         TrackPlayer.CAPABILITY_JUMP_FORWARD,
         TrackPlayer.CAPABILITY_JUMP_BACKWARD,
+        TrackPlayer.CAPABILITY_STOP,
+      ],
+      compactCapabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
       ],
     });
     await TrackPlayer.add({
@@ -64,14 +69,14 @@ const CustomTrackPlayer = ({
     return true;
   };
 
-  //initialize the TrackPlayer when the App component is mounted
+  //initialize the TrackPlayer when "AUDIO PLAYER" is clicked
   useEffect(() => {
     const startPlayer = async () => {
       let isInit = await trackPlayerInit(url);
       setIsTrackPlayerInit(isInit);
     };
-    startPlayer();
-  }, []);
+    if (trackPlayerVisible) startPlayer();
+  }, [trackPlayerVisible]);
 
   //this hook updates the value of the slider whenever
   //the current position of the song changes
@@ -99,11 +104,6 @@ const CustomTrackPlayer = ({
       setIsPlaying(false);
     }
   };
-
-  //Trackplayer starts player when "AUDIO PLAYER" is clicked
-  useEffect(() => {
-    if (trackPlayerVisible) onPlayButtonPressed();
-  }, [trackPlayerVisible]);
 
   //this function is called when the user starts to slide the seekbar
   const slidingStarted = () => {
