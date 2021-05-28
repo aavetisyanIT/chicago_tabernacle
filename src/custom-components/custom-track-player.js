@@ -33,6 +33,10 @@ const CustomTrackPlayer = ({
 
   const [isPlaying, setIsPlaying] = React.useState(false);
 
+  const [timeStamp, setTimeStamp] = React.useState('00:00');
+
+  const [trackTime, setTrackTime] = React.useState('00:00');
+
   //the value of the slider should be between 0 and 1
   const [sliderValue, setSliderValue] = React.useState(0);
 
@@ -42,9 +46,6 @@ const CustomTrackPlayer = ({
   //useTrackPlayerProgress is a hook which provides the current position
   //and duration of the track player. These values will update every 250ms
   const {position, duration} = useTrackPlayerProgress(250);
-
-  let timeStamp = timeFormat(position);
-  const trackTime = timeFormat(duration);
 
   //function to initialize the Track Player
   const trackPlayerInit = async url => {
@@ -81,7 +82,6 @@ const CustomTrackPlayer = ({
       let isInit = await trackPlayerInit(url);
       setIsTrackPlayerInit(isInit);
     };
-
     if (trackPlayerVisible) startPlayer();
   }, [trackPlayerVisible]);
 
@@ -91,6 +91,8 @@ const CustomTrackPlayer = ({
     if (!isSeeking && position && duration) {
       setSliderValue(position / duration);
     }
+    setTimeStamp(timeFormat(position));
+    setTrackTime(timeFormat(duration));
   }, [position, duration]);
 
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], event => {
@@ -98,20 +100,11 @@ const CustomTrackPlayer = ({
       setIsPlaying(true);
     } else if (event.state === STATE_NONE) {
       hideTrackPlayer();
+      setTimeStamp('00:00');
+      setSliderValue(0);
     } else {
       setIsPlaying(false);
     }
-
-    // console.log(event.state);
-    // console.log(TrackPlayer);
-    // function getKeyByValue(object, value) {
-    //   for (var prop in object) {
-    //     if (object.hasOwnProperty(prop)) {
-    //       if (object[prop] === value) return prop;
-    //     }
-    //   }
-    // }
-    // console.log(getKeyByValue(TrackPlayer, event.state) === 'STATE_NONE');
   });
 
   //start playing the TrackPlayer when the button is pressed
@@ -140,22 +133,9 @@ const CustomTrackPlayer = ({
   const playIcon = <Icon name="play-arrow" size={30} color="#fff" />;
   const pauseIcon = <Icon name="pause" size={30} color="#fff" />;
 
-  const handleAudioPlayerButtonClick = async () => {
-    // const state = await TrackPlayer.getState();
-    showTrackPlayer();
-    //when "Audio Player" button clicked for a first time
-    // if (state === TrackPlayer.STATE_NONE) {
-    //   console.log('State None');
-    // }
-    // //When "Audio Player" button clicked after player was stopped
-    // if (state === TrackPlayer.STATE_STOPPED) {
-    //   console.log('State Stopped');
-    // }
-  };
-
   return trackPlayerVisible ? (
     <View style={styles.container}>
-      <Text style={styles.text}>{timeStamp}</Text>
+      <Text style={styles.text}>{timeStamp || '00:00'}</Text>
       <Slider
         style={styles.slider}
         minimumValue={0}
@@ -179,7 +159,7 @@ const CustomTrackPlayer = ({
       textStyle={styles.audioButtonText}
       icon="volume-high-outline"
       iconSize={20}
-      onPress={handleAudioPlayerButtonClick}
+      onPress={showTrackPlayer}
     />
   );
 };
