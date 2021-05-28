@@ -40,6 +40,7 @@ const SermonNoteListHeader = ({article}) => {
             image={sermonImage}
             trackPlayerVisible={audioPlayerVisible}
             showTrackPlayer={showAudioPlayer}
+            hideTrackPlayer={hideAudioPlayer}
           />
         ) : null}
       </View>

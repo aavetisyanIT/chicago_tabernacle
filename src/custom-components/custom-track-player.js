@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import TrackPlayer, {
   TrackPlayerEvents,
   STATE_PLAYING,
+  STATE_NONE,
 } from 'react-native-track-player';
 import {
   useTrackPlayerProgress,
@@ -22,6 +23,7 @@ const CustomTrackPlayer = ({
   url,
   trackPlayerVisible,
   showTrackPlayer,
+  hideTrackPlayer,
   trackId,
   image,
 }) => {
@@ -41,6 +43,9 @@ const CustomTrackPlayer = ({
   //and duration of the track player. These values will update every 250ms
   const {position, duration} = useTrackPlayerProgress(250);
 
+  let timeStamp = timeFormat(position);
+  const trackTime = timeFormat(duration);
+
   //function to initialize the Track Player
   const trackPlayerInit = async url => {
     await TrackPlayer.setupPlayer();
@@ -57,6 +62,7 @@ const CustomTrackPlayer = ({
       compactCapabilities: [
         TrackPlayer.CAPABILITY_PLAY,
         TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_STOP,
       ],
     });
     await TrackPlayer.add({
@@ -75,6 +81,7 @@ const CustomTrackPlayer = ({
       let isInit = await trackPlayerInit(url);
       setIsTrackPlayerInit(isInit);
     };
+
     if (trackPlayerVisible) startPlayer();
   }, [trackPlayerVisible]);
 
@@ -89,9 +96,22 @@ const CustomTrackPlayer = ({
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], event => {
     if (event.state === STATE_PLAYING) {
       setIsPlaying(true);
+    } else if (event.state === STATE_NONE) {
+      hideTrackPlayer();
     } else {
       setIsPlaying(false);
     }
+
+    // console.log(event.state);
+    // console.log(TrackPlayer);
+    // function getKeyByValue(object, value) {
+    //   for (var prop in object) {
+    //     if (object.hasOwnProperty(prop)) {
+    //       if (object[prop] === value) return prop;
+    //     }
+    //   }
+    // }
+    // console.log(getKeyByValue(TrackPlayer, event.state) === 'STATE_NONE');
   });
 
   //start playing the TrackPlayer when the button is pressed
@@ -120,8 +140,18 @@ const CustomTrackPlayer = ({
   const playIcon = <Icon name="play-arrow" size={30} color="#fff" />;
   const pauseIcon = <Icon name="pause" size={30} color="#fff" />;
 
-  const timeStamp = timeFormat(position);
-  const trackTime = timeFormat(duration);
+  const handleAudioPlayerButtonClick = async () => {
+    // const state = await TrackPlayer.getState();
+    showTrackPlayer();
+    //when "Audio Player" button clicked for a first time
+    // if (state === TrackPlayer.STATE_NONE) {
+    //   console.log('State None');
+    // }
+    // //When "Audio Player" button clicked after player was stopped
+    // if (state === TrackPlayer.STATE_STOPPED) {
+    //   console.log('State Stopped');
+    // }
+  };
 
   return trackPlayerVisible ? (
     <View style={styles.container}>
@@ -149,7 +179,7 @@ const CustomTrackPlayer = ({
       textStyle={styles.audioButtonText}
       icon="volume-high-outline"
       iconSize={20}
-      onPress={showTrackPlayer}
+      onPress={handleAudioPlayerButtonClick}
     />
   );
 };

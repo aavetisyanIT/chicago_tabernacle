@@ -1,8 +1,8 @@
 import TrackPlayer from 'react-native-track-player';
 
-module.exports = async function () {
+module.exports = async () => {
   TrackPlayer.addEventListener('remote-stop', () => {
-    TrackPlayer.destroy();
+    TrackPlayer.stop();
   });
 
   TrackPlayer.addEventListener('remote-play', () => {
