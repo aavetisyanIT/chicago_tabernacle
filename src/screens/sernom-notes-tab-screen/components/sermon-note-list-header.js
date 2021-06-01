@@ -3,14 +3,17 @@ import {Text, View, StyleSheet} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import CustomTrackPlayer from '../../../custom-components/custom-track-player';
+import CustomVideoPlayer from './../../../custom-components/custom-video-player';
 
 const SermonNoteListHeader = ({article}) => {
   const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
   const showAudioPlayer = () => setAudioPlayerVisible(true);
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
 
-  const url = article.audio.url;
+  const audioUrl = article.audio.url;
   const audioId = article.audio.id;
+  const videoUrl = article.video.url;
+  const videoId = article.video.id;
   const sermonTitle = article.headline;
   const sermonImage = article.image.url;
 
@@ -21,14 +24,15 @@ const SermonNoteListHeader = ({article}) => {
 
   return (
     <>
-      <FastImage
+      {/* <FastImage
         source={{
           uri: `${sermonImage}`,
           priority: FastImage.priority.normal,
         }}
         style={styles.image}
         resizeMode={FastImage.resizeMode.contain}
-      />
+      /> */}
+      <CustomVideoPlayer videoUrl={videoUrl} imageUrl={sermonImage} />
       <View style={styles.headerContent}>
         <Text>{article.headline}</Text>
         <Text style={styles.description}>{article.desc}</Text>
@@ -36,7 +40,7 @@ const SermonNoteListHeader = ({article}) => {
           <CustomTrackPlayer
             title={sermonTitle}
             trackId={audioId}
-            url={url}
+            url={audioUrl}
             image={sermonImage}
             trackPlayerVisible={audioPlayerVisible}
             showTrackPlayer={showAudioPlayer}
