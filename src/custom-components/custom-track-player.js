@@ -98,7 +98,6 @@ const CustomTrackPlayer = ({
   //Unmount track player when leaving a sceen
   useEffect(() => {
     return () => {
-      console.log('Unmounting');
       TrackPlayer.destroy();
     };
   }, []);
