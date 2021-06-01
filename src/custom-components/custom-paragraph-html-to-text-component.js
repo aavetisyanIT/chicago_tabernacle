@@ -22,8 +22,10 @@ const CustomParagraphHtmlToText = ({paragraphHtml}) => {
   return (
     <View>
       <HTML
+        //fix "react-native-render-html Please provide the html or uri prop" warning
+        //by loading empty p tag
         source={{
-          html: paragraphHtml,
+          html: paragraphHtml || '<p></p>',
         }}
         contentWidth={contentWidth}
         renderers={renderers}
