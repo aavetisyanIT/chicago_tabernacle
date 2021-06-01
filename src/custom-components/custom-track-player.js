@@ -95,6 +95,14 @@ const CustomTrackPlayer = ({
     setTrackTime(timeFormat(duration));
   }, [position, duration]);
 
+  //Unmount track player when leaving a sceen
+  useEffect(() => {
+    return () => {
+      console.log('Unmounting');
+      TrackPlayer.destroy();
+    };
+  }, []);
+
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], event => {
     if (event.state === STATE_PLAYING) {
       setIsPlaying(true);
