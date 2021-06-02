@@ -13,10 +13,10 @@ import Orientation from 'react-native-orientation';
 
 import timeFormat from './../utils/trackPlayerUtils';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
-  let Player = null;
+  let videoPlayer = null;
   let overlayTimer = null;
   let lastTap = 0;
   let timer = 0;
@@ -32,18 +32,18 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const handleEnd = () => setPaused(true);
 
   const handleSlide = slide => {
-    Player.seek(slide * duration);
+    videoPlayer.seek(slide * duration);
     clearTimeout(overlayTimer);
     overlayTimer = setTimeout(() => setOverlay(false), 3000);
   };
 
   const goBackward_10 = () => {
-    Player.seek(currentTime - 10);
+    videoPlayer.seek(currentTime - 10);
     clearTimeout(overlayTimer);
     overlayTimer = setTimeout(() => setOverlay(false), 3000);
   };
   const goForward_10 = () => {
-    Player.seek(currentTime + 10);
+    videoPlayer.seek(currentTime + 10);
     clearTimeout(overlayTimer);
     overlayTimer = setTimeout(() => setOverlay(false), 3000);
   };
@@ -74,18 +74,18 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const hiddenJumpBackward = () => {
     handleDoubleTap(
       () => {
-        Player.seek(currentTime - 10);
+        videoPlayer.seek(currentTime - 10);
       },
       () => {
         setOverlay(true);
-        overlayTime = setTimeout(() => setOverlay(false), 3000);
+        overlayTimer = setTimeout(() => setOverlay(false), 3000);
       },
     );
   };
   const hiddenJumpFrontward = () => {
     handleDoubleTap(
       () => {
-        Player.seek(currentTime + 10);
+        videoPlayer.seek(currentTime + 10);
       },
       () => {
         setOverlay(true);
@@ -104,12 +104,13 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
           paused={!paused}
           style={{...StyleSheet.absoluteFill}}
           source={{uri: videoUrl}}
-          resizeMode="cover"
+          resizeMode="none"
           fullscreen={fullScreen}
           poster={imageUrl}
-          ref={ref => (Player = ref)}
+          ref={ref => (videoPlayer = ref)}
           onLoad={handleLoad}
           onProgress={handleProgress}
+          progressUpdateInterval={250.0}
           // onVideoEnd = {null}
         />
         <View style={styles.overlay}>
@@ -143,7 +144,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
                     {timeFormat(currentTime)}{' '}
                     <Icon
                       onPress={handleFullScreen}
-                      size={20}
+                      size={25}
                       name={fullScreen ? 'arrow-collapse' : 'arrow-expand'}
                     />
                   </Text>

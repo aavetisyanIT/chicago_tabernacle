@@ -13,7 +13,6 @@ const SermonNoteListHeader = ({article}) => {
   const audioUrl = article.audio.url;
   const audioId = article.audio.id;
   const videoUrl = article.video.url;
-  const videoId = article.video.id;
   const sermonTitle = article.headline;
   const sermonImage = article.image.url;
 
@@ -24,15 +23,19 @@ const SermonNoteListHeader = ({article}) => {
 
   return (
     <>
-      {/* <FastImage
-        source={{
-          uri: `${sermonImage}`,
-          priority: FastImage.priority.normal,
-        }}
-        style={styles.image}
-        resizeMode={FastImage.resizeMode.contain}
-      /> */}
-      <CustomVideoPlayer videoUrl={videoUrl} imageUrl={sermonImage} />
+      {videoUrl ? (
+        <CustomVideoPlayer videoUrl={videoUrl} imageUrl={sermonImage} />
+      ) : (
+        <FastImage
+          source={{
+            uri: `${sermonImage}`,
+            priority: FastImage.priority.normal,
+          }}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+      )}
+
       <View style={styles.headerContent}>
         <Text>{article.headline}</Text>
         <Text style={styles.description}>{article.desc}</Text>
