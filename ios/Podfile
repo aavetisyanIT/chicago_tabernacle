@@ -14,8 +14,6 @@ target 'chicago_tabernacle' do
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 
-  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
-
   target 'chicago_tabernacleTests' do
     inherit! :complete
     # Pods for testing
