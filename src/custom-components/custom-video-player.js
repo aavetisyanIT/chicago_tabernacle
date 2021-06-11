@@ -15,7 +15,7 @@ import timeFormat from './../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
-  let width = Dimensions.get('window').width;
+  let {width, height} = Dimensions.get('window');
 
   let videoPlayer = null;
   let overlayTimer = null;
@@ -101,7 +101,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
     <View
       style={
         fullScreen
-          ? {...styles.fullscreenContainer, width, height: width * 0.5625}
+          ? {
+              ...styles.fullscreenContainer,
+              width: '100%',
+              height,
+            }
           : styles.container
       }>
       <View
@@ -187,7 +191,7 @@ export default CustomVideoPlayer;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
-  fullscreenContainer: {position: 'relative', width: '100%', height: '100%'},
+  fullscreenContainer: {flex: 1},
   videoPlayerContainer: {
     backgroundColor: 'black',
   },

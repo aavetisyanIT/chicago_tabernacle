@@ -10,7 +10,7 @@ const {Navigator, Screen} = createMaterialTopTabNavigator();
 
 const TopTabsSermonStack = () => {
   return (
-    <Navigator tabBar={props => <SermonTabBar {...props} />}>
+    <Navigator tabBar={props => (true ? null : <SermonTabBar {...props} />)}>
       <Screen
         name="SERMON NOTES"
         component={SermonNotesTab}
