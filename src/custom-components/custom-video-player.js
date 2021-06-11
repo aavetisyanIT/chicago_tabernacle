@@ -12,11 +12,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Orientation from 'react-native-orientation';
 
 import timeFormat from './../utils/trackPlayerUtils';
-import FullScreen from '../utils/FullScreen';
-
-const {width} = Dimensions.get('window');
+import FullScreen from '../utils/fullScreen';
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
+  let width = Dimensions.get('window').width;
+
   let videoPlayer = null;
   let overlayTimer = null;
   let lastTap = 0;
@@ -66,11 +66,12 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const handleFullScreen = () => {
     if (fullScreen) {
       Orientation.lockToPortrait();
+      FullScreen.enable();
     } else {
       Orientation.lockToLandscape();
+      FullScreen.disable();
     }
     setFullScreen(currentFullScreen => !currentFullScreen);
-    FullScreen.enable();
   };
 
   const hiddenJumpBackward = () => {
@@ -97,10 +98,17 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={
+        fullScreen
+          ? {...styles.fullscreenContainer, width, height: width * 0.5625}
+          : styles.container
+      }>
       <View
         style={
-          fullScreen ? styles.fullScreenMode : styles.videoPlayerContainer
+          fullScreen
+            ? styles.fullScreenMode
+            : {...styles.videoPlayerContainer, width, height: width * 0.5625}
         }>
         <Video
           paused={!paused}
@@ -179,14 +187,11 @@ export default CustomVideoPlayer;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  fullscreenContainer: {position: 'relative', width: '100%', height: '100%'},
   videoPlayerContainer: {
-    width,
-    height: width * 0.5625,
     backgroundColor: 'black',
   },
   fullScreenMode: {
-    width,
-    height: width * 0.5625,
     backgroundColor: 'black',
     ...StyleSheet.absoluteFill,
     elevation: 1,
