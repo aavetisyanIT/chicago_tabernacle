@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Orientation from 'react-native-orientation';
 
 import timeFormat from './../utils/trackPlayerUtils';
+import FullScreen from '../utils/FullScreen';
 
 const {width} = Dimensions.get('window');
 
@@ -69,6 +70,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       Orientation.lockToLandscape();
     }
     setFullScreen(currentFullScreen => !currentFullScreen);
+    FullScreen.enable();
   };
 
   const hiddenJumpBackward = () => {
@@ -104,7 +106,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
           paused={!paused}
           style={{...StyleSheet.absoluteFill}}
           source={{uri: videoUrl}}
-          resizeMode="none"
+          resizeMode="contain"
           fullscreen={fullScreen}
           poster={imageUrl}
           ref={ref => (videoPlayer = ref)}
@@ -118,7 +120,6 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
             //shade effect
             <View style={{...styles.overlaySet, backgroundColor: '#0006'}}>
               {/* Controllers */}
-              {/* backward is not working */}
               <Icon
                 name="skip-backward"
                 style={styles.icon}
