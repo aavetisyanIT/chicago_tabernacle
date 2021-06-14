@@ -1,12 +1,8 @@
-import React, {useReducer, createContext} from 'react'
-
-export const AppContext = createContext();
-
-const initialState = {
+export const initialState = {
   isFullScreenVideo = false,
 }
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case "FULL_SCREEN_VIDEO":
       return {
