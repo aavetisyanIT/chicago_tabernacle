@@ -4,8 +4,12 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import SermonNote from './components/sermon-note';
 import SermonNoteListHeader from './components/sermon-note-list-header';
 import CustomAddNoteModal from './../../custom-components/custom-add-note-modal';
+import {AppContext} from './../../context/app.context';
 
 const SermonNotesTab = ({route}) => {
+  const [state] = React.useContext(AppContext);
+  const {isFullScreenVideo} = state;
+
   const {article} = route.params;
   const PARAGRAPHDATA = article.paragraphs;
 
@@ -35,7 +39,7 @@ const SermonNotesTab = ({route}) => {
         ListHeaderComponent={<SermonNoteListHeader article={article} />}
         data={PARAGRAPHDATA}
         renderItem={renderItem}
-        scrollEnabled={true}
+        scrollEnabled={isFullScreenVideo ? false : true}
         keyExtractor={item => item.id}
       />
     </View>

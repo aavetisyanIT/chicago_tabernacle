@@ -5,12 +5,19 @@ import DevotionalTab from '../screens/devotional-tab-screen/devotional.tab.scree
 import SermonNotesTab from './../screens/sernom-notes-tab-screen/sermon-notes.tab.screen';
 import SermonTabBar from './components/sermon-tab-bar.component';
 import LazyPlaceholder from './components/lazy-placeholder.component';
+import {AppContext} from './../context/app.context';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 
 const TopTabsSermonStack = () => {
+  const [state] = React.useContext(AppContext);
+  const {isFullScreenVideo} = state;
   return (
-    <Navigator tabBar={props => (!false ? null : <SermonTabBar {...props} />)}>
+    //hide header when video player is fullscreen mode
+    <Navigator
+      tabBar={props =>
+        isFullScreenVideo ? null : <SermonTabBar {...props} />
+      }>
       <Screen
         name="SERMON NOTES"
         component={SermonNotesTab}

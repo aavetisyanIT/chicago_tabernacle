@@ -8,10 +8,14 @@ import TopTabsStack from './TopTabsStack';
 import SideMenuButton from './components/side-menu-button';
 import TopTabsSermonStack from './TopTabsSermonStack';
 import PrayerRequestScreen from './../screens/prayer-request-screen/prayer-request.screen';
+import {AppContext} from './../context/app.context';
 
 const {Navigator, Screen} = createStackNavigator();
 
 const DrawerStack = ({route}) => {
+  const [state] = React.useContext(AppContext);
+  const {isFullScreenVideo} = state;
+
   const getHeaderTitle = route => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
     switch (routeName) {
@@ -59,7 +63,8 @@ const DrawerStack = ({route}) => {
         name="TopTabsSermonStack"
         component={TopTabsSermonStack}
         options={{
-          headerShown: false ? true : false,
+          //hide header when video player is fullscreen mode
+          headerShown: isFullScreenVideo ? false : true,
           title: getHeaderTitle(route),
           headerLeft: () => <SideMenuButton />,
         }}
