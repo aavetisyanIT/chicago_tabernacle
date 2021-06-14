@@ -35,7 +35,7 @@ const SermonNotesTab = ({route}) => {
         ListHeaderComponent={<SermonNoteListHeader article={article} />}
         data={PARAGRAPHDATA}
         renderItem={renderItem}
-        scrollEnabled={false}
+        scrollEnabled={true}
         keyExtractor={item => item.id}
       />
     </View>

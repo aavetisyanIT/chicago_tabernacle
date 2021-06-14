@@ -59,7 +59,7 @@ const DrawerStack = ({route}) => {
         name="TopTabsSermonStack"
         component={TopTabsSermonStack}
         options={{
-          headerShown: false,
+          headerShown: false ? true : false,
           title: getHeaderTitle(route),
           headerLeft: () => <SideMenuButton />,
         }}
