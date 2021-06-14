@@ -14,6 +14,7 @@ import Orientation from 'react-native-orientation';
 import timeFormat from './../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
 import {AppContext} from './../context/app.context';
+import {useEffect} from 'react/cjs/react.development';
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   let {width, height} = Dimensions.get('window');
@@ -67,13 +68,13 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 
   const handleFullScreen = () => {
     if (fullScreen) {
-      Orientation.lockToPortrait();
-      FullScreen.enable();
       dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
+      FullScreen.enable();
+      Orientation.lockToPortrait();
     } else {
-      Orientation.lockToLandscape();
-      FullScreen.disable();
       dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
+      FullScreen.disable();
+      Orientation.lockToLandscape();
     }
     setFullScreen(currentFullScreen => !currentFullScreen);
   };
@@ -100,6 +101,12 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       },
     );
   };
+  useEffect(() => {
+    return () => {
+      setCurrentTime(0);
+      setDuration(0.1);
+    };
+  }, []);
 
   return (
     <View
@@ -194,15 +201,14 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 export default CustomVideoPlayer;
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, marginTop: 9},
   fullscreenContainer: {flex: 1},
   videoPlayerContainer: {
     backgroundColor: 'black',
   },
   fullScreenMode: {
-    backgroundColor: 'black',
     ...StyleSheet.absoluteFill,
-    elevation: 1,
+    margin: -1,
   },
   overlay: {...StyleSheet.absoluteFill},
   overlaySet: {

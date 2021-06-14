@@ -24,12 +24,14 @@ const TopTabsSermonStack = () => {
         lazy
         lazyPlaceholder={() => <LazyPlaceholder />}
       />
-      <Screen
-        name="DEVOTIONAL"
-        component={DevotionalTab}
-        lazy
-        lazyPlaceholder={() => <LazyPlaceholder />}
-      />
+      {isFullScreenVideo ? null : (
+        <Screen
+          name="DEVOTIONAL"
+          component={DevotionalTab}
+          lazy
+          lazyPlaceholder={() => <LazyPlaceholder />}
+        />
+      )}
     </Navigator>
   );
 };
