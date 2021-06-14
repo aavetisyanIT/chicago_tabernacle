@@ -6,12 +6,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {navigationRef} from './navigation/RootNavigation';
 import RootStack from './navigation/RootStack';
 import {reactNativePaperTheme} from './config/react-native-paper-theme';
+import {AppContextProvider} from './context/app.context.provider';
 
 export default function App() {
   return (
     <NavigationContainer ref={navigationRef}>
       <PaperProvider theme={reactNativePaperTheme}>
-        <RootStack />
+        <AppContextProvider>
+          <RootStack />
+        </AppContextProvider>
       </PaperProvider>
     </NavigationContainer>
   );

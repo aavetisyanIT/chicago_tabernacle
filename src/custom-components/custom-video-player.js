@@ -13,6 +13,7 @@ import Orientation from 'react-native-orientation';
 
 import timeFormat from './../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
+import {AppContext} from './../context/app.context';
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   let {width, height} = Dimensions.get('window');
@@ -22,6 +23,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   let lastTap = 0;
   let timer = 0;
 
+  const [state, dispatch] = React.useContext(AppContext);
   const [paused, setPaused] = React.useState(false);
   const [overlay, setOverlay] = React.useState(false);
   const [fullScreen, setFullScreen] = React.useState(false);
@@ -67,9 +69,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
     if (fullScreen) {
       Orientation.lockToPortrait();
       FullScreen.enable();
+      dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
     } else {
       Orientation.lockToLandscape();
       FullScreen.disable();
+      dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
     }
     setFullScreen(currentFullScreen => !currentFullScreen);
   };

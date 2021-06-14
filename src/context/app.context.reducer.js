@@ -1,18 +1,18 @@
 export const initialState = {
-  isFullScreenVideo = false,
-}
+  isFullScreenVideo: false,
+};
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case "FULL_SCREEN_VIDEO":
+    case 'FULL_SCREEN_VIDEO':
       return {
         isFullScreenVideo: action.payload,
       };
-      case "HORIZONTAL_VIEW_VIDEO": 
+    case 'HORIZONTAL_VIEW_VIDEO':
       return {
         isFullScreenVideo: action.payload,
       };
-      default: 
+    default:
       state;
   }
-}
+};
