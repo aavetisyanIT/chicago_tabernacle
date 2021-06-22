@@ -14,7 +14,6 @@ import Orientation from 'react-native-orientation';
 import timeFormat from './../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
 import {AppContext} from './../context/app.context';
-import {useEffect} from 'react/cjs/react.development';
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   let {width, height} = Dimensions.get('window');
@@ -26,7 +25,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 
   const [state, dispatch] = React.useContext(AppContext);
   const [paused, setPaused] = React.useState(false);
-  const [overlay, setOverlay] = React.useState(false);
+  const [overlay, setOverlay] = React.useState(true);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [duration, setDuration] = React.useState(0.1);
   const [currentTime, setCurrentTime] = React.useState(0);
@@ -38,18 +37,24 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const handleSlide = slide => {
     videoPlayer.seek(slide * duration);
     clearTimeout(overlayTimer);
-    overlayTimer = setTimeout(() => setOverlay(false), 3000);
+    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
+  };
+
+  const handlePlayPausePress = () => {
+    setPaused(currentPaused => !currentPaused);
+    clearTimeout(overlayTimer);
+    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
   };
 
   const goBackward_10 = () => {
     videoPlayer.seek(currentTime - 10);
     clearTimeout(overlayTimer);
-    overlayTimer = setTimeout(() => setOverlay(false), 3000);
+    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
   };
   const goForward_10 = () => {
     videoPlayer.seek(currentTime + 10);
     clearTimeout(overlayTimer);
-    overlayTimer = setTimeout(() => setOverlay(false), 3000);
+    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
   };
 
   const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
@@ -85,8 +90,8 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
         videoPlayer.seek(currentTime - 10);
       },
       () => {
-        setOverlay(true);
-        overlayTimer = setTimeout(() => setOverlay(false), 3000);
+        setOverlay(overlay => !overlay);
+        overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
       },
     );
   };
@@ -96,17 +101,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
         videoPlayer.seek(currentTime + 10);
       },
       () => {
-        setOverlay(true);
-        overlayTimer = setTimeout(() => setOverlay(false), 3000);
+        setOverlay(overlay => !overlay);
+        overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
       },
     );
   };
-  useEffect(() => {
-    return () => {
-      setCurrentTime(0);
-      setDuration(0.1);
-    };
-  }, []);
 
   return (
     <View
@@ -151,7 +150,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
               <Icon
                 name={paused ? 'pause' : 'play'}
                 style={styles.icon}
-                onPress={() => setPaused(currentPaused => !currentPaused)}
+                onPress={handlePlayPausePress}
               />
               {/* forward is not working */}
               <Icon
