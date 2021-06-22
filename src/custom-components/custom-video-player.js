@@ -19,42 +19,47 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   let {width, height} = Dimensions.get('window');
 
   let videoPlayer = null;
-  let overlayTimer = null;
+  let overlayTimerId = null;
   let lastTap = 0;
   let timer = 0;
 
   const [state, dispatch] = React.useContext(AppContext);
-  const [paused, setPaused] = React.useState(false);
+  const [paused, setPaused] = React.useState(true);
+  const [overlayToggling, setOverlayToggling] = React.useState(false);
   const [overlay, setOverlay] = React.useState(true);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [duration, setDuration] = React.useState(0.1);
   const [currentTime, setCurrentTime] = React.useState(0);
 
+  const toggleOverlay = () => {
+    clearTimeout(overlayTimerId);
+    overlayTimerId = setTimeout(() => setOverlay(overlay => !overlay), 4000);
+  };
+
   const handleLoad = ({duration}) => setDuration(duration);
   const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
-  const handleEnd = () => setPaused(true);
+  const handleEnd = () => {
+    setPaused(true);
+    toggleOverlay();
+  };
 
   const handleSlide = slide => {
     videoPlayer.seek(slide * duration);
-    clearTimeout(overlayTimer);
-    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
+    toggleOverlay();
   };
 
   const handlePlayPausePress = () => {
     setPaused(currentPaused => !currentPaused);
-    clearTimeout(overlayTimer);
-    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
+    toggleOverlay();
   };
 
-  const goBackward_10 = () => {
+  const handleSkipBackward_10 = () => {
     videoPlayer.seek(currentTime - 10);
-    clearTimeout(overlayTimer);
-    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
+    toggleOverlay();
   };
-  const goForward_10 = () => {
+  const handleSkipForward_10 = () => {
     videoPlayer.seek(currentTime + 10);
-    clearTimeout(overlayTimer);
-    overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
+    toggleOverlay();
   };
 
   const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
@@ -91,7 +96,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       },
       () => {
         setOverlay(overlay => !overlay);
-        overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
+        clearTimeout(overlayTimerId);
+        overlayTimerId = setTimeout(
+          () => setOverlay(overlay => !overlay),
+          4000,
+        );
       },
     );
   };
@@ -102,7 +111,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       },
       () => {
         setOverlay(overlay => !overlay);
-        overlayTimer = setTimeout(() => setOverlay(overlay => !overlay), 3000);
+        clearTimeout(overlayTimerId);
+        overlayTimerId = setTimeout(
+          () => setOverlay(overlay => !overlay),
+          4000,
+        );
       },
     );
   };
@@ -125,7 +138,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
             : {...styles.videoPlayerContainer, width, height: width * 0.5625}
         }>
         <Video
-          paused={!paused}
+          paused={paused}
           style={{...StyleSheet.absoluteFill}}
           source={{uri: videoUrl}}
           resizeMode="contain"
@@ -135,7 +148,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
           onLoad={handleLoad}
           onProgress={handleProgress}
           progressUpdateInterval={250.0}
-          // onVideoEnd = {null}
+          onVideoEnd={handleEnd}
         />
         <View style={styles.overlay}>
           {overlay ? (
@@ -145,18 +158,17 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
               <Icon
                 name="skip-backward"
                 style={styles.icon}
-                onPress={goBackward_10}
+                onPress={handleSkipBackward_10}
               />
               <Icon
-                name={paused ? 'pause' : 'play'}
+                name={paused ? 'play' : 'pause'}
                 style={styles.icon}
                 onPress={handlePlayPausePress}
               />
-              {/* forward is not working */}
               <Icon
                 name="skip-forward"
                 style={styles.icon}
-                onPress={goForward_10}
+                onPress={handleSkipForward_10}
               />
               {/* Slider and time stamps */}
 
