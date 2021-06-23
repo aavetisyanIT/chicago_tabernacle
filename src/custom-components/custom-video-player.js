@@ -21,19 +21,21 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   let videoPlayer = null;
   let overlayTimerId = null;
   let lastTap = 0;
-  let timer = 0;
+  let timerId = 0;
 
   const [state, dispatch] = React.useContext(AppContext);
   const [paused, setPaused] = React.useState(true);
-  const [overlayToggling, setOverlayToggling] = React.useState(false);
   const [overlay, setOverlay] = React.useState(true);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [duration, setDuration] = React.useState(0.1);
   const [currentTime, setCurrentTime] = React.useState(0);
 
   const toggleOverlay = () => {
+    console.log('Toggling overlay');
     clearTimeout(overlayTimerId);
-    overlayTimerId = setTimeout(() => setOverlay(overlay => !overlay), 4000);
+    overlayTimerId = setTimeout(() => {
+      // setOverlay(overlay => !overlay), 4000;
+    });
   };
 
   const handleLoad = ({duration}) => setDuration(duration);
@@ -55,10 +57,12 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 
   const handleSkipBackward_10 = () => {
     videoPlayer.seek(currentTime - 10);
+    setCurrentTime(currentTime - 10);
     toggleOverlay();
   };
   const handleSkipForward_10 = () => {
     videoPlayer.seek(currentTime + 10);
+    setCurrentTime(currentTime + 10);
     toggleOverlay();
   };
 
@@ -66,11 +70,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
     const now = Date.now();
     const DOUBLE_PRESS_DELAY = 300;
     if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
-      clearTimeout(timer);
+      clearTimeout(timerId);
       doubleTapCallback();
     } else {
       lastTap = now;
-      timer = setTimeout(() => {
+      timerId = setTimeout(() => {
         signleTapCallback();
       }, DOUBLE_PRESS_DELAY);
     }
@@ -90,9 +94,12 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   };
 
   const hiddenJumpBackward = () => {
+    console.log('hiddenJumpBackward clicked');
+    if (overlay) return;
     handleDoubleTap(
       () => {
         videoPlayer.seek(currentTime - 10);
+        setCurrentTime(currentTime - 10);
       },
       () => {
         setOverlay(overlay => !overlay);
@@ -105,9 +112,12 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
     );
   };
   const hiddenJumpFrontward = () => {
+    console.log('hiddenJumpFrontward clicked');
+    if (overlay) return;
     handleDoubleTap(
       () => {
         videoPlayer.seek(currentTime + 10);
+        setCurrentTime(currentTime + 10);
       },
       () => {
         setOverlay(overlay => !overlay);
@@ -153,7 +163,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
         <View style={styles.overlay}>
           {overlay ? (
             //shade effect
-            <View style={{...styles.overlaySet, backgroundColor: '#0006'}}>
+            <View style={styles.iconContainer}>
               {/* Controllers */}
               <Icon
                 name="skip-backward"
@@ -226,12 +236,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
+  iconContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    // backgroundColor: '#0006',
+  },
   icon: {
     flex: 1,
     color: 'white',
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 40,
+    // backgroundColor: 'lightgray',
   },
   sliderContainer: {
     position: 'absolute',
