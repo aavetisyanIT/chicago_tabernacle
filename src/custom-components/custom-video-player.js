@@ -171,7 +171,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
                       style={styles.fullscreenIcon}
                       onPress={handleFullScreen}
                       size={25}
-                      name={fullScreen ? 'arrow-collapse' : 'arrow-expand'}
+                      name={fullScreen ? 'fullscreen-exit' : 'fullscreen'}
                     />
                   </View>
                 </View>
