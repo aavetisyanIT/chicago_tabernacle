@@ -202,6 +202,20 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
                   onValueChange={handleSlide}
                 />
               </View>
+
+              <View
+                style={
+                  fullScreen
+                    ? {...styles.closeIconContainer, left: width}
+                    : {...styles.closeIconContainer, left: width * 0.9}
+                }>
+                <Icon
+                  style={styles.closeIcon}
+                  size={30}
+                  onPress={null}
+                  name="close"
+                />
+              </View>
             </View>
           ) : (
             <View style={styles.overlaySet}>
@@ -239,7 +253,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     flexDirection: 'row',
-    // backgroundColor: '#0006',
+    backgroundColor: '#0006',
   },
   icon: {
     flex: 1,
@@ -247,8 +261,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 40,
-    // backgroundColor: 'lightgray',
   },
+  closeIconContainer: {
+    position: 'absolute',
+    top: 0,
+    margin: 5,
+  },
+  closeIcon: {color: 'white'},
   sliderContainer: {
     position: 'absolute',
     left: 0,
