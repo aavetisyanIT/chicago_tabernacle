@@ -19,7 +19,6 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   let {width, height} = Dimensions.get('window');
 
   let videoPlayer = null;
-  let overlayTimerId = null;
   let lastTap = 0;
   let timerId = 0;
 
@@ -30,10 +29,6 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const [duration, setDuration] = React.useState(0.1);
   const [currentTime, setCurrentTime] = React.useState(0);
 
-  const toggleOverlay = () => {
-    setOverlay(overlay => !overlay), 4000;
-  };
-
   const handleLoad = ({duration}) => setDuration(duration);
   const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
   const handleEnd = () => {
@@ -43,23 +38,23 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 
   const handleSlide = slide => {
     videoPlayer.seek(slide * duration);
-    // toggleOverlay();
   };
 
   const handlePlayPausePress = () => {
     setPaused(currentPaused => !currentPaused);
-    // toggleOverlay();
+  };
+
+  const handleCloseIconPress = () => {
+    setOverlay(false);
   };
 
   const handleSkipBackward_10 = () => {
     videoPlayer.seek(currentTime - 10);
     setCurrentTime(currentTime - 10);
-    // toggleOverlay();
   };
   const handleSkipForward_10 = () => {
     videoPlayer.seek(currentTime + 10);
     setCurrentTime(currentTime + 10);
-    // toggleOverlay();
   };
 
   const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
@@ -78,42 +73,36 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 
   const handleFullScreen = () => {
     if (fullScreen) {
+      Orientation.lockToPortrait();
       dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
       FullScreen.enable();
-      Orientation.lockToPortrait();
     } else {
+      Orientation.lockToLandscape();
       dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
       FullScreen.disable();
-      Orientation.lockToLandscape();
     }
     setFullScreen(currentFullScreen => !currentFullScreen);
   };
 
-  const hiddenJumpBackward = () => {
-    console.log('hiddenJumpBackward clicked');
-    if (overlay) return;
-    handleDoubleTap(
-      () => {
-        videoPlayer.seek(currentTime - 10);
-        setCurrentTime(currentTime - 10);
-      },
-      () => {
-        setOverlay(overlay => !overlay);
-        toggleOverlay();
-      },
-    );
-  };
   const hiddenJumpFrontward = () => {
-    console.log('hiddenJumpFrontward clicked');
-    if (overlay) return;
     handleDoubleTap(
       () => {
         videoPlayer.seek(currentTime + 10);
         setCurrentTime(currentTime + 10);
       },
       () => {
-        setOverlay(overlay => !overlay);
-        toggleOverlay();
+        setOverlay(true);
+      },
+    );
+  };
+  const hiddenJumpBackward = () => {
+    handleDoubleTap(
+      () => {
+        videoPlayer.seek(currentTime - 10);
+        setCurrentTime(currentTime - 10);
+      },
+      () => {
+        setOverlay(true);
       },
     );
   };
@@ -149,8 +138,8 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
           onVideoEnd={handleEnd}
         />
         <View style={styles.overlay}>
+          {/* Shade effect */}
           {overlay ? (
-            //shade effect
             <View style={styles.iconContainer}>
               {/* Controllers */}
               <Icon
@@ -203,7 +192,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
                 <Icon
                   style={styles.closeIcon}
                   size={30}
-                  onPress={null}
+                  onPress={handleCloseIconPress}
                   name="close"
                 />
               </View>
