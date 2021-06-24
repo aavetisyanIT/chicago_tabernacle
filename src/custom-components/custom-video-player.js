@@ -31,39 +31,35 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const [currentTime, setCurrentTime] = React.useState(0);
 
   const toggleOverlay = () => {
-    console.log('Toggling overlay');
-    clearTimeout(overlayTimerId);
-    overlayTimerId = setTimeout(() => {
-      // setOverlay(overlay => !overlay), 4000;
-    });
+    setOverlay(overlay => !overlay), 4000;
   };
 
   const handleLoad = ({duration}) => setDuration(duration);
   const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
   const handleEnd = () => {
-    setPaused(true);
-    toggleOverlay();
+    // setPaused(true);
+    return null;
   };
 
   const handleSlide = slide => {
     videoPlayer.seek(slide * duration);
-    toggleOverlay();
+    // toggleOverlay();
   };
 
   const handlePlayPausePress = () => {
     setPaused(currentPaused => !currentPaused);
-    toggleOverlay();
+    // toggleOverlay();
   };
 
   const handleSkipBackward_10 = () => {
     videoPlayer.seek(currentTime - 10);
     setCurrentTime(currentTime - 10);
-    toggleOverlay();
+    // toggleOverlay();
   };
   const handleSkipForward_10 = () => {
     videoPlayer.seek(currentTime + 10);
     setCurrentTime(currentTime + 10);
-    toggleOverlay();
+    // toggleOverlay();
   };
 
   const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
@@ -103,11 +99,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       },
       () => {
         setOverlay(overlay => !overlay);
-        clearTimeout(overlayTimerId);
-        overlayTimerId = setTimeout(
-          () => setOverlay(overlay => !overlay),
-          4000,
-        );
+        toggleOverlay();
       },
     );
   };
@@ -121,11 +113,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       },
       () => {
         setOverlay(overlay => !overlay);
-        clearTimeout(overlayTimerId);
-        overlayTimerId = setTimeout(
-          () => setOverlay(overlay => !overlay),
-          4000,
-        );
+        toggleOverlay();
       },
     );
   };
@@ -181,18 +169,22 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
                 onPress={handleSkipForward_10}
               />
               {/* Slider and time stamps */}
-
               <View style={styles.sliderContainer}>
-                <View style={styles.timer}>
-                  <Text style={styles.text}>{timeFormat(duration)}</Text>
-                  <Text style={styles.text}>
-                    {timeFormat(currentTime)}{' '}
+                <View style={styles.timeStampsContainer}>
+                  <Text style={styles.durationTimeText}>
+                    {timeFormat(duration)}
+                  </Text>
+                  <View style={styles.timeStampsInnerContainer}>
+                    <Text style={styles.currentTimeText}>
+                      {timeFormat(currentTime)}{' '}
+                    </Text>
                     <Icon
+                      style={styles.fullscreenIcon}
                       onPress={handleFullScreen}
                       size={25}
                       name={fullScreen ? 'arrow-collapse' : 'arrow-expand'}
                     />
-                  </Text>
+                  </View>
                 </View>
                 <Slider
                   maximumTrackImage="white"
@@ -202,7 +194,6 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
                   onValueChange={handleSlide}
                 />
               </View>
-
               <View
                 style={
                   fullScreen
@@ -270,19 +261,31 @@ const styles = StyleSheet.create({
   closeIcon: {color: 'white'},
   sliderContainer: {
     position: 'absolute',
-    left: 0,
+    left: 5,
     right: 0,
-    bottom: 0,
+    bottom: 10,
   },
-  timer: {
+  timeStampsContainer: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 5,
   },
-  text: {
+  timeStampsInnerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  durationTimeText: {
     color: '#fff',
     fontFamily: 'Roboto-Medium',
-    fontSize: 14,
+    fontSize: 15,
+    marginTop: 1,
   },
+  currentTimeText: {
+    color: '#fff',
+    fontFamily: 'Roboto-Medium',
+    fontSize: 15,
+    marginTop: 1,
+  },
+  fullscreenIcon: {color: 'white'},
 });
