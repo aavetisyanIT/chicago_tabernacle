@@ -50,14 +50,23 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const handleCloseIconPress = () => {
     setOverlay(false);
   };
-
-  const handleSkipBackward_10 = () => {
-    videoPlayer.seek(currentTime - 10);
-    setCurrentTime(currentTime - 10);
-  };
   const handleSkipForward_10 = () => {
+    if (currentTime >= duration) {
+      setCurrentTime(duration);
+      return;
+    }
     videoPlayer.seek(currentTime + 10);
     setCurrentTime(currentTime + 10);
+  };
+  const handleSkipBackward_10 = () => {
+    if (currentTime <= 10) {
+      videoPlayer.seek(0.1);
+      setCurrentTime(0);
+      return;
+    }
+
+    videoPlayer.seek(currentTime - 10);
+    setCurrentTime(currentTime - 10);
   };
 
   const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
@@ -74,20 +83,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
     }
   };
 
-  const handleFullScreen = () => {
-    if (fullScreen) {
-      Orientation.lockToPortrait();
-      dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
-      FullScreen.enable();
-    } else {
-      Orientation.lockToLandscape();
-      dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
-      FullScreen.disable();
-    }
-    setFullScreen(currentFullScreen => !currentFullScreen);
-  };
-
   const hiddenJumpFrontward = () => {
+    if (currentTime >= duration) {
+      setCurrentTime(duration);
+      return;
+    }
     handleDoubleTap(
       () => {
         videoPlayer.seek(currentTime + 10);
@@ -99,6 +99,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
     );
   };
   const hiddenJumpBackward = () => {
+    if (currentTime <= 10) {
+      videoPlayer.seek(0.1);
+      setCurrentTime(0);
+      return;
+    }
     handleDoubleTap(
       () => {
         videoPlayer.seek(currentTime - 10);
@@ -108,6 +113,19 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
         setOverlay(true);
       },
     );
+  };
+
+  const handleFullScreen = () => {
+    if (fullScreen) {
+      Orientation.lockToPortrait();
+      dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
+      FullScreen.enable();
+    } else {
+      Orientation.lockToLandscape();
+      dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
+      FullScreen.disable();
+    }
+    setFullScreen(currentFullScreen => !currentFullScreen);
   };
 
   return (
