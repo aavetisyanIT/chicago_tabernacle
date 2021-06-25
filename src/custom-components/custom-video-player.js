@@ -32,12 +32,15 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const handleLoad = ({duration}) => setDuration(duration);
   const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
   const handleEnd = () => {
-    // setPaused(true);
-    return null;
+    setPaused(true);
+    videoPlayer.seek(0.1);
+    setCurrentTime(0);
+    setOverlay(true);
   };
 
   const handleSlide = slide => {
     videoPlayer.seek(slide * duration);
+    setCurrentTime(slide * duration);
   };
 
   const handlePlayPausePress = () => {
@@ -135,7 +138,7 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
           onLoad={handleLoad}
           onProgress={handleProgress}
           progressUpdateInterval={250.0}
-          onVideoEnd={handleEnd}
+          onEnd={handleEnd}
         />
         <View style={styles.overlay}>
           {/* Shade effect */}
