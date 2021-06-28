@@ -15,31 +15,33 @@ import timeFormat from './../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
 import {AppContext} from './../context/app.context';
 
-const CustomVideoPlayer = ({videoUrl, imageUrl, height, width}) => {
-  //need to avoid extra recounting
-  // let {height, width} = Dimensions.get('window');
+const window = Dimensions.get('window');
+const screen = Dimensions.get('screen');
 
-  let videoPlayer = null;
-  let lastTap = 0;
-  let timerId = 0;
-
+const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const [state, dispatch] = React.useContext(AppContext);
   const [paused, setPaused] = React.useState(true);
   const [overlay, setOverlay] = React.useState(true);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [duration, setDuration] = React.useState(0.1);
   const [currentTime, setCurrentTime] = React.useState(0);
+  const [dimensions, setDimensions] = React.useState({window, screen});
 
-  // React.useEffect(() => {
-  //   console.log('useEffect');
-  //   width = Dimensions.get('window').width;
-  //   height = Dimensions.get('window').height;
-  //   console.log('Width: ', width);
-  //   console.log('height: ', height);
-  // }, [fullScreen]);
+  let {height, width} = dimensions.window;
+  let videoPlayer = null;
+  let lastTap = 0;
+  let timerId = 0;
 
-  console.log('Width: ', width);
-  console.log('height: ', height);
+  const onChange = ({window, screen}) => {
+    setDimensions({window, screen});
+  };
+
+  React.useEffect(() => {
+    Dimensions.addEventListener('change', onChange);
+    return () => {
+      Dimensions.removeEventListener('change', onChange);
+    };
+  }, [fullScreen]);
 
   const handleLoad = ({duration}) => setDuration(duration);
   const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
