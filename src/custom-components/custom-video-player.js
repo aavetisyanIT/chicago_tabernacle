@@ -15,8 +15,9 @@ import timeFormat from './../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
 import {AppContext} from './../context/app.context';
 
-const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
-  let {width, height} = Dimensions.get('window');
+const CustomVideoPlayer = ({videoUrl, imageUrl, height, width}) => {
+  //need to avoid extra recounting
+  // let {height, width} = Dimensions.get('window');
 
   let videoPlayer = null;
   let lastTap = 0;
@@ -28,6 +29,17 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   const [fullScreen, setFullScreen] = React.useState(false);
   const [duration, setDuration] = React.useState(0.1);
   const [currentTime, setCurrentTime] = React.useState(0);
+
+  // React.useEffect(() => {
+  //   console.log('useEffect');
+  //   width = Dimensions.get('window').width;
+  //   height = Dimensions.get('window').height;
+  //   console.log('Width: ', width);
+  //   console.log('height: ', height);
+  // }, [fullScreen]);
+
+  console.log('Width: ', width);
+  console.log('height: ', height);
 
   const handleLoad = ({duration}) => setDuration(duration);
   const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
@@ -117,13 +129,13 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 
   const handleFullScreen = () => {
     if (fullScreen) {
-      Orientation.lockToPortrait();
       dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
-      FullScreen.enable();
-    } else {
-      Orientation.lockToLandscape();
-      dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
       FullScreen.disable();
+      Orientation.lockToPortrait();
+    } else {
+      dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
+      FullScreen.enable();
+      Orientation.lockToLandscape();
     }
     setFullScreen(currentFullScreen => !currentFullScreen);
   };
@@ -150,7 +162,10 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
           style={{...StyleSheet.absoluteFill}}
           source={{uri: videoUrl}}
           resizeMode="contain"
-          fullscreen={fullScreen}
+          // fullScreen property is iOS only per documentation
+          // but it is working. Currently disabled cause FullScreen
+          // is used from utils.
+          // fullscreen={fullScreen}
           poster={imageUrl}
           ref={ref => (videoPlayer = ref)}
           onLoad={handleLoad}
