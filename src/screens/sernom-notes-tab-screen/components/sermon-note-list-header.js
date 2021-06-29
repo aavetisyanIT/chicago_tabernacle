@@ -3,6 +3,7 @@ import {Text, View, StyleSheet} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import CustomTrackPlayer from '../../../custom-components/custom-track-player';
+// import CustomVideoPlayerAlpha from './../../../custom-components/custom-video-player-alpha';
 import CustomVideoPlayer from './../../../custom-components/custom-video-player';
 
 const SermonNoteListHeader = ({article}) => {
@@ -24,6 +25,7 @@ const SermonNoteListHeader = ({article}) => {
   return (
     <>
       {videoUrl ? (
+        // <CustomVideoPlayerAlpha videoUrl={videoUrl} imageUrl={sermonImage} />
         <CustomVideoPlayer videoUrl={videoUrl} imageUrl={sermonImage} />
       ) : (
         <FastImage
