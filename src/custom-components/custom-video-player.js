@@ -16,15 +16,24 @@ import FullScreen from '../utils/fullScreen';
 import {AppContext} from '../context/app.context';
 import CustomVideoPlayerTracker from './custom-video-player-tracker';
 import CustomVideoPlayerSlider from './custom-video-player-slider';
+import CustomVideoPlayerFullscreenProvider from './custom-video-player-fullscreen-provider';
 
 const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
+  const [fullscreen, setFullscreen] = React.useState(false);
+  const [dimensions, setDimensions] = React.useState({window, screen});
+
+  let {height, width} = dimensions.window;
+
   return (
-    <View>
+    <CustomVideoPlayerFullscreenProvider
+      fullscreenMode={fullscreen}
+      screenWidth={width}
+      screenHeight={height}>
       <Text>Video Player</Text>
-    </View>
+    </CustomVideoPlayerFullscreenProvider>
   );
 };
 
