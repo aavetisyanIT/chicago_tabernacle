@@ -1,19 +1,22 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import Slider from '@react-native-community/slider';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const CustomVideoPlayerSlider = ({currentTime}) => {
+const CustomVideoPlayerSlider = ({currentTime, fullscreenMode}) => {
   return (
     <View style={styles.sliderContainer}>
-      <Text>{currentTime}</Text>
-      {/* <View style={styles.timeStampsContainer}>
-        <Text style={styles.durationTimeText}>{timeFormat(duration)}</Text>
+      <View style={styles.timeStampsContainer}>
+        {/* <Text style={styles.durationTimeText}>{timeFormat(duration)}</Text> */}
+        <Text style={styles.durationTimeText}>00:00</Text>
         <View style={styles.timeStampsInnerContainer}>
-          <Text style={styles.currentTimeText}>{timeFormat(currentTime)} </Text>
+          {/* <Text style={styles.currentTimeText}>{timeFormat(currentTime)} </Text> */}
+          <Text style={styles.currentTimeText}>00:00 </Text>
           <Icon
             style={styles.fullscreenIcon}
-            onPress={handleFullScreen}
+            // onPress={handleFullScreen}
             size={25}
-            name={fullScreen ? 'fullscreen-exit' : 'fullscreen'}
+            name={fullscreenMode ? 'fullscreen-exit' : 'fullscreen'}
           />
         </View>
       </View>
@@ -21,9 +24,9 @@ const CustomVideoPlayerSlider = ({currentTime}) => {
         maximumTrackImage="white"
         minimumTrackTintColor="#bc9665"
         thumbTintColor="white"
-        value={currentTime / duration}
-        onValueChange={handleSlide}
-      /> */}
+        // value={currentTime / duration}
+        // onValueChange={handleSlide}
+      />
     </View>
   );
 };
