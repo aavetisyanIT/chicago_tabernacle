@@ -14,7 +14,7 @@ import Orientation from 'react-native-orientation';
 import timeFormat from '../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
 import {AppContext} from '../context/app.context';
-import CustomVideoPlayerTracker from './custom-video-player-tracker';
+import CustomVideoPlayerTracker from './custom-video-player-media-player';
 import CustomVideoPlayerSlider from './custom-video-player-slider';
 
 const window = Dimensions.get('window');
