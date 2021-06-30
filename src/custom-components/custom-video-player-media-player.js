@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import Video from 'react-native-video';
 
-const CustomVideoPlayerTracker = ({
+const CustomVideoPlayerMediaPlayer = ({
   videoUrl,
   imageUrl,
   paused,
@@ -28,4 +28,4 @@ const CustomVideoPlayerTracker = ({
   );
 };
 
-export default CustomVideoPlayerTracker;
+export default CustomVideoPlayerMediaPlayer;

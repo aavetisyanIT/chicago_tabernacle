@@ -60,9 +60,8 @@ const styles = StyleSheet.create({
   },
   childrenContainer: {
     position: 'absolute',
-    left: 5,
+    left: 0,
     right: 0,
-    bottom: 10,
   },
   hiddenControllersContainer: {
     flex: 1,

@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
-import Slider from '@react-native-community/slider';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Orientation from 'react-native-orientation';
@@ -8,7 +7,7 @@ import Orientation from 'react-native-orientation';
 import timeFormat from '../utils/trackPlayerUtils';
 import FullScreen from '../utils/fullScreen';
 import {AppContext} from '../context/app.context';
-import CustomVideoPlayerTracker from './custom-video-player-tracker';
+import CustomVideoPlayerMediaPlayer from './custom-video-player-media-player';
 import CustomVideoPlayerSlider from './custom-video-player-slider';
 import CustomVideoPlayerFullscreenProvider from './custom-video-player-fullscreen-provider';
 import CustomVideoPlayerLayersProvider from './custom-video-player-layers-provider';
@@ -40,11 +39,12 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       fullscreenMode={fullscreen}
       screenWidth={width}
       screenHeight={height}>
-      <Text>Video Player</Text>
       <CustomVideoPlayerLayersProvider
         isOverlayView={isOverlayView}
         isVideoPaused={isVideoPaused}>
-        <Text>Slider</Text>
+        <Text>Video Player Component</Text>
+        <Text>Slider Component</Text>
+        <CustomVideoPlayerSlider fullscreenMode={fullscreen} />
       </CustomVideoPlayerLayersProvider>
     </CustomVideoPlayerFullscreenProvider>
   );
