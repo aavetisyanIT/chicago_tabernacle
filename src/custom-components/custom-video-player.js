@@ -1,7 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
-import Video from 'react-native-video';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Dimensions} from 'react-native';
 import Orientation from 'react-native-orientation';
 
 import timeFormat from '../utils/trackPlayerUtils';
@@ -16,6 +14,8 @@ const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
+  const [state, dispatch] = React.useContext(AppContext);
+
   const [fullscreen, setFullscreen] = React.useState(false);
   const [dimensions, setDimensions] = React.useState({window, screen});
   const [isOverlayView, setIsOverlayView] = React.useState(true);
@@ -29,6 +29,17 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
 
   React.useEffect(() => {
     Dimensions.addEventListener('change', onScreenRotation);
+    // temporary way of rotating screen
+    if (fullscreen) {
+      dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
+      FullScreen.enable();
+      Orientation.lockToLandscape();
+    } else {
+      dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
+      FullScreen.disable();
+      Orientation.lockToPortrait();
+    }
+
     return () => {
       Dimensions.removeEventListener('change', onScreenRotation);
     };
@@ -39,17 +50,18 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
       fullscreenMode={fullscreen}
       screenWidth={width}
       screenHeight={height}>
+      <CustomVideoPlayerMediaPlayer
+        videoUrl={videoUrl}
+        imageUrl={imageUrl}
+        isVideoPaused={isVideoPaused}
+      />
+      <CustomVideoPlayerSlider fullscreenMode={fullscreen} />
       <CustomVideoPlayerLayersProvider
         isOverlayView={isOverlayView}
-        isVideoPaused={isVideoPaused}>
-        <Text>Video Player Component</Text>
-        <Text>Slider Component</Text>
-        <CustomVideoPlayerSlider fullscreenMode={fullscreen} />
-      </CustomVideoPlayerLayersProvider>
+        isVideoPaused={isVideoPaused}
+      />
     </CustomVideoPlayerFullscreenProvider>
   );
 };
 
 export default CustomVideoPlayer;
-
-const styles = StyleSheet.create({});

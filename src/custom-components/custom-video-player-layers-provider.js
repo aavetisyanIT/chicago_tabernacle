@@ -25,7 +25,6 @@ const CustomVideoPlayerLayersProvider = props => {
             style={styles.icon}
             // onPress={handleSkipForward_10}
           />
-          <View style={styles.childrenContainer}>{props.children}</View>
         </View>
       ) : (
         /* Hidden View Controllers */
@@ -57,11 +56,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 40,
-  },
-  childrenContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
   },
   hiddenControllersContainer: {
     flex: 1,

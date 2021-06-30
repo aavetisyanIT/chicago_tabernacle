@@ -9,7 +9,8 @@ const CustomVideoPlayerFullscreenProvider = props => {
         fullscreenMode
           ? {
               ...styles.fullscreenContainer,
-              height: screenHeight,
+              // adding 1 to hide little stripe
+              height: screenHeight + 1,
             }
           : {
               ...styles.container,
@@ -25,14 +26,8 @@ const CustomVideoPlayerFullscreenProvider = props => {
 export default CustomVideoPlayerFullscreenProvider;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, marginTop: 9, backgroundColor: 'lightgray'},
+  container: {flex: 1, marginTop: 9},
   fullscreenContainer: {
     flex: 1,
-    // this style was in fullScreenMode of alpha version
-    // fullScreenMode was deleted
-    // ...StyleSheet.absoluteFill,
-    margin: -1,
-    backgroundColor: 'lightgray',
-    width: '100%',
   },
 });
