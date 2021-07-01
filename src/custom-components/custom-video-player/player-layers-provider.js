@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const CustomVideoPlayerLayersProvider = props => {
+const PlayerLayersProvider = props => {
   const {isVideoPaused, isOverlayView} = props;
 
   return (
@@ -41,7 +41,7 @@ const CustomVideoPlayerLayersProvider = props => {
   );
 };
 
-export default CustomVideoPlayerLayersProvider;
+export default PlayerLayersProvider;
 
 const styles = StyleSheet.create({
   overlayContainer: {...StyleSheet.absoluteFill},

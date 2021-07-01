@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-const CustomVideoPlayerFullscreenProvider = props => {
+const PlayerFullscreenProvider = props => {
   const {fullscreenMode, screenWidth, screenHeight} = props;
   return (
     <View
@@ -23,7 +23,7 @@ const CustomVideoPlayerFullscreenProvider = props => {
   );
 };
 
-export default CustomVideoPlayerFullscreenProvider;
+export default PlayerFullscreenProvider;
 
 const styles = StyleSheet.create({
   container: {flex: 1, marginTop: 9},

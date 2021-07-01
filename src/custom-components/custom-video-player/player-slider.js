@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const CustomVideoPlayerSlider = ({currentTime, fullscreenMode}) => {
+const PlayerSlider = ({currentTime, fullscreenMode}) => {
   return (
     <View style={styles.sliderContainer}>
       <View style={styles.timeStampsContainer}>
@@ -31,7 +31,7 @@ const CustomVideoPlayerSlider = ({currentTime, fullscreenMode}) => {
   );
 };
 
-export default CustomVideoPlayerSlider;
+export default PlayerSlider;
 
 const styles = StyleSheet.create({
   sliderContainer: {position: 'absolute', left: 5, right: 0, bottom: 10},

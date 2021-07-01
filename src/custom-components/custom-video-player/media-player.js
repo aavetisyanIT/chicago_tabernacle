@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import Video from 'react-native-video';
 
-const CustomVideoPlayerMediaPlayer = ({
+const MediaPlayer = ({
   videoUrl,
   imageUrl,
   isVideoPaused,
@@ -28,7 +28,7 @@ const CustomVideoPlayerMediaPlayer = ({
   );
 };
 
-export default CustomVideoPlayerMediaPlayer;
+export default MediaPlayer;
 
 const styles = StyleSheet.create({
   video: {
