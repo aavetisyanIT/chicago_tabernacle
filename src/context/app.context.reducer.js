@@ -1,5 +1,8 @@
 export const initialState = {
   isFullScreenVideo: false,
+  currentVideoPlayTime: 0,
+  isVideoPaused: true,
+  isOverlayView: true,
 };
 
 export const reducer = (state, action) => {
@@ -8,9 +11,17 @@ export const reducer = (state, action) => {
       return {
         isFullScreenVideo: action.payload,
       };
-    case 'HORIZONTAL_VIEW_VIDEO':
+    case 'CURRENT_VIDEO_PLAY_TIME':
       return {
-        isFullScreenVideo: action.payload,
+        currentVideoPlayTime: action.payload,
+      };
+    case 'VIDEO_PAUSED':
+      return {
+        isVideoPaused: action.payload,
+      };
+    case 'OVERLAY_VIEW':
+      return {
+        isOverlayView: action.payload,
       };
     default:
       state;
