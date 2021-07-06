@@ -1,29 +1,31 @@
-import {Dimensions} from 'react-native';
+import timeFormat from './../utils/trackPlayerUtils';
 
-const window = Dimensions.get('window');
-const screen = Dimensions.get('screen');
-
-export const initialState = {
-  isFullScreenVideo: false,
-  currentVideoPlayTime: 0,
-  isVideoPaused: true,
-  isOverlayView: true,
-  screenDimensions: {window: window, screen: screen},
-};
-
-export const reducer = (state, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_FULLSCREEN_VIDEO':
       return {...state, isFullScreenVideo: action.payload};
     case 'SET_CURRENT_VIDEO_PLAY_TIME':
-      return {...state, currentVideoPlayTime: action.payload};
-    case 'PAUSE_VIDEO':
-      return {...state, isVideoPaused: action.payload};
+      return {
+        ...state,
+        currentVideoPlayTime: timeFormat(action.currentTime),
+      };
+    case 'TOGGLE_PAUSE_VIDEO':
+      return {...state, isVideoPaused: !state.isVideoPaused};
     case 'SET_OVERLAY_VIEW':
       return {...state, isOverlayView: action.payload};
     case 'SET_SCREEN_DIMENSIONS':
-      return {...state, screenDimensions: action.payload};
+      return {
+        ...state,
+        screenDimensions: {
+          window: action.payload.window,
+          screen: action.payload.screen,
+        },
+      };
+    case 'SET_VIDEO_DURATION':
+      return {...state, videoDuration: timeFormat(action.videoDuration)};
     default:
-      return state;
+      throw new Error();
   }
 };
+
+export default reducer;
