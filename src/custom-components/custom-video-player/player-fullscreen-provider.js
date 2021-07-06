@@ -1,12 +1,34 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
+
+import FullScreen from './../../utils/fullScreen';
+import {AppContext} from './../../context/app.context';
 
 const PlayerFullscreenProvider = props => {
-  const {fullscreenMode, screenWidth, screenHeight} = props;
+  const [state, dispatch] = React.useContext(AppContext);
+
+  const {screenDimensions, isFullScreenVideo} = state;
+  const screenHeight = screenDimensions.window.height;
+  const screenWidth = screenDimensions.window.width;
+
+  // const onScreenRotation = ({window, screen}) => {
+  //   dispatch({
+  //     type: 'SET_SCREEN_DIMENSIONS',
+  //     payload: {window: window, screen: screen},
+  //   });
+  // };
+
+  // React.useEffect(() => {
+  //   Dimensions.addEventListener('change', onScreenRotation);
+  //   return () => {
+  //     Dimensions.removeEventListener('change', onScreenRotation);
+  //   };
+  // }, [isFullScreenVideo]);
+
   return (
     <View
       style={
-        fullscreenMode
+        isFullScreenVideo
           ? {
               ...styles.fullscreenContainer,
               // adding 1 to hide little stripe

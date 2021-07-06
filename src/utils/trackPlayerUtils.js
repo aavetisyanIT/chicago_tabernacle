@@ -1,6 +1,6 @@
 //Build timestamp
-const timeFormat = duration => {
-  var date = new Date(duration * 1000);
+const timeFormat = time => {
+  var date = new Date(time * 1000);
   var hh = date.getUTCHours();
   var mm = date.getUTCMinutes();
   var ss = date.getSeconds();
@@ -17,6 +17,7 @@ const timeFormat = duration => {
   }
   // Format MM:SS
   timeStamp = mm + ':' + ss;
+
   return timeStamp;
 };
 

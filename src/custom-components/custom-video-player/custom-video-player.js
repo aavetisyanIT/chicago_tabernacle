@@ -1,59 +1,23 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
-import Orientation from 'react-native-orientation';
 
-import FullScreen from './../../utils/fullScreen';
 import MediaPlayer from './media-player';
 import PlayerSlider from './player-slider';
 import PlayerFullscreenProvider from './player-fullscreen-provider';
 import PlayerLayersProvider from './player-layers-provider';
-import timeFormat from './../../utils/trackPlayerUtils';
-import {AppContext} from './../../context/app.context';
+
+let count = 0;
 
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
-  const [state, dispatch] = React.useContext(AppContext);
-
-  const {
-    isFullScreenVideo,
-    screenDimensions,
-    isOverlayView,
-    isVideoPaused,
-  } = state;
-
-  let height = screenDimensions.window.height;
-  let width = screenDimensions.window.width;
-
-  const onScreenRotation = ({window, screen}) => {
-    console.log(window, screen);
-    dispatch({
-      type: 'SET_SCREEN_DIMENSIONS',
-      action: {window, screen},
-    });
-  };
-
-  React.useEffect(() => {
-    Dimensions.addEventListener('change', onScreenRotation);
-
-    return () => {
-      Dimensions.removeEventListener('change', onScreenRotation);
-    };
-  }, [isFullScreenVideo]);
-
+  count = count + 1;
+  console.log(`CustomVideoPlayer: ${count}`);
+  //  currentVideoPlayTime and videoDuration  state variables need to be move to
+  // own context and provided to only PlayerSlider and MediaPlayer components to
+  // reduce rerenders when play is running.
   return (
-    <PlayerFullscreenProvider
-      fullscreenMode={isFullScreenVideo}
-      screenWidth={width}
-      screenHeight={height}>
-      <MediaPlayer
-        videoUrl={videoUrl}
-        imageUrl={imageUrl}
-        isVideoPaused={isVideoPaused}
-      />
-      <PlayerSlider fullscreenMode={isFullScreenVideo} />
-      <PlayerLayersProvider
-        isOverlayView={isOverlayView}
-        isVideoPaused={isVideoPaused}
-      />
+    <PlayerFullscreenProvider>
+      <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
+      <PlayerSlider />
+      <PlayerLayersProvider />
     </PlayerFullscreenProvider>
   );
 };

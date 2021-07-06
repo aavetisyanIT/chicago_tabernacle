@@ -2,8 +2,18 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const PlayerLayersProvider = props => {
-  const {isVideoPaused, isOverlayView} = props;
+import {AppContext} from './../../context/app.context';
+
+const PlayerLayersProvider = () => {
+  const [state, dispatch] = React.useContext(AppContext);
+
+  const {isOverlayView, isVideoPaused} = state;
+
+  const handlePlayPausePress = () => {
+    dispatch({
+      type: 'TOGGLE_PAUSE_VIDEO',
+    });
+  };
 
   return (
     <View style={styles.overlayContainer}>
@@ -18,7 +28,7 @@ const PlayerLayersProvider = props => {
           <Icon
             name={isVideoPaused ? 'play' : 'pause'}
             style={styles.icon}
-            // onPress={handlePlayPausePress}
+            onPress={handlePlayPausePress}
           />
           <Icon
             name="skip-forward"

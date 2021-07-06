@@ -26,7 +26,7 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
   // Need to add transitioning to height and width in fullscreen mode
   counter++;
   console.log(counter);
-  const [state, dispatch] = React.useContext(AppContext);
+  const [state, dispatch] = React.useReducer(AppContext);
   const [paused, setPaused] = React.useState(true);
   const [overlay, setOverlay] = React.useState(true);
   const [fullScreen, setFullScreen] = React.useState(false);
