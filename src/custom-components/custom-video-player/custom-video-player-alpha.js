@@ -39,100 +39,100 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
   let lastTap = 0;
   let timerId = 0;
 
-  const onChange = ({window, screen}) => {
-    setDimensions({window, screen});
-  };
+  // const onChange = ({window, screen}) => {
+  //   setDimensions({window, screen});
+  // };
 
-  React.useEffect(() => {
-    Dimensions.addEventListener('change', onChange);
-    return () => {
-      Dimensions.removeEventListener('change', onChange);
-    };
-  }, [fullScreen]);
+  // React.useEffect(() => {
+  //   Dimensions.addEventListener('change', onChange);
+  //   return () => {
+  //     Dimensions.removeEventListener('change', onChange);
+  //   };
+  // }, [fullScreen]);
 
-  const handleLoad = ({duration}) => setDuration(duration);
-  const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
-  const handleEnd = () => {
-    setPaused(true);
-    videoPlayer.seek(0.1);
-    setCurrentTime(0);
-    setOverlay(true);
-  };
+  // const handleLoad = ({duration}) => setDuration(duration);
+  // const handleProgress = ({currentTime}) => setCurrentTime(currentTime);
+  // const handleEnd = () => {
+  //   setPaused(true);
+  //   videoPlayer.seek(0.1);
+  //   setCurrentTime(0);
+  //   setOverlay(true);
+  // };
 
-  const handleSlide = slide => {
-    videoPlayer.seek(slide * duration);
-    setCurrentTime(slide * duration);
-  };
-  const handlePlayPausePress = () => {
-    setPaused(currentPaused => !currentPaused);
-  };
+  // const handleSlide = slide => {
+  //   videoPlayer.seek(slide * duration);
+  //   setCurrentTime(slide * duration);
+  // };
+  // const handlePlayPausePress = () => {
+  //   setPaused(currentPaused => !currentPaused);
+  // };
 
-  const handleCloseIconPress = () => {
-    setOverlay(false);
-  };
-  const handleSkipForward_10 = () => {
-    if (currentTime >= duration) {
-      setCurrentTime(duration);
-      return;
-    }
-    videoPlayer.seek(currentTime + 10);
-    setCurrentTime(currentTime + 10);
-  };
-  const handleSkipBackward_10 = () => {
-    if (currentTime <= 10) {
-      videoPlayer.seek(0.1);
-      setCurrentTime(0);
-      return;
-    }
-    videoPlayer.seek(currentTime - 10);
-    setCurrentTime(currentTime - 10);
-  };
+  // const handleCloseIconPress = () => {
+  //   setOverlay(false);
+  // };
+  // const handleSkipForward_10 = () => {
+  //   if (currentTime >= duration) {
+  //     setCurrentTime(duration);
+  //     return;
+  //   }
+  //   videoPlayer.seek(currentTime + 10);
+  //   setCurrentTime(currentTime + 10);
+  // };
+  // const handleSkipBackward_10 = () => {
+  //   if (currentTime <= 10) {
+  //     videoPlayer.seek(0.1);
+  //     setCurrentTime(0);
+  //     return;
+  //   }
+  //   videoPlayer.seek(currentTime - 10);
+  //   setCurrentTime(currentTime - 10);
+  // };
 
-  const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
-    const now = Date.now();
-    const DOUBLE_PRESS_DELAY = 300;
-    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
-      clearTimeout(timerId);
-      doubleTapCallback();
-    } else {
-      lastTap = now;
-      timerId = setTimeout(() => {
-        signleTapCallback();
-      }, DOUBLE_PRESS_DELAY);
-    }
-  };
+  // const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
+  //   const now = Date.now();
+  //   const DOUBLE_PRESS_DELAY = 300;
+  //   if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+  //     clearTimeout(timerId);
+  //     doubleTapCallback();
+  //   } else {
+  //     lastTap = now;
+  //     timerId = setTimeout(() => {
+  //       signleTapCallback();
+  //     }, DOUBLE_PRESS_DELAY);
+  //   }
+  // };
 
-  const hiddenJumpFrontward = () => {
-    if (currentTime >= duration) {
-      setCurrentTime(duration);
-      return;
-    }
-    handleDoubleTap(
-      () => {
-        videoPlayer.seek(currentTime + 10);
-        setCurrentTime(currentTime + 10);
-      },
-      () => {
-        setOverlay(true);
-      },
-    );
-  };
-  const hiddenJumpBackward = () => {
-    if (currentTime <= 10) {
-      videoPlayer.seek(0.1);
-      setCurrentTime(0);
-      return;
-    }
-    handleDoubleTap(
-      () => {
-        videoPlayer.seek(currentTime - 10);
-        setCurrentTime(currentTime - 10);
-      },
-      () => {
-        setOverlay(true);
-      },
-    );
-  };
+  // const hiddenJumpFrontward = () => {
+  //   if (currentTime >= duration) {
+  //     setCurrentTime(duration);
+  //     return;
+  //   }
+  //   handleDoubleTap(
+  //     () => {
+  //       videoPlayer.seek(currentTime + 10);
+  //       setCurrentTime(currentTime + 10);
+  //     },
+  //     () => {
+  //       setOverlay(true);
+  //     },
+  //   );
+  // };
+  // const hiddenJumpBackward = () => {
+  //   if (currentTime <= 10) {
+  //     videoPlayer.seek(0.1);
+  //     setCurrentTime(0);
+  //     return;
+  //   }
+  //   handleDoubleTap(
+  //     () => {
+  //       videoPlayer.seek(currentTime - 10);
+  //       setCurrentTime(currentTime - 10);
+  //     },
+  //     () => {
+  //       setOverlay(true);
+  //     },
+  //   );
+  // };
 
   const handleFullScreen = () => {
     if (fullScreen) {

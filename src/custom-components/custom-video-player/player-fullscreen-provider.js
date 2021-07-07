@@ -3,6 +3,7 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 
 import FullScreen from './../../utils/fullScreen';
 import {AppContext} from './../../context/app.context';
+import {actionTypes} from './../../context/action.types';
 
 const PlayerFullscreenProvider = props => {
   const [state, dispatch] = React.useContext(AppContext);
@@ -11,19 +12,19 @@ const PlayerFullscreenProvider = props => {
   const screenHeight = screenDimensions.window.height;
   const screenWidth = screenDimensions.window.width;
 
-  // const onScreenRotation = ({window, screen}) => {
-  //   dispatch({
-  //     type: 'SET_SCREEN_DIMENSIONS',
-  //     payload: {window: window, screen: screen},
-  //   });
-  // };
+  const onScreenRotation = ({window, screen}) => {
+    dispatch({
+      type: actionTypes.SET_SCREEN_DIMENSIONS,
+      payload: {window: window, screen: screen},
+    });
+  };
 
-  // React.useEffect(() => {
-  //   Dimensions.addEventListener('change', onScreenRotation);
-  //   return () => {
-  //     Dimensions.removeEventListener('change', onScreenRotation);
-  //   };
-  // }, [isFullScreenVideo]);
+  React.useEffect(() => {
+    Dimensions.addEventListener('change', onScreenRotation);
+    return () => {
+      Dimensions.removeEventListener('change', onScreenRotation);
+    };
+  }, [isFullScreenVideo]);
 
   return (
     <View

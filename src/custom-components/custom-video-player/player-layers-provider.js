@@ -28,6 +28,75 @@ const PlayerLayersProvider = () => {
     null;
   };
 
+  const handleSkipForward_10 = () => {
+    //  if (currentTime >= duration) {
+    //    setCurrentTime(duration);
+    //    return;
+    //  }
+    //  videoPlayer.seek(currentTime + 10);
+    //  setCurrentTime(currentTime + 10);
+    return null;
+  };
+  const handleSkipBackward_10 = () => {
+    //  if (currentTime <= 10) {
+    //    videoPlayer.seek(0.1);
+    //    setCurrentTime(0);
+    //    return;
+    //  }
+    //  videoPlayer.seek(currentTime - 10);
+    //  setCurrentTime(currentTime - 10);
+    return null;
+  };
+
+  const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
+    //  const now = Date.now();
+    //  const DOUBLE_PRESS_DELAY = 300;
+    //  if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+    //    clearTimeout(timerId);
+    //    doubleTapCallback();
+    //  } else {
+    //    lastTap = now;
+    //    timerId = setTimeout(() => {
+    //      signleTapCallback();
+    //    }, DOUBLE_PRESS_DELAY);
+    //  }
+    return null;
+  };
+
+  const hiddenJumpFrontward = () => {
+    //  if (currentTime >= duration) {
+    //    setCurrentTime(duration);
+    //    return;
+    //  }
+    //  handleDoubleTap(
+    //    () => {
+    //      videoPlayer.seek(currentTime + 10);
+    //      setCurrentTime(currentTime + 10);
+    //    },
+    //    () => {
+    //      setOverlay(true);
+    //    },
+    //  );
+    return null;
+  };
+  const hiddenJumpBackward = () => {
+    //  if (currentTime <= 10) {
+    //    videoPlayer.seek(0.1);
+    //    setCurrentTime(0);
+    //    return;
+    //  }
+    //  handleDoubleTap(
+    //    () => {
+    //      videoPlayer.seek(currentTime - 10);
+    //      setCurrentTime(currentTime - 10);
+    //    },
+    //    () => {
+    //      setOverlay(true);
+    //    },
+    //  );
+    return null;
+  };
+
   return (
     <View style={styles.overlayContainer}>
       {isOverlayView ? (
@@ -36,7 +105,7 @@ const PlayerLayersProvider = () => {
           <Icon
             name="skip-backward"
             style={styles.icon}
-            // onPress={handleSkipBackward_10}
+            onPress={handleSkipBackward_10}
           />
           <Icon
             name={isVideoPaused ? 'play' : 'pause'}
@@ -46,7 +115,7 @@ const PlayerLayersProvider = () => {
           <Icon
             name="skip-forward"
             style={styles.icon}
-            // onPress={handleSkipForward_10}
+            onPress={handleSkipForward_10}
           />
           <View
             style={
@@ -65,10 +134,10 @@ const PlayerLayersProvider = () => {
       ) : (
         /* Hidden View Controllers */
         <View style={styles.hiddenControllersContainer}>
-          <TouchableNativeFeedback /*onPress={hiddenJumpBackward}*/>
+          <TouchableNativeFeedback onPress={hiddenJumpBackward}>
             <View style={styles.hiddenController}></View>
           </TouchableNativeFeedback>
-          <TouchableNativeFeedback /*onPress={hiddenJumpFrontward}*/>
+          <TouchableNativeFeedback onPress={hiddenJumpFrontward}>
             <View style={styles.hiddenController}></View>
           </TouchableNativeFeedback>
         </View>
