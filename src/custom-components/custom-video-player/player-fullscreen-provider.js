@@ -5,7 +5,11 @@ import FullScreen from './../../utils/fullScreen';
 import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
 
+let count = 0;
 const PlayerFullscreenProvider = props => {
+  count = count + 1;
+  console.log(`PlayerFullscreenProvider: ${count}`);
+
   const [state, dispatch] = React.useContext(AppContext);
 
   const {screenDimensions, isFullScreenVideo} = state;

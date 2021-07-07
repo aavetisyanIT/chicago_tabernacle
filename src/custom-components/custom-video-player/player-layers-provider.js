@@ -5,7 +5,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
 
+let count = 0;
 const PlayerLayersProvider = () => {
+  count = count + 1;
+  console.log(`PlayerLayersProvider: ${count}`);
+
   const [state, dispatch] = React.useContext(AppContext);
 
   const {

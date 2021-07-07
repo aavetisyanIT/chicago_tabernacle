@@ -4,25 +4,35 @@ import Video from 'react-native-video';
 
 import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
+import {VideoPlayerContext} from './video-player-context/video.player.context';
+import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
+let count = 0;
 const MediaPlayer = ({videoUrl, imageUrl}) => {
+  count = count + 1;
+  // console.log(`MediaPlayer: ${count}`);
+
   const [state, dispatch] = React.useContext(AppContext);
+  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+    VideoPlayerContext,
+  );
 
   const {isVideoPaused} = state;
+  const {currentVideoPlayTime, videoDuration} = videoPlayerState;
+
   let videoPlayer = null;
 
   const handleOnLoad = ({duration}) => {
-    dispatch({
-      type: actionTypes.SET_VIDEO_DURATION,
-      videoDuration: duration,
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_VIDEO_DURATION,
+      payload: {videoDuration: duration},
     });
   };
   const handleOnProgress = ({currentTime}) => {
-    // dispatch({
-    //   type: 'SET_CURRENT_VIDEO_PLAY_TIME',
-    //   currentTime,
-    //   // payload: {currentTime: currentTime},
-    // });
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+      payload: {currentTime: currentTime},
+    });
   };
 
   const handleOnEnd = () => null;

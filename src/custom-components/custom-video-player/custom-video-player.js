@@ -4,9 +4,9 @@ import MediaPlayer from './media-player';
 import PlayerSlider from './player-slider';
 import PlayerFullscreenProvider from './player-fullscreen-provider';
 import PlayerLayersProvider from './player-layers-provider';
+import {VideoPlayerContextProvider} from './video-player-context/video.player.context.provider';
 
 let count = 0;
-
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   count = count + 1;
   console.log(`CustomVideoPlayer: ${count}`);
@@ -15,8 +15,11 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   // reduce rerenders when play is running.
   return (
     <PlayerFullscreenProvider>
-      <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
-      <PlayerSlider />
+      <VideoPlayerContextProvider>
+        <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
+        <PlayerSlider />
+        <PlayerLayersProvider />
+      </VideoPlayerContextProvider>
       <PlayerLayersProvider />
     </PlayerFullscreenProvider>
   );

@@ -5,16 +5,26 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import FullScreen from '../../utils/fullScreen';
 import {AppContext} from './../../context/app.context';
+import {VideoPlayerContext} from './video-player-context/video.player.context';
+import timeFormat from './../../utils/trackPlayerUtils';
 
+let count = 0;
 const PlayerSlider = () => {
+  count = count + 1;
+  // console.log(`PlayerSlider: ${count}`);
+  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+    VideoPlayerContext,
+  );
   const [state, dispatch] = React.useContext(AppContext);
 
-  const {videoDuration, currentVideoPlayTime, isFullScreenVideo} = state;
+  const {isFullScreenVideo} = state;
+  const {videoDuration, currentVideoPlayTime} = videoPlayerState;
 
   const handleSlide = slide => {
     // videoPlayer.seek(slide * duration);
     // setCurrentTime(slide * duration);
-    return null;
+    console.log(slide);
+    // return null;
   };
   const handleFullScreen = () => {
     //  if (fullScreen) {
@@ -33,9 +43,11 @@ const PlayerSlider = () => {
   return (
     <View style={styles.sliderContainer}>
       <View style={styles.timeStampsContainer}>
-        <Text style={styles.durationTimeText}>{videoDuration}</Text>
+        <Text style={styles.durationTimeText}>{timeFormat(videoDuration)}</Text>
         <View style={styles.timeStampsInnerContainer}>
-          <Text style={styles.currentTimeText}>{currentVideoPlayTime} </Text>
+          <Text style={styles.currentTimeText}>
+            {timeFormat(currentVideoPlayTime)}{' '}
+          </Text>
           <Icon
             style={styles.fullscreenIcon}
             onPress={handleFullScreen}
@@ -48,7 +60,7 @@ const PlayerSlider = () => {
         maximumTrackImage="white"
         minimumTrackTintColor="#bc9665"
         thumbTintColor="white"
-        // value={currentTime / duration}
+        value={currentVideoPlayTime / videoDuration}
         onValueChange={handleSlide}
       />
     </View>

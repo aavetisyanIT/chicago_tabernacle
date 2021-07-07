@@ -134,18 +134,18 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
   //   );
   // };
 
-  const handleFullScreen = () => {
-    if (fullScreen) {
-      dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
-      FullScreen.disable();
-      Orientation.lockToPortrait();
-    } else {
-      dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
-      FullScreen.enable();
-      Orientation.lockToLandscape();
-    }
-    setFullScreen(currentFullScreen => !currentFullScreen);
-  };
+  // const handleFullScreen = () => {
+  //   if (fullScreen) {
+  //     dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
+  //     FullScreen.disable();
+  //     Orientation.lockToPortrait();
+  //   } else {
+  //     dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
+  //     FullScreen.enable();
+  //     Orientation.lockToLandscape();
+  //   }
+  //   setFullScreen(currentFullScreen => !currentFullScreen);
+  // };
 
   return (
     <View
