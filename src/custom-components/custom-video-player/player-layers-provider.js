@@ -8,12 +8,24 @@ import {actionTypes} from './../../context/action.types';
 const PlayerLayersProvider = () => {
   const [state, dispatch] = React.useContext(AppContext);
 
-  const {isOverlayView, isVideoPaused} = state;
+  const {
+    isOverlayView,
+    isVideoPaused,
+    isFullScreenVideo,
+    screenDimensions,
+  } = state;
+
+  const screenWidth = screenDimensions.window.width;
 
   const handlePlayPausePress = () => {
     dispatch({
       type: actionTypes.TOGGLE_PAUSE_VIDEO,
     });
+  };
+
+  const handleCloseIconPress = () => {
+    //  setOverlay(false);
+    null;
   };
 
   return (
@@ -36,6 +48,19 @@ const PlayerLayersProvider = () => {
             style={styles.icon}
             // onPress={handleSkipForward_10}
           />
+          <View
+            style={
+              isFullScreenVideo
+                ? {...styles.closeIconContainer, left: screenWidth}
+                : {...styles.closeIconContainer, left: screenWidth * 0.9}
+            }>
+            <Icon
+              style={styles.closeIcon}
+              size={30}
+              onPress={handleCloseIconPress}
+              name="close"
+            />
+          </View>
         </View>
       ) : (
         /* Hidden View Controllers */
@@ -73,4 +98,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   hiddenController: {flex: 1},
+  closeIconContainer: {
+    position: 'absolute',
+    top: 0,
+    margin: 5,
+  },
+  closeIcon: {color: 'white'},
 });
