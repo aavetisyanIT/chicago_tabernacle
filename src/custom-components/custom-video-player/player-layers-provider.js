@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {AppContext} from './../../context/app.context';
+import {actionTypes} from './../../context/action.types';
 
 const PlayerLayersProvider = () => {
   const [state, dispatch] = React.useContext(AppContext);
@@ -11,7 +12,7 @@ const PlayerLayersProvider = () => {
 
   const handlePlayPausePress = () => {
     dispatch({
-      type: 'TOGGLE_PAUSE_VIDEO',
+      type: actionTypes.TOGGLE_PAUSE_VIDEO,
     });
   };
 

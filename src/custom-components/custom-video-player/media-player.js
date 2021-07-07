@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import Video from 'react-native-video';
 
 import {AppContext} from './../../context/app.context';
+import {actionTypes} from './../../context/action.types';
 
 const MediaPlayer = ({videoUrl, imageUrl}) => {
   const [state, dispatch] = React.useContext(AppContext);
@@ -12,7 +13,7 @@ const MediaPlayer = ({videoUrl, imageUrl}) => {
 
   const handleOnLoad = ({duration}) => {
     dispatch({
-      type: 'SET_VIDEO_DURATION',
+      type: actionTypes.SET_VIDEO_DURATION,
       videoDuration: duration,
     });
   };
