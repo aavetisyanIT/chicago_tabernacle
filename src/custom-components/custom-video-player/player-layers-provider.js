@@ -4,11 +4,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
+import MediaPlayer from './media-player';
 
 let count = 0;
-const PlayerLayersProvider = () => {
+const PlayerLayersProvider = props => {
   count = count + 1;
-  console.log(`PlayerLayersProvider: ${count}`);
+  // console.log(`PlayerLayersProvider: ${count}`);
+
+  const {videoUrl, imageUrl} = props;
 
   const [state, dispatch] = React.useContext(AppContext);
 
@@ -29,7 +32,7 @@ const PlayerLayersProvider = () => {
 
   const handleCloseIconPress = () => {
     //  setOverlay(false);
-    null;
+    console.log('close');
   };
 
   const handleSkipForward_10 = () => {
@@ -103,6 +106,9 @@ const PlayerLayersProvider = () => {
 
   return (
     <View style={styles.overlayContainer}>
+      <View style={{...StyleSheet.absoluteFill}}>
+        <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
+      </View>
       {isOverlayView ? (
         <View style={styles.iconContainer}>
           {/* Overlay View Controllers */}
@@ -134,6 +140,7 @@ const PlayerLayersProvider = () => {
               name="close"
             />
           </View>
+          <View style={styles.childrenContainer}>{props.children}</View>
         </View>
       ) : (
         /* Hidden View Controllers */
@@ -153,7 +160,16 @@ const PlayerLayersProvider = () => {
 export default PlayerLayersProvider;
 
 const styles = StyleSheet.create({
+  // overlayContainer: {flex: 1},
   overlayContainer: {...StyleSheet.absoluteFill},
+  // childrenContainer: {...StyleSheet.absoluteFill},
+  childrenContainer: {
+    position: 'absolute',
+    left: 5,
+    right: 0,
+    bottom: 10,
+    backgroundColor: 'red',
+  },
   iconContainer: {
     flex: 1,
     flexDirection: 'row',

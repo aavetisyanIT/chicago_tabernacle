@@ -8,7 +8,7 @@ import {actionTypes} from './../../context/action.types';
 let count = 0;
 const PlayerFullscreenProvider = props => {
   count = count + 1;
-  console.log(`PlayerFullscreenProvider: ${count}`);
+  // console.log(`PlayerFullscreenProvider: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
 
@@ -45,7 +45,7 @@ const PlayerFullscreenProvider = props => {
               height: screenWidth * 0.5625,
             }
       }>
-      {props.children}
+      <View style={styles.childrenContainer}>{props.children}</View>
     </View>
   );
 };
@@ -57,4 +57,5 @@ const styles = StyleSheet.create({
   fullscreenContainer: {
     flex: 1,
   },
+  childrenContainer: {flex: 1},
 });

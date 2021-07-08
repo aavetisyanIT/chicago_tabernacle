@@ -172,17 +172,9 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
           poster={imageUrl}
           ref={ref => (videoPlayer = ref)}
           onLoad={handleLoad}
-          // onProgress={handleProgress}
+          onProgress={handleProgress}
           progressUpdateInterval={250.0}
           onEnd={handleEnd}></Video>
-        {/* <CustomVideoPlayerTracker
-          paused={paused}
-          videoUrl={videoUrl}
-          imageUrl={imageUrl}
-          onLoad={handleLoad}
-          onProgress={handleProgress}
-          onEnd={handleEnd}
-        /> */}
         <View style={styles.overlay}>
           {/* Shade effect */}
           {overlay ? (
@@ -203,17 +195,9 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
                 style={styles.icon}
                 onPress={handleSkipForward_10}
               />
-
-              <CustomVideoPlayerSlider currentTime={currentTime} />
-              <Icon
-                style={styles.fullscreenIcon}
-                onPress={handleFullScreen}
-                size={25}
-                name={fullScreen ? 'fullscreen-exit' : 'fullscreen'}
-              />
               {/* Slider and time stamps */}
-              {/*<View style={styles.sliderContainer}>
-                 <View style={styles.timeStampsContainer}>
+              <View style={styles.sliderContainer}>
+                <View style={styles.timeStampsContainer}>
                   <Text style={styles.durationTimeText}>
                     {timeFormat(duration)}
                   </Text>
@@ -235,9 +219,9 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
                   thumbTintColor="white"
                   value={currentTime / duration}
                   onValueChange={handleSlide}
-                /> 
-              </View>*/}
-              {/* <View
+                />
+              </View>
+              <View
                 style={
                   fullScreen
                     ? {...styles.closeIconContainer, left: width}
@@ -249,7 +233,7 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
                   onPress={handleCloseIconPress}
                   name="close"
                 />
-              </View> */}
+              </View>
             </View>
           ) : (
             <View style={styles.overlaySet}>

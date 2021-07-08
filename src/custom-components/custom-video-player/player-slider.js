@@ -23,7 +23,7 @@ const PlayerSlider = () => {
   const handleSlide = slide => {
     // videoPlayer.seek(slide * duration);
     // setCurrentTime(slide * duration);
-    console.log(slide);
+    console.log('Sliding --------------------------');
     // return null;
   };
   const handleFullScreen = () => {
@@ -70,7 +70,6 @@ const PlayerSlider = () => {
 export default PlayerSlider;
 
 const styles = StyleSheet.create({
-  sliderContainer: {position: 'absolute', left: 5, right: 0, bottom: 10},
   sliderContainer: {
     position: 'absolute',
     left: 5,

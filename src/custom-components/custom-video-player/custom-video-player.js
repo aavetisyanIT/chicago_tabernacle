@@ -9,18 +9,16 @@ import {VideoPlayerContextProvider} from './video-player-context/video.player.co
 let count = 0;
 const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
   count = count + 1;
-  console.log(`CustomVideoPlayer: ${count}`);
-  //  currentVideoPlayTime and videoDuration  state variables need to be move to
-  // own context and provided to only PlayerSlider and MediaPlayer components to
-  // reduce rerenders when play is running.
+  // console.log(`CustomVideoPlayer: ${count}`);
+
   return (
     <PlayerFullscreenProvider>
       <VideoPlayerContextProvider>
-        <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
-        <PlayerSlider />
-        <PlayerLayersProvider />
+        <PlayerLayersProvider videoUrl={videoUrl} imageUrl={imageUrl}>
+          {/* <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} /> */}
+          <PlayerSlider />
+        </PlayerLayersProvider>
       </VideoPlayerContextProvider>
-      <PlayerLayersProvider />
     </PlayerFullscreenProvider>
   );
 };
