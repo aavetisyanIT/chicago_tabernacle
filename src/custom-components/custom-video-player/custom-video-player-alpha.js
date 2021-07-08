@@ -36,8 +36,8 @@ const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
 
   let {height, width} = dimensions.window;
   let videoPlayer = null;
-  let lastTap = 0;
-  let timerId = 0;
+  // let lastTap = 0;
+  // let timerId = 0;
 
   // const onChange = ({window, screen}) => {
   //   setDimensions({window, screen});

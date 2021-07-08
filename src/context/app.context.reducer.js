@@ -7,7 +7,7 @@ const reducer = (state, action) => {
     case actionTypes.TOGGLE_PAUSE_VIDEO:
       return {...state, isVideoPaused: !state.isVideoPaused};
     case actionTypes.SET_OVERLAY_VIEW:
-      return {...state, isOverlayView: action.payload};
+      return {...state, isOverlayView: !state.isOverlayView};
     case actionTypes.SET_SCREEN_DIMENSIONS:
       return {
         ...state,

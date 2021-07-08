@@ -23,6 +23,8 @@ const PlayerLayersProvider = props => {
   } = state;
 
   const screenWidth = screenDimensions.window.width;
+  let lastTap = 0;
+  let timerId = 0;
 
   const handlePlayPausePress = () => {
     dispatch({
@@ -31,8 +33,9 @@ const PlayerLayersProvider = props => {
   };
 
   const handleCloseIconPress = () => {
-    //  setOverlay(false);
-    console.log('close');
+    dispatch({
+      type: actionTypes.SET_OVERLAY_VIEW,
+    });
   };
 
   const handleSkipForward_10 = () => {
@@ -56,17 +59,17 @@ const PlayerLayersProvider = props => {
   };
 
   const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
-    //  const now = Date.now();
-    //  const DOUBLE_PRESS_DELAY = 300;
-    //  if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
-    //    clearTimeout(timerId);
-    //    doubleTapCallback();
-    //  } else {
-    //    lastTap = now;
-    //    timerId = setTimeout(() => {
-    //      signleTapCallback();
-    //    }, DOUBLE_PRESS_DELAY);
-    //  }
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+      clearTimeout(timerId);
+      doubleTapCallback();
+    } else {
+      lastTap = now;
+      timerId = setTimeout(() => {
+        signleTapCallback();
+      }, DOUBLE_PRESS_DELAY);
+    }
     return null;
   };
 
@@ -75,15 +78,18 @@ const PlayerLayersProvider = props => {
     //    setCurrentTime(duration);
     //    return;
     //  }
-    //  handleDoubleTap(
-    //    () => {
-    //      videoPlayer.seek(currentTime + 10);
-    //      setCurrentTime(currentTime + 10);
-    //    },
-    //    () => {
-    //      setOverlay(true);
-    //    },
-    //  );
+    handleDoubleTap(
+      () => {
+        //  videoPlayer.seek(currentTime + 10);
+        //  setCurrentTime(currentTime + 10);
+        return null;
+      },
+      () => {
+        dispatch({
+          type: actionTypes.SET_OVERLAY_VIEW,
+        });
+      },
+    );
     return null;
   };
   const hiddenJumpBackward = () => {
@@ -92,15 +98,18 @@ const PlayerLayersProvider = props => {
     //    setCurrentTime(0);
     //    return;
     //  }
-    //  handleDoubleTap(
-    //    () => {
-    //      videoPlayer.seek(currentTime - 10);
-    //      setCurrentTime(currentTime - 10);
-    //    },
-    //    () => {
-    //      setOverlay(true);
-    //    },
-    //  );
+    handleDoubleTap(
+      () => {
+        //  videoPlayer.seek(currentTime - 10);
+        //  setCurrentTime(currentTime - 10);
+        return null;
+      },
+      () => {
+        dispatch({
+          type: actionTypes.SET_OVERLAY_VIEW,
+        });
+      },
+    );
     return null;
   };
 
