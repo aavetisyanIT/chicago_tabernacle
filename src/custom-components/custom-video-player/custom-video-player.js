@@ -1,6 +1,5 @@
 import React from 'react';
 
-import MediaPlayer from './media-player';
 import PlayerSlider from './player-slider';
 import PlayerFullscreenProvider from './player-fullscreen-provider';
 import PlayerLayersProvider from './player-layers-provider';
@@ -15,7 +14,6 @@ const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
     <PlayerFullscreenProvider>
       <VideoPlayerContextProvider>
         <PlayerLayersProvider videoUrl={videoUrl} imageUrl={imageUrl}>
-          {/* <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} /> */}
           <PlayerSlider />
         </PlayerLayersProvider>
       </VideoPlayerContextProvider>

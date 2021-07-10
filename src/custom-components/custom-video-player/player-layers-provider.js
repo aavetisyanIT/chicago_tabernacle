@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
 import MediaPlayer from './media-player';
+import {handleDoubleTap} from './../../utils/trackPlayerUtils';
 
 let count = 0;
 const PlayerLayersProvider = props => {
@@ -23,8 +24,6 @@ const PlayerLayersProvider = props => {
   } = state;
 
   const screenWidth = screenDimensions.window.width;
-  let lastTap = 0;
-  let timerId = 0;
 
   const handlePlayPausePress = () => {
     dispatch({
@@ -55,21 +54,6 @@ const PlayerLayersProvider = props => {
     //  }
     //  videoPlayer.seek(currentTime - 10);
     //  setCurrentTime(currentTime - 10);
-    return null;
-  };
-
-  const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
-    const now = Date.now();
-    const DOUBLE_PRESS_DELAY = 300;
-    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
-      clearTimeout(timerId);
-      doubleTapCallback();
-    } else {
-      lastTap = now;
-      timerId = setTimeout(() => {
-        signleTapCallback();
-      }, DOUBLE_PRESS_DELAY);
-    }
     return null;
   };
 
@@ -114,54 +98,55 @@ const PlayerLayersProvider = props => {
   };
 
   return (
-    <View style={styles.overlayContainer}>
-      <View style={{...StyleSheet.absoluteFill}}>
-        <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
-      </View>
-      {isOverlayView ? (
-        <View style={styles.iconContainer}>
-          {/* Overlay View Controllers */}
-          <Icon
-            name="skip-backward"
-            style={styles.icon}
-            onPress={handleSkipBackward_10}
-          />
-          <Icon
-            name={isVideoPaused ? 'play' : 'pause'}
-            style={styles.icon}
-            onPress={handlePlayPausePress}
-          />
-          <Icon
-            name="skip-forward"
-            style={styles.icon}
-            onPress={handleSkipForward_10}
-          />
-          <View
-            style={
-              isFullScreenVideo
-                ? {...styles.closeIconContainer, left: screenWidth}
-                : {...styles.closeIconContainer, left: screenWidth * 0.9}
-            }>
+    <View style={styles.container}>
+      <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
+      <View style={styles.overlayContainer}>
+        {isOverlayView ? (
+          <View style={styles.iconContainer}>
+            {/* Overlay View Controllers */}
             <Icon
-              style={styles.closeIcon}
-              size={30}
-              onPress={handleCloseIconPress}
-              name="close"
+              name="skip-backward"
+              style={styles.icon}
+              onPress={handleSkipBackward_10}
             />
+            <Icon
+              name={isVideoPaused ? 'play' : 'pause'}
+              style={styles.icon}
+              onPress={handlePlayPausePress}
+            />
+            <Icon
+              name="skip-forward"
+              style={styles.icon}
+              onPress={handleSkipForward_10}
+            />
+            {/* Slider and time stamps */}
+            <View style={styles.childrenContainer}>{props.children}</View>
+            <View
+              style={
+                isFullScreenVideo
+                  ? {...styles.closeIconContainer, left: screenWidth}
+                  : {...styles.closeIconContainer, left: screenWidth * 0.9}
+              }>
+              <Icon
+                style={styles.closeIcon}
+                size={30}
+                onPress={handleCloseIconPress}
+                name="close"
+              />
+            </View>
           </View>
-          <View style={styles.childrenContainer}>{props.children}</View>
-        </View>
-      ) : (
-        /* Hidden View Controllers */
-        <View style={styles.hiddenControllersContainer}>
-          <TouchableNativeFeedback onPress={hiddenJumpBackward}>
-            <View style={styles.hiddenController}></View>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback onPress={hiddenJumpFrontward}>
-            <View style={styles.hiddenController}></View>
-          </TouchableNativeFeedback>
-        </View>
-      )}
+        ) : (
+          /* Hidden View Controllers */
+          <View style={styles.hiddenControllersContainer}>
+            <TouchableNativeFeedback onPress={hiddenJumpBackward}>
+              <View style={styles.hiddenController}></View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={hiddenJumpFrontward}>
+              <View style={styles.hiddenController}></View>
+            </TouchableNativeFeedback>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
@@ -169,15 +154,13 @@ const PlayerLayersProvider = props => {
 export default PlayerLayersProvider;
 
 const styles = StyleSheet.create({
-  // overlayContainer: {flex: 1},
+  container: {...StyleSheet.absoluteFill},
   overlayContainer: {...StyleSheet.absoluteFill},
-  // childrenContainer: {...StyleSheet.absoluteFill},
   childrenContainer: {
     position: 'absolute',
     left: 5,
     right: 0,
     bottom: 10,
-    backgroundColor: 'red',
   },
   iconContainer: {
     flex: 1,
