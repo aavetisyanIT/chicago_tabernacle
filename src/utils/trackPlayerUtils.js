@@ -21,4 +21,21 @@ const timeFormat = time => {
   return timeStamp;
 };
 
+let lastTap = 0;
+let timerId = 0;
+export const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
+  const now = Date.now();
+  const DOUBLE_PRESS_DELAY = 300;
+  if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+    clearTimeout(timerId);
+    doubleTapCallback();
+  } else {
+    lastTap = now;
+    timerId = setTimeout(() => {
+      signleTapCallback();
+    }, DOUBLE_PRESS_DELAY);
+  }
+  return null;
+};
+
 export default timeFormat;
