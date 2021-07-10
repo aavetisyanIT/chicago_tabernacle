@@ -1,5 +1,6 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import Orientation from 'react-native-orientation';
 
 import FullScreen from './../../utils/fullScreen';
 import {AppContext} from './../../context/app.context';
@@ -23,8 +24,24 @@ const PlayerFullscreenProvider = props => {
     });
   };
 
+  const toggleScreenModes = () => {
+    if (!isFullScreenVideo) {
+      // dispatch({type: actionTypes.SET_FULLSCREEN_VIDEO, payload: false});
+      // dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
+      FullScreen.disable();
+      Orientation.lockToPortrait();
+    } else {
+      // dispatch({type: actionTypes.SET_FULLSCREEN_VIDEO, payload: true});
+      // dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
+      FullScreen.enable();
+      Orientation.lockToLandscape();
+    }
+    // dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
+  };
+
   React.useEffect(() => {
     Dimensions.addEventListener('change', onScreenRotation);
+    toggleScreenModes();
     return () => {
       Dimensions.removeEventListener('change', onScreenRotation);
     };

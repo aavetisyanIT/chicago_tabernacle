@@ -4,6 +4,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_FULLSCREEN_VIDEO:
       return {...state, isFullScreenVideo: action.payload};
+    case actionTypes.TOGGLE_FULLSCREEN_VIDEO:
+      return {...state, isFullScreenVideo: !state.isFullScreenVideo};
+    case actionTypes.HORIZONTAL_VIEW_VIDEO:
+      return {...state, isHorisontalVideoView: action.payload};
     case actionTypes.TOGGLE_PAUSE_VIDEO:
       return {...state, isVideoPaused: !state.isVideoPaused};
     case actionTypes.SET_OVERLAY_VIEW:

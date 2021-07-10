@@ -7,6 +7,7 @@ import FullScreen from '../../utils/fullScreen';
 import {AppContext} from './../../context/app.context';
 import {VideoPlayerContext} from './video-player-context/video.player.context';
 import timeFormat from './../../utils/trackPlayerUtils';
+import {actionTypes} from './../../context/action.types';
 
 let count = 0;
 const PlayerSlider = () => {
@@ -27,6 +28,8 @@ const PlayerSlider = () => {
     // return null;
   };
   const handleFullScreen = () => {
+    console.log('fullscreen');
+    dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
     //  if (fullScreen) {
     //    dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
     //    FullScreen.disable();
