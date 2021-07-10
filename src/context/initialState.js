@@ -10,6 +10,8 @@ const initialState = {
   isVideoPaused: true,
   isOverlayView: true,
   screenDimensions: {window: window, screen: screen},
+  articleVideoUrl: '',
+  articleImageUrl: '',
 };
 
 export default initialState;

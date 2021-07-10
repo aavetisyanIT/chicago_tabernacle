@@ -20,6 +20,16 @@ const reducer = (state, action) => {
           screen: action.payload.screen,
         },
       };
+    case actionTypes.SET_ARTICLE_VIDEO_URL:
+      return {
+        ...state,
+        articleVideoUrl: action.payload,
+      };
+    case actionTypes.SET_ARTICLE_IMAGE_URL:
+      return {
+        ...state,
+        articleImageUrl: action.payload,
+      };
     default:
       throw new Error();
   }
