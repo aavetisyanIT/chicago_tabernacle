@@ -22,10 +22,6 @@ const screen = Dimensions.get('screen');
 
 let counter = 0;
 const CustomVideoPlayerAlpha = ({videoUrl, imageUrl}) => {
-  // Need to reduce component rerendering when video is playing
-  // Need to add transitioning to height and width in fullscreen mode
-  counter++;
-  console.log(counter);
   const [state, dispatch] = React.useReducer(AppContext);
   const [paused, setPaused] = React.useState(true);
   const [overlay, setOverlay] = React.useState(true);

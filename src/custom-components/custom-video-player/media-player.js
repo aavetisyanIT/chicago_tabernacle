@@ -8,16 +8,16 @@ import {VideoPlayerContext} from './video-player-context/video.player.context';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
 let count = 0;
-const MediaPlayer = ({videoUrl, imageUrl}) => {
+const MediaPlayer = () => {
   count = count + 1;
-  // console.log(`MediaPlayer: ${count}`);
+  console.log(`MediaPlayer: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
     VideoPlayerContext,
   );
 
-  const {isVideoPaused} = state;
+  const {isVideoPaused, articleVideoUrl, articleImageUrl} = state;
   const {currentVideoPlayTime, videoDuration} = videoPlayerState;
 
   let videoPlayer = null;
@@ -41,9 +41,17 @@ const MediaPlayer = ({videoUrl, imageUrl}) => {
     <Video
       paused={isVideoPaused}
       style={styles.video}
-      source={{uri: videoUrl}}
+      source={{
+        uri: articleVideoUrl
+          ? articleVideoUrl
+          : 'https://player.vimeo.com/external/535955445.m3u8?s=9b15c3f1d9565e47615953db6c46c27b79c686fb',
+      }}
       resizeMode="contain"
-      poster={imageUrl}
+      poster={
+        articleImageUrl
+          ? articleImageUrl
+          : 'https://chitab.org/wp-content/uploads/2020/09/CT-blank-slide.png'
+      }
       progressUpdateInterval={250.0}
       ref={ref => (videoPlayer = ref)}
       onLoad={handleOnLoad}

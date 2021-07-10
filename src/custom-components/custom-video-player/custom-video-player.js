@@ -6,14 +6,14 @@ import PlayerLayersProvider from './player-layers-provider';
 import {VideoPlayerContextProvider} from './video-player-context/video.player.context.provider';
 
 let count = 0;
-const CustomVideoPlayer = ({videoUrl, imageUrl}) => {
+const CustomVideoPlayer = () => {
   count = count + 1;
-  // console.log(`CustomVideoPlayer: ${count}`);
+  console.log(`CustomVideoPlayer: ${count}`);
 
   return (
     <PlayerFullscreenProvider>
       <VideoPlayerContextProvider>
-        <PlayerLayersProvider videoUrl={videoUrl} imageUrl={imageUrl}>
+        <PlayerLayersProvider>
           <PlayerSlider />
         </PlayerLayersProvider>
       </VideoPlayerContextProvider>

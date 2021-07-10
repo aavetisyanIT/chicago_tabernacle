@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
+import {StyleSheet, View, TouchableNativeFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {AppContext} from './../../context/app.context';
@@ -10,9 +10,7 @@ import {handleDoubleTap} from './../../utils/trackPlayerUtils';
 let count = 0;
 const PlayerLayersProvider = props => {
   count = count + 1;
-  // console.log(`PlayerLayersProvider: ${count}`);
-
-  const {videoUrl, imageUrl} = props;
+  console.log(`PlayerLayersProvider: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
 
@@ -99,7 +97,7 @@ const PlayerLayersProvider = props => {
 
   return (
     <View style={styles.container}>
-      <MediaPlayer videoUrl={videoUrl} imageUrl={imageUrl} />
+      <MediaPlayer />
       <View style={styles.overlayContainer}>
         {isOverlayView ? (
           <View style={styles.iconContainer}>

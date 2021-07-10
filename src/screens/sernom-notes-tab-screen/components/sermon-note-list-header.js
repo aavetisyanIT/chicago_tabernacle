@@ -4,9 +4,13 @@ import {Text, View, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomTrackPlayer from '../../../custom-components/custom-track-player';
 import CustomVideoPlayer from './../../../custom-components/custom-video-player/custom-video-player';
+import {AppContext} from './../../../context/app.context';
+import {actionTypes} from './../../../context/action.types';
 
 const SermonNoteListHeader = ({article}) => {
   const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
+  const [state, dispatch] = React.useContext(AppContext);
+
   const showAudioPlayer = () => setAudioPlayerVisible(true);
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
 
@@ -16,6 +20,17 @@ const SermonNoteListHeader = ({article}) => {
   const sermonTitle = article.headline;
   const sermonImage = article.image.url;
 
+  React.useEffect(() => {
+    dispatch({
+      type: actionTypes.SET_ARTICLE_VIDEO_URL,
+      payload: videoUrl,
+    });
+    dispatch({
+      type: actionTypes.SET_ARTICLE_IMAGE_URL,
+      payload: sermonImage,
+    });
+  }, []);
+
   let articleHasAudio = null;
   article.audio.type === 'audio'
     ? (articleHasAudio = true)
@@ -24,7 +39,7 @@ const SermonNoteListHeader = ({article}) => {
   return (
     <>
       {videoUrl ? (
-        <CustomVideoPlayer videoUrl={videoUrl} imageUrl={sermonImage} />
+        <CustomVideoPlayer />
       ) : (
         <FastImage
           source={{

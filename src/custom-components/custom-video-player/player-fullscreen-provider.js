@@ -9,7 +9,7 @@ import {actionTypes} from './../../context/action.types';
 let count = 0;
 const PlayerFullscreenProvider = props => {
   count = count + 1;
-  // console.log(`PlayerFullscreenProvider: ${count}`);
+  console.log(`PlayerFullscreenProvider: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
 
