@@ -26,17 +26,12 @@ const PlayerFullscreenProvider = props => {
 
   const toggleScreenModes = () => {
     if (!isFullScreenVideo) {
-      // dispatch({type: actionTypes.SET_FULLSCREEN_VIDEO, payload: false});
-      // dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
       FullScreen.disable();
       Orientation.lockToPortrait();
     } else {
-      // dispatch({type: actionTypes.SET_FULLSCREEN_VIDEO, payload: true});
-      // dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
       FullScreen.enable();
       Orientation.lockToLandscape();
     }
-    // dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
   };
 
   React.useEffect(() => {

@@ -28,19 +28,7 @@ const PlayerSlider = () => {
     // return null;
   };
   const handleFullScreen = () => {
-    console.log('fullscreen');
     dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
-    //  if (fullScreen) {
-    //    dispatch({type: 'FULL_SCREEN_VIDEO', payload: false});
-    //    FullScreen.disable();
-    //    Orientation.lockToPortrait();
-    //  } else {
-    //    dispatch({type: 'HORIZONTAL_VIEW_VIDEO', payload: true});
-    //    FullScreen.enable();
-    //    Orientation.lockToLandscape();
-    //  }
-    //  setFullScreen(currentFullScreen => !currentFullScreen);
-    return null;
   };
 
   return (
