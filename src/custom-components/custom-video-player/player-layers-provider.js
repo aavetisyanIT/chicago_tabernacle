@@ -38,7 +38,7 @@ const PlayerLayersProvider = props => {
 
   const handleCloseIconPress = () => {
     dispatch({
-      type: actionTypes.SET_OVERLAY_VIEW,
+      type: actionTypes.TOGGLE_OVERLAY_VIEW,
     });
   };
 
@@ -90,7 +90,7 @@ const PlayerLayersProvider = props => {
       },
       () => {
         dispatch({
-          type: actionTypes.SET_OVERLAY_VIEW,
+          type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });
       },
     );
@@ -114,7 +114,7 @@ const PlayerLayersProvider = props => {
       },
       () => {
         dispatch({
-          type: actionTypes.SET_OVERLAY_VIEW,
+          type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });
       },
     );

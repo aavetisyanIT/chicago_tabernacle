@@ -19,11 +19,8 @@ const MediaPlayer = () => {
   );
 
   const {isVideoPaused, articleVideoUrl, articleImageUrl} = state;
-  const {currentVideoPlayTime, videoDuration} = videoPlayerState;
 
   let videoPlayer = React.useRef(null);
-
-  console.log(videoPlayer.current);
 
   React.useEffect(() => {
     dispatchToVideoPlayer({
@@ -45,7 +42,22 @@ const MediaPlayer = () => {
     });
   };
 
-  const handleOnEnd = () => null;
+  const handleOnEnd = () => {
+    dispatch({
+      type: actionTypes.SET_PAUSE_VIDEO,
+      action: true,
+    });
+    //videoPlayer object is stored in current property of refUse
+    videoPlayer.current.seek(0.1);
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+      payload: 0,
+    });
+    dispatch({
+      type: actionTypes.SET_OVERLAY_VIEW,
+      action: true,
+    });
+  };
 
   return (
     <Video
