@@ -7,6 +7,7 @@ import {VideoPlayerContext} from './video-player-context/video.player.context';
 import {actionTypes} from './../../context/action.types';
 import MediaPlayer from './media-player';
 import {handleDoubleTap} from './../../utils/trackPlayerUtils';
+import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
 let count = 0;
 const PlayerLayersProvider = props => {
@@ -42,35 +43,50 @@ const PlayerLayersProvider = props => {
   };
 
   const handleSkipForward_10 = () => {
-    //  if (currentTime >= duration) {
-    //    setCurrentTime(duration);
-    //    return;
-    //  }
-    //  videoPlayer.seek(currentTime + 10);
-    //  setCurrentTime(currentTime + 10);
-    return null;
+    if (currentVideoPlayTime >= videoDuration) {
+      setCurrentTime(duration);
+      dispatchToVideoPlayer({
+        type: videoPlayerActionTypes.SET_VIDEO_DURATION,
+        payload: videoDuration,
+      });
+      return;
+    }
+    videoPlayer.seek(currentVideoPlayTime + 10);
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+      payload: currentVideoPlayTime + 10,
+    });
   };
   const handleSkipBackward_10 = () => {
-    //  if (currentTime <= 10) {
-    //    videoPlayer.seek(0.1);
-    //    setCurrentTime(0);
-    //    return;
-    //  }
-    //  videoPlayer.seek(currentTime - 10);
-    //  setCurrentTime(currentTime - 10);
-    return null;
+    if (currentVideoPlayTime <= 10) {
+      videoPlayer.seek(0.1);
+      dispatchToVideoPlayer({
+        type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+        payload: 0,
+      });
+      return;
+    }
+    videoPlayer.seek(currentVideoPlayTime - 10);
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+      payload: currentVideoPlayTime - 10,
+    });
   };
 
   const hiddenJumpFrontward = () => {
-    //  if (currentTime >= duration) {
-    //    setCurrentTime(duration);
-    //    return;
-    //  }
+    if (currentVideoPlayTime >= videoDuration) {
+      return dispatchToVideoPlayer({
+        type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+        payload: videoDuration,
+      });
+    }
     handleDoubleTap(
       () => {
-        //  videoPlayer.seek(currentTime + 10);
-        //  setCurrentTime(currentTime + 10);
-        return null;
+        videoPlayer.seek(currentVideoPlayTime + 10);
+        dispatchToVideoPlayer({
+          type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+          payload: currentVideoPlayTime + 10,
+        });
       },
       () => {
         dispatch({
@@ -81,16 +97,20 @@ const PlayerLayersProvider = props => {
     return null;
   };
   const hiddenJumpBackward = () => {
-    //  if (currentTime <= 10) {
-    //    videoPlayer.seek(0.1);
-    //    setCurrentTime(0);
-    //    return;
-    //  }
+    if (currentVideoPlayTime <= 10) {
+      videoPlayer.seek(0.1);
+      return dispatchToVideoPlayer({
+        type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+        payload: 0,
+      });
+    }
     handleDoubleTap(
       () => {
-        //  videoPlayer.seek(currentTime - 10);
-        //  setCurrentTime(currentTime - 10);
-        return null;
+        videoPlayer.seek(currentVideoPlayTime - 10);
+        dispatchToVideoPlayer({
+          type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+          payload: currentVideoPlayTime - 10,
+        });
       },
       () => {
         dispatch({

@@ -23,23 +23,25 @@ const MediaPlayer = () => {
 
   let videoPlayer = React.useRef(null);
 
+  console.log(videoPlayer.current);
+
   React.useEffect(() => {
     dispatchToVideoPlayer({
       type: videoPlayerActionTypes.SET_VIDEO_PLAYER_OBJECT,
-      payload: videoPlayer,
+      payload: videoPlayer.current,
     });
   }, [videoPlayer]);
 
   const handleOnLoad = ({duration}) => {
     dispatchToVideoPlayer({
       type: videoPlayerActionTypes.SET_VIDEO_DURATION,
-      payload: {videoDuration: duration},
+      payload: duration,
     });
   };
   const handleOnProgress = ({currentTime}) => {
     dispatchToVideoPlayer({
       type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
-      payload: {currentTime: currentTime},
+      payload: currentTime,
     });
   };
 

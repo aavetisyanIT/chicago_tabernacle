@@ -5,12 +5,12 @@ const videoPlayerReducer = (state, action) => {
     case videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME:
       return {
         ...state,
-        currentVideoPlayTime: action.payload.currentTime,
+        currentVideoPlayTime: action.payload,
       };
     case videoPlayerActionTypes.SET_VIDEO_DURATION:
       return {
         ...state,
-        videoDuration: action.payload.videoDuration,
+        videoDuration: action.payload,
       };
     case videoPlayerActionTypes.SET_VIDEO_PLAYER_OBJECT:
       return {
