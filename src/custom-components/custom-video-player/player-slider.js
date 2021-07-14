@@ -3,10 +3,11 @@ import {StyleSheet, Text, View} from 'react-native';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import timeFormat from './../../utils/trackPlayerUtils';
 import {AppContext} from './../../context/app.context';
 import {VideoPlayerContext} from './video-player-context/video.player.context';
-import timeFormat from './../../utils/trackPlayerUtils';
 import {actionTypes} from './../../context/action.types';
+import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
 let count = 0;
 const PlayerSlider = () => {
@@ -18,14 +19,16 @@ const PlayerSlider = () => {
   const [state, dispatch] = React.useContext(AppContext);
 
   const {isFullScreenVideo} = state;
-  const {videoDuration, currentVideoPlayTime} = videoPlayerState;
+  const {videoDuration, currentVideoPlayTime, videoPlayer} = videoPlayerState;
 
   const handleSlide = slide => {
-    // videoPlayer.seek(slide * duration);
-    // setCurrentTime(slide * duration);
-    console.log('Sliding --------------------------');
-    // return null;
+    videoPlayer.seek(slide * videoDuration);
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+      payload: slide * videoDuration,
+    });
   };
+
   const handleFullScreen = () => {
     dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
   };
