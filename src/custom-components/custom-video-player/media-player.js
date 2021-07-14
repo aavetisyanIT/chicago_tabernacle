@@ -8,9 +8,10 @@ import {VideoPlayerContext} from './video-player-context/video.player.context';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
 let count = 0;
+
 const MediaPlayer = () => {
   count = count + 1;
-  console.log(`MediaPlayer: ${count}`);
+  // console.log(`MediaPlayer: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
@@ -20,7 +21,14 @@ const MediaPlayer = () => {
   const {isVideoPaused, articleVideoUrl, articleImageUrl} = state;
   const {currentVideoPlayTime, videoDuration} = videoPlayerState;
 
-  let videoPlayer = null;
+  let videoPlayer = React.useRef(null);
+
+  React.useEffect(() => {
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_VIDEO_PLAYER_OBJECT,
+      payload: videoPlayer,
+    });
+  }, [videoPlayer]);
 
   const handleOnLoad = ({duration}) => {
     dispatchToVideoPlayer({
@@ -53,7 +61,7 @@ const MediaPlayer = () => {
           : 'https://chitab.org/wp-content/uploads/2020/09/CT-blank-slide.png'
       }
       progressUpdateInterval={250.0}
-      ref={ref => (videoPlayer = ref)}
+      ref={videoPlayer}
       onLoad={handleOnLoad}
       onProgress={handleOnProgress}
       onEnd={handleOnEnd}

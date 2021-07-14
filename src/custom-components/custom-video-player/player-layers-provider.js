@@ -3,6 +3,7 @@ import {StyleSheet, View, TouchableNativeFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {AppContext} from './../../context/app.context';
+import {VideoPlayerContext} from './video-player-context/video.player.context';
 import {actionTypes} from './../../context/action.types';
 import MediaPlayer from './media-player';
 import {handleDoubleTap} from './../../utils/trackPlayerUtils';
@@ -13,6 +14,9 @@ const PlayerLayersProvider = props => {
   console.log(`PlayerLayersProvider: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
+  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+    VideoPlayerContext,
+  );
 
   const {
     isOverlayView,
@@ -20,6 +24,8 @@ const PlayerLayersProvider = props => {
     isFullScreenVideo,
     screenDimensions,
   } = state;
+
+  const {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
 
   const screenWidth = screenDimensions.window.width;
 

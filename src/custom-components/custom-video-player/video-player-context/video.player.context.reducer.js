@@ -12,6 +12,11 @@ const videoPlayerReducer = (state, action) => {
         ...state,
         videoDuration: action.payload.videoDuration,
       };
+    case videoPlayerActionTypes.SET_VIDEO_PLAYER_OBJECT:
+      return {
+        ...state,
+        videoPlayer: action.payload,
+      };
     default:
       throw new Error();
   }
