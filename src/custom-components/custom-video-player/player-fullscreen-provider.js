@@ -2,14 +2,13 @@ import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import Orientation from 'react-native-orientation';
 
-import FullScreen from './../../utils/fullScreen';
 import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
 
 let count = 0;
 const PlayerFullscreenProvider = props => {
   count = count + 1;
-  console.log(`PlayerFullscreenProvider: ${count}`);
+  // console.log(`PlayerFullscreenProvider: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
 
@@ -17,21 +16,19 @@ const PlayerFullscreenProvider = props => {
   const screenHeight = screenDimensions.window.height;
   const screenWidth = screenDimensions.window.width;
 
+  const toggleScreenModes = () => {
+    if (!isFullScreenVideo) {
+      Orientation.lockToPortrait();
+    } else {
+      Orientation.lockToLandscape();
+    }
+  };
+
   const onScreenRotation = ({window, screen}) => {
     dispatch({
       type: actionTypes.SET_SCREEN_DIMENSIONS,
       payload: {window: window, screen: screen},
     });
-  };
-
-  const toggleScreenModes = () => {
-    if (!isFullScreenVideo) {
-      FullScreen.disable();
-      Orientation.lockToPortrait();
-    } else {
-      FullScreen.enable();
-      Orientation.lockToLandscape();
-    }
   };
 
   React.useEffect(() => {

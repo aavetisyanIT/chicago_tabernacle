@@ -12,7 +12,7 @@ import {videoPlayerActionTypes} from './video-player-context/video.player.action
 let count = 0;
 const PlayerLayersProvider = props => {
   count = count + 1;
-  console.log(`PlayerLayersProvider: ${count}`);
+  // console.log(`PlayerLayersProvider: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(

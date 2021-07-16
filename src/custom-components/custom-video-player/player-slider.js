@@ -12,7 +12,7 @@ import {videoPlayerActionTypes} from './video-player-context/video.player.action
 let count = 0;
 const PlayerSlider = () => {
   count = count + 1;
-  console.log(`PlayerSlider: ${count}`);
+  // console.log(`PlayerSlider: ${count}`);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
     VideoPlayerContext,
   );

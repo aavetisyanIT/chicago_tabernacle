@@ -8,7 +8,7 @@ import {VideoPlayerContextProvider} from './video-player-context/video.player.co
 let count = 0;
 const CustomVideoPlayer = () => {
   count = count + 1;
-  console.log(`CustomVideoPlayer: ${count}`);
+  // console.log(`CustomVideoPlayer: ${count}`);
 
   return (
     <PlayerFullscreenProvider>
