@@ -11,7 +11,7 @@ let count = 0;
 
 const MediaPlayer = () => {
   count = count + 1;
-  console.log(`MediaPlayer: ${count}`);
+  // console.log(`MediaPlayer: ${count}`);
 
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(

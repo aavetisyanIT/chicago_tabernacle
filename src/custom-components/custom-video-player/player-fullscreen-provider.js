@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View, Animated, Easing} from 'react-native';
 import Orientation from 'react-native-orientation';
 
 import {AppContext} from './../../context/app.context';
@@ -16,11 +16,29 @@ const PlayerFullscreenProvider = props => {
   const screenHeight = screenDimensions.window.height;
   const screenWidth = screenDimensions.window.width;
 
+  const width = React.useRef(new Animated.Value(screenWidth)).current;
+  const height = React.useRef(new Animated.Value(screenHeight)).current;
+
+  React.useEffect(() => {
+    Animated.timing(width, {
+      toValue: screenWidth * 0.5625,
+      duration: 0,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(height, {
+      toValue: screenWidth + 1,
+      duration: 0,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }, []);
+
   const toggleScreenModes = () => {
-    if (!isFullScreenVideo) {
-      Orientation.lockToPortrait();
-    } else {
+    if (isFullScreenVideo) {
       Orientation.lockToLandscape();
+    } else {
+      Orientation.lockToPortrait();
     }
   };
 
@@ -40,22 +58,23 @@ const PlayerFullscreenProvider = props => {
   }, [isFullScreenVideo]);
 
   return (
-    <View
+    <Animated.View
       style={
         isFullScreenVideo
           ? {
               ...styles.fullscreenContainer,
               // adding 1 to hide little stripe
-              height: screenHeight + 1,
+              height: height,
             }
           : {
               ...styles.container,
-              width: screenWidth,
-              height: screenWidth * 0.5625,
+              // width: screenWidth,
+              // height: screenWidth * 0.5625,
+              height: width,
             }
       }>
       <View style={styles.childrenContainer}>{props.children}</View>
-    </View>
+    </Animated.View>
   );
 };
 
