@@ -11,7 +11,9 @@ import TrackPlayer from 'react-native-track-player';
 export default function Main() {
   return (
     <PaperProvider>
+      {/* <React.StrictMode> */}
       <App />
+      {/* </React.StrictMode> */}
     </PaperProvider>
   );
 }

@@ -10,6 +10,10 @@ const PlayerFullscreenProvider = props => {
   count = count + 1;
   // console.log(`PlayerFullscreenProvider: ${count}`);
 
+  // issues:
+  // close icon jumps on screen mode change
+  // single devotional from home screen is showing header
+
   const [state, dispatch] = React.useContext(AppContext);
 
   const {screenDimensions, isFullScreenVideo} = state;
@@ -19,14 +23,19 @@ const PlayerFullscreenProvider = props => {
   const width = React.useRef(new Animated.Value(screenWidth)).current;
   const height = React.useRef(new Animated.Value(screenHeight)).current;
 
+  console.log(
+    `Fullscreen Provider height: ${screenHeight}, wigth: ${screenWidth}`,
+  );
+
   React.useEffect(() => {
     Animated.timing(width, {
-      toValue: screenWidth * 0.5625,
+      toValue: screenWidth * 0.57,
       duration: 0,
       easing: Easing.linear,
       useNativeDriver: false,
     }).start();
     Animated.timing(height, {
+      // adding 1 to hide little stripe
       toValue: screenWidth + 1,
       duration: 0,
       easing: Easing.linear,
@@ -63,13 +72,11 @@ const PlayerFullscreenProvider = props => {
         isFullScreenVideo
           ? {
               ...styles.fullscreenContainer,
-              // adding 1 to hide little stripe
               height: height,
+              marginTop: -1,
             }
           : {
               ...styles.container,
-              // width: screenWidth,
-              // height: screenWidth * 0.5625,
               height: width,
             }
       }>

@@ -29,6 +29,9 @@ const PlayerLayersProvider = props => {
   const {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
 
   const screenWidth = screenDimensions.window.width;
+  const screenHeight = screenDimensions.window.height;
+
+  console.log(`Close button height: ${screenHeight}, wigth: ${screenWidth}`);
 
   const handlePlayPausePress = () => {
     dispatch({

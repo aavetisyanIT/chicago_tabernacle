@@ -7,7 +7,6 @@ import {navigationRef} from './navigation/RootNavigation';
 import RootStack from './navigation/RootStack';
 import {reactNativePaperTheme} from './config/react-native-paper-theme';
 import {AppContextProvider} from './context/app.context.provider';
-import {VideoPlayerContextProvider} from './custom-components/custom-video-player/video-player-context/video.player.context.provider';
 
 export default function App() {
   return (
