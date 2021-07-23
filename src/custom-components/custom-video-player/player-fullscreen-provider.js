@@ -23,9 +23,9 @@ const PlayerFullscreenProvider = props => {
   const width = React.useRef(new Animated.Value(screenWidth)).current;
   const height = React.useRef(new Animated.Value(screenHeight)).current;
 
-  console.log(
-    `Fullscreen Provider height: ${screenHeight}, wigth: ${screenWidth}`,
-  );
+  // console.log(
+  //   `Fullscreen Provider height: ${screenHeight}, wigth: ${screenWidth}`,
+  // );
 
   React.useEffect(() => {
     Animated.timing(width, {

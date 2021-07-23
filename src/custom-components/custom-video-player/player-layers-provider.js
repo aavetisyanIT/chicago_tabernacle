@@ -13,7 +13,7 @@ let count = 0;
 const PlayerLayersProvider = props => {
   count = count + 1;
   // console.log(`PlayerLayersProvider: ${count}`);
-
+  const [dismissTimerId, setDismissTimerId] = React.useState(0);
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
     VideoPlayerContext,
@@ -31,21 +31,36 @@ const PlayerLayersProvider = props => {
   const screenWidth = screenDimensions.window.width;
   const screenHeight = screenDimensions.window.height;
 
-  console.log(`Close button height: ${screenHeight}, wigth: ${screenWidth}`);
+  // console.log(`Close button height: ${screenHeight}, wigth: ${screenWidth}`);
+
+  const setUpDismissTimer = () => {
+    clearTimeout(dismissTimerId);
+    let timerId = setTimeout(() => {
+      dispatch({
+        type: actionTypes.TOGGLE_OVERLAY_VIEW,
+      });
+    }, 3000);
+    setDismissTimerId(timerId);
+  };
 
   const handlePlayPausePress = () => {
+    setUpDismissTimer();
     dispatch({
       type: actionTypes.TOGGLE_PAUSE_VIDEO,
     });
   };
 
   const handleCloseIconPress = () => {
+    clearTimeout(dismissTimerId);
+
     dispatch({
       type: actionTypes.TOGGLE_OVERLAY_VIEW,
     });
   };
 
   const handleSkipForward_10 = () => {
+    setUpDismissTimer();
+
     if (currentVideoPlayTime >= videoDuration) {
       setCurrentTime(duration);
       dispatchToVideoPlayer({
@@ -61,6 +76,8 @@ const PlayerLayersProvider = props => {
     });
   };
   const handleSkipBackward_10 = () => {
+    setUpDismissTimer();
+
     if (currentVideoPlayTime <= 10) {
       videoPlayer.seek(0.1);
       dispatchToVideoPlayer({
@@ -92,6 +109,7 @@ const PlayerLayersProvider = props => {
         });
       },
       () => {
+        setUpDismissTimer();
         dispatch({
           type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });
@@ -99,6 +117,7 @@ const PlayerLayersProvider = props => {
     );
     return null;
   };
+
   const hiddenJumpBackward = () => {
     if (currentVideoPlayTime <= 10) {
       videoPlayer.seek(0.1);
@@ -116,6 +135,7 @@ const PlayerLayersProvider = props => {
         });
       },
       () => {
+        setUpDismissTimer();
         dispatch({
           type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });

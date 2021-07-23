@@ -1,7 +1,7 @@
 import React from 'react';
 
-import videoPlayerInitialState from './video.player.initialState';
 import {VideoPlayerContext} from './video.player.context';
+import videoPlayerInitialState from './video.player.initialState';
 import videoPlayerReducer from './video.player.context.reducer';
 
 export const VideoPlayerContextProvider = props => {
