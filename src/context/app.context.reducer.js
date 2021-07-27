@@ -34,6 +34,11 @@ const reducer = (state, action) => {
         ...state,
         articleImageUrl: action.payload,
       };
+    case actionTypes.SET_DISMISS_TIMER_ID:
+      return {
+        ...state,
+        dismissTimerId: action.payload,
+      };
     default:
       throw new Error();
   }

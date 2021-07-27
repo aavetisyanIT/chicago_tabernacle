@@ -9,10 +9,7 @@ import MediaPlayer from './media-player';
 import {handleDoubleTap} from './../../utils/trackPlayerUtils';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
-let count = 0;
 const PlayerLayersProvider = props => {
-  count = count + 1;
-  // console.log(`PlayerLayersProvider: ${count}`);
   const [dismissTimerId, setDismissTimerId] = React.useState(0);
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
@@ -29,9 +26,6 @@ const PlayerLayersProvider = props => {
   const {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
 
   const screenWidth = screenDimensions.window.width;
-  const screenHeight = screenDimensions.window.height;
-
-  // console.log(`Close button height: ${screenHeight}, wigth: ${screenWidth}`);
 
   const setUpDismissTimer = () => {
     clearTimeout(dismissTimerId);
@@ -52,7 +46,6 @@ const PlayerLayersProvider = props => {
 
   const handleCloseIconPress = () => {
     clearTimeout(dismissTimerId);
-
     dispatch({
       type: actionTypes.TOGGLE_OVERLAY_VIEW,
     });

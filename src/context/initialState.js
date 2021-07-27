@@ -12,6 +12,7 @@ const initialState = {
   screenDimensions: {window: window, screen: screen},
   articleVideoUrl: '',
   articleImageUrl: '',
+  dismissTimerId: 0,
 };
 
 export default initialState;
