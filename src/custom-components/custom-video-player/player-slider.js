@@ -9,17 +9,13 @@ import {VideoPlayerContext} from './video-player-context/video.player.context';
 import {actionTypes} from './../../context/action.types';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
-let count = 0;
 const PlayerSlider = () => {
-  count = count + 1;
-  // console.log(`PlayerSlider: ${count}`);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-    VideoPlayerContext,
-  );
-  const [state, dispatch] = React.useContext(AppContext);
-
-  const {isFullScreenVideo} = state;
-  const {videoDuration, currentVideoPlayTime, videoPlayer} = videoPlayerState;
+      VideoPlayerContext,
+    ),
+    [state, dispatch] = React.useContext(AppContext),
+    {isFullScreenVideo} = state,
+    {videoDuration, currentVideoPlayTime, videoPlayer} = videoPlayerState;
 
   const handleSlide = slide => {
     videoPlayer.seek(slide * videoDuration);

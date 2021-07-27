@@ -5,27 +5,18 @@ import Orientation from 'react-native-orientation';
 import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
 
-let count = 0;
 const PlayerFullscreenProvider = props => {
-  count = count + 1;
-  // console.log(`PlayerFullscreenProvider: ${count}`);
-
   // issues:
   // close icon jumps on screen mode change
   // single devotional from home screen is showing header
 
-  const [state, dispatch] = React.useContext(AppContext);
-
-  const {screenDimensions, isFullScreenVideo} = state;
-  const screenHeight = screenDimensions.window.height;
-  const screenWidth = screenDimensions.window.width;
-
-  const width = React.useRef(new Animated.Value(screenWidth)).current;
-  const height = React.useRef(new Animated.Value(screenHeight)).current;
-
-  // console.log(
-  //   `Fullscreen Provider height: ${screenHeight}, wigth: ${screenWidth}`,
-  // );
+  const [state, dispatch] = React.useContext(AppContext),
+    {screenDimensions, isFullScreenVideo} = state,
+    screenHeight = screenDimensions.window.height,
+    screenWidth = screenDimensions.window.width,
+    dismissTimerId = state.dismissTimerId,
+    width = React.useRef(new Animated.Value(screenWidth)).current,
+    height = React.useRef(new Animated.Value(screenHeight)).current;
 
   React.useEffect(() => {
     Animated.timing(width, {
@@ -46,8 +37,18 @@ const PlayerFullscreenProvider = props => {
   const toggleScreenModes = () => {
     if (isFullScreenVideo) {
       Orientation.lockToLandscape();
+      clearTimeout(dismissTimerId);
+      dispatch({
+        type: actionTypes.SET_OVERLAY_VIEW,
+        payload: false,
+      });
     } else {
       Orientation.lockToPortrait();
+      clearTimeout(dismissTimerId);
+      dispatch({
+        type: actionTypes.SET_OVERLAY_VIEW,
+        payload: false,
+      });
     }
   };
 

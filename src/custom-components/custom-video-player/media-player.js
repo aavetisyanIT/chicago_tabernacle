@@ -7,23 +7,17 @@ import {actionTypes} from './../../context/action.types';
 import {VideoPlayerContext} from './video-player-context/video.player.context';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
-let count = 0;
-
 const MediaPlayer = () => {
-  count = count + 1;
-  // console.log(`MediaPlayer: ${count}`);
-
-  const [state, dispatch] = React.useContext(AppContext);
-  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-    VideoPlayerContext,
-  );
-
-  const {
-    isVideoPaused,
-    articleVideoUrl,
-    articleImageUrl,
-    isFullScreenVideo,
-  } = state;
+  const [state, dispatch] = React.useContext(AppContext),
+    [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+      VideoPlayerContext,
+    ),
+    {
+      isVideoPaused,
+      articleVideoUrl,
+      articleImageUrl,
+      isFullScreenVideo,
+    } = state;
 
   let videoPlayer = React.useRef(null);
 

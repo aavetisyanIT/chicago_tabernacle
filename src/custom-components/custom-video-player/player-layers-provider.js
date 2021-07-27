@@ -10,7 +10,6 @@ import {handleDoubleTap} from './../../utils/trackPlayerUtils';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
 const PlayerLayersProvider = props => {
-  const [dismissTimerId, setDismissTimerId] = React.useState(0);
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
     VideoPlayerContext,
@@ -21,6 +20,7 @@ const PlayerLayersProvider = props => {
     isVideoPaused,
     isFullScreenVideo,
     screenDimensions,
+    dismissTimerId,
   } = state;
 
   const {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
@@ -34,7 +34,10 @@ const PlayerLayersProvider = props => {
         type: actionTypes.TOGGLE_OVERLAY_VIEW,
       });
     }, 3000);
-    setDismissTimerId(timerId);
+    dispatch({
+      type: actionTypes.SET_DISMISS_TIMER_ID,
+      payload: timerId,
+    });
   };
 
   const handlePlayPausePress = () => {
