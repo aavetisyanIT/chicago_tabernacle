@@ -1,5 +1,10 @@
 import React from 'react';
-import {StyleSheet, View, TouchableNativeFeedback} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableNativeFeedback,
+  Pressable,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {AppContext} from './../../context/app.context';
@@ -10,22 +15,12 @@ import {handleDoubleTap} from './../../utils/trackPlayerUtils';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
 const PlayerLayersProvider = props => {
-  const [state, dispatch] = React.useContext(AppContext);
-  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-    VideoPlayerContext,
-  );
-
-  const {
-    isOverlayView,
-    isVideoPaused,
-    isFullScreenVideo,
-    screenDimensions,
-    dismissTimerId,
-  } = state;
-
-  const {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
-
-  const screenWidth = screenDimensions.window.width;
+  const [state, dispatch] = React.useContext(AppContext),
+    [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+      VideoPlayerContext,
+    ),
+    {isOverlayView, isVideoPaused, dismissTimerId} = state,
+    {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
 
   const setUpDismissTimer = () => {
     clearTimeout(dismissTimerId);
@@ -40,17 +35,17 @@ const PlayerLayersProvider = props => {
     });
   };
 
+  const closeOverlay = () => {
+    clearTimeout(dismissTimerId);
+    dispatch({
+      type: actionTypes.TOGGLE_OVERLAY_VIEW,
+    });
+  };
+
   const handlePlayPausePress = () => {
     setUpDismissTimer();
     dispatch({
       type: actionTypes.TOGGLE_PAUSE_VIDEO,
-    });
-  };
-
-  const handleCloseIconPress = () => {
-    clearTimeout(dismissTimerId);
-    dispatch({
-      type: actionTypes.TOGGLE_OVERLAY_VIEW,
     });
   };
 
@@ -145,39 +140,25 @@ const PlayerLayersProvider = props => {
       <MediaPlayer />
       <View style={styles.overlayContainer}>
         {isOverlayView ? (
-          <View style={styles.iconContainer}>
+          <Pressable style={styles.iconContainer} onPress={closeOverlay}>
             {/* Overlay View Controllers */}
             <Icon
               name="skip-backward"
-              style={styles.icon}
               onPress={handleSkipBackward_10}
+              style={styles.icon}
             />
             <Icon
               name={isVideoPaused ? 'play' : 'pause'}
-              style={styles.icon}
               onPress={handlePlayPausePress}
+              style={styles.icon}
             />
             <Icon
               name="skip-forward"
-              style={styles.icon}
               onPress={handleSkipForward_10}
+              style={styles.icon}
             />
-            {/* Slider and time stamps */}
             <View style={styles.childrenContainer}>{props.children}</View>
-            <View
-              style={
-                isFullScreenVideo
-                  ? {...styles.closeIconContainer, left: screenWidth}
-                  : {...styles.closeIconContainer, left: screenWidth * 0.9}
-              }>
-              <Icon
-                style={styles.closeIcon}
-                size={30}
-                onPress={handleCloseIconPress}
-                name="close"
-              />
-            </View>
-          </View>
+          </Pressable>
         ) : (
           /* Hidden View Controllers */
           <View style={styles.hiddenControllersContainer}>
@@ -208,10 +189,11 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     backgroundColor: '#0006',
   },
   icon: {
-    flex: 1,
     color: 'white',
     textAlign: 'center',
     textAlignVertical: 'center',
