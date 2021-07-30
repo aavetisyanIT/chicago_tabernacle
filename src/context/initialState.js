@@ -13,6 +13,7 @@ const initialState = {
   articleVideoUrl: '',
   articleImageUrl: '',
   dismissTimerId: 0,
+  isTrackPlaying: false,
 };
 
 export default initialState;

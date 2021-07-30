@@ -29,23 +29,17 @@ const CustomTrackPlayer = ({
 }) => {
   //state to manage whether track player is initialized or not
   //The play button stays disabled if the Track Player isn't initialized.
-  const [isTrackPlayerInit, setIsTrackPlayerInit] = React.useState(false);
-
-  const [isPlaying, setIsPlaying] = React.useState(false);
-
-  const [timeStamp, setTimeStamp] = React.useState('00:00');
-
-  const [trackTime, setTrackTime] = React.useState('00:00');
-
-  //the value of the slider should be between 0 and 1
-  const [sliderValue, setSliderValue] = React.useState(0);
-
-  //flag to check whether the use is sliding the seekbar or not
-  const [isSeeking, setIsSeeking] = React.useState(false);
-
-  //useTrackPlayerProgress is a hook which provides the current position
-  //and duration of the track player. These values will update every 250ms
-  const {position, duration} = useTrackPlayerProgress(250);
+  const [isTrackPlayerInit, setIsTrackPlayerInit] = React.useState(false),
+    [isPlaying, setIsPlaying] = React.useState(false),
+    [timeStamp, setTimeStamp] = React.useState('00:00'),
+    [trackTime, setTrackTime] = React.useState('00:00'),
+    //the value of the slider should be between 0 and 1
+    [sliderValue, setSliderValue] = React.useState(0),
+    //flag to check whether the use is sliding the seekbar or not
+    [isSeeking, setIsSeeking] = React.useState(false),
+    //useTrackPlayerProgress is a hook which provides the current position
+    //and duration of the track player. These values will update every 250ms
+    {position, duration} = useTrackPlayerProgress(250);
 
   //function to initialize the Track Player
   const trackPlayerInit = async url => {
@@ -114,7 +108,7 @@ const CustomTrackPlayer = ({
     }
   });
 
-  //start playing the TrackPlayer when the button is pressed
+  //start playing the TrackPlayer when the play button is pressed
   const onPlayButtonPressed = () => {
     if (!isPlaying) {
       TrackPlayer.play();
@@ -134,11 +128,12 @@ const CustomTrackPlayer = ({
   const slidingCompleted = async value => {
     await TrackPlayer.seekTo(value * duration);
     setSliderValue(value);
+    setTimeStamp(timeFormat(value * duration));
     setIsSeeking(false);
   };
 
-  const playIcon = <Icon name="play-arrow" size={30} color="#fff" />;
-  const pauseIcon = <Icon name="pause" size={30} color="#fff" />;
+  const playIcon = <Icon name="play-arrow" size={30} color="#fff" />,
+    pauseIcon = <Icon name="pause" size={30} color="#fff" />;
 
   return trackPlayerVisible ? (
     <View style={styles.container}>
