@@ -39,6 +39,11 @@ const reducer = (state, action) => {
         ...state,
         dismissTimerId: action.payload,
       };
+    case actionTypes.SET_TRACK_PLAYING:
+      return {
+        ...state,
+        isTrackPlaying: action.payload,
+      };
     default:
       throw new Error();
   }
