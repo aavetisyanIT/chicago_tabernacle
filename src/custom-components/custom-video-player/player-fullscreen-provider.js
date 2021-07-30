@@ -6,17 +6,16 @@ import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
 
 const PlayerFullscreenProvider = props => {
-  // issues:
-  // single devotional from home screen is showing header
-
   const [state, dispatch] = React.useContext(AppContext),
-    {screenDimensions, isFullScreenVideo, isOverlayView} = state,
+    {screenDimensions, isFullScreenVideo} = state,
     screenHeight = screenDimensions.window.height,
     screenWidth = screenDimensions.window.width,
     dismissTimerId = state.dismissTimerId,
     width = React.useRef(new Animated.Value(screenWidth)).current,
     height = React.useRef(new Animated.Value(screenHeight)).current;
 
+  //This useEffect needs to be above others so overlay wouldn't
+  //be overriden to false
   React.useEffect(() => {
     Dimensions.addEventListener('change', onScreenRotation);
     toggleScreenModes();

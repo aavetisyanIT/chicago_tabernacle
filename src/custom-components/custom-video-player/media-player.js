@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import Video from 'react-native-video';
 
 import {AppContext} from './../../context/app.context';
@@ -17,9 +16,8 @@ const MediaPlayer = () => {
       articleVideoUrl,
       articleImageUrl,
       isFullScreenVideo,
-    } = state;
-
-  let videoPlayer = React.useRef(null);
+    } = state,
+    videoPlayer = React.useRef(null);
 
   React.useEffect(() => {
     dispatchToVideoPlayer({
@@ -62,7 +60,7 @@ const MediaPlayer = () => {
     <Video
       fullscreen={isFullScreenVideo}
       paused={isVideoPaused}
-      style={styles.video}
+      style={{flex: 1}}
       source={{
         uri: articleVideoUrl
           ? articleVideoUrl
@@ -84,9 +82,3 @@ const MediaPlayer = () => {
 };
 
 export default MediaPlayer;
-
-const styles = StyleSheet.create({
-  video: {
-    flex: 1,
-  },
-});
