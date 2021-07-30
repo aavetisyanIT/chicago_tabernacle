@@ -4,6 +4,7 @@ import TrackPlayer, {
   TrackPlayerEvents,
   STATE_PLAYING,
   STATE_NONE,
+  STATE_PAUSED,
 } from 'react-native-track-player';
 import {
   useTrackPlayerProgress,
@@ -16,12 +17,6 @@ import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import CustomButton from './custom-button';
 import timeFormat from './../utils/trackPlayerUtils';
-
-//We get the total duration of the song every 250ms
-//even though the duration doesn’t change – need to be optimized later).
-
-// Issues:
-// Pause/play toggles when sliding on playing video
 
 const CustomTrackPlayer = ({
   title,
@@ -112,7 +107,7 @@ const CustomTrackPlayer = ({
       hideTrackPlayer();
       setTimeStamp('00:00');
       setSliderValue(0);
-    } else {
+    } else if (event.state === STATE_PAUSED) {
       dispatch({
         type: actionTypes.SET_TRACK_PLAYING,
         payload: false,
