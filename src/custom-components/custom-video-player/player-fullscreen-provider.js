@@ -7,16 +7,23 @@ import {actionTypes} from './../../context/action.types';
 
 const PlayerFullscreenProvider = props => {
   // issues:
-  // close icon jumps on screen mode change
   // single devotional from home screen is showing header
 
   const [state, dispatch] = React.useContext(AppContext),
-    {screenDimensions, isFullScreenVideo} = state,
+    {screenDimensions, isFullScreenVideo, isOverlayView} = state,
     screenHeight = screenDimensions.window.height,
     screenWidth = screenDimensions.window.width,
     dismissTimerId = state.dismissTimerId,
     width = React.useRef(new Animated.Value(screenWidth)).current,
     height = React.useRef(new Animated.Value(screenHeight)).current;
+
+  React.useEffect(() => {
+    Dimensions.addEventListener('change', onScreenRotation);
+    toggleScreenModes();
+    return () => {
+      Dimensions.removeEventListener('change', onScreenRotation);
+    };
+  }, [isFullScreenVideo]);
 
   React.useEffect(() => {
     Animated.timing(width, {
@@ -32,6 +39,11 @@ const PlayerFullscreenProvider = props => {
       easing: Easing.linear,
       useNativeDriver: false,
     }).start();
+    // Show overlay on initial screen load
+    dispatch({
+      type: actionTypes.SET_OVERLAY_VIEW,
+      payload: true,
+    });
   }, []);
 
   const toggleScreenModes = () => {
@@ -58,14 +70,6 @@ const PlayerFullscreenProvider = props => {
       payload: {window: window, screen: screen},
     });
   };
-
-  React.useEffect(() => {
-    Dimensions.addEventListener('change', onScreenRotation);
-    toggleScreenModes();
-    return () => {
-      Dimensions.removeEventListener('change', onScreenRotation);
-    };
-  }, [isFullScreenVideo]);
 
   return (
     <Animated.View
