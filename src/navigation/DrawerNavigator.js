@@ -76,15 +76,15 @@ const DrawerStack = ({route}) => {
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
-  const [state] = React.useContext(AppContext);
-  const {isFullScreenVideo} = state;
+  const [state] = React.useContext(AppContext),
+    {isFullScreenVideo} = state;
   return (
     <Drawer.Navigator drawerContent={() => <DrawerContent />}>
       <Drawer.Screen
         name="Home"
         component={DrawerStack}
         headerMode="none"
-        // Stop side menu from swiping out when in fullscreen mode
+        // Stop side menu from sliding out when in fullscreen mode
         options={{swipeEnabled: isFullScreenVideo ? false : true}}
       />
     </Drawer.Navigator>

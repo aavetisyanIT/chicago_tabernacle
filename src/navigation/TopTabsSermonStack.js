@@ -10,8 +10,8 @@ import {AppContext} from './../context/app.context';
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 
 const TopTabsSermonStack = () => {
-  const [state] = React.useContext(AppContext);
-  const {isFullScreenVideo} = state;
+  const [state] = React.useContext(AppContext),
+    {isFullScreenVideo} = state;
   return (
     //Hide header when video player is fullscreen mode
     <Navigator

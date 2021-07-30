@@ -10,7 +10,7 @@ const {Navigator, Screen} = createStackNavigator();
 
 const RootStack = () => {
   return (
-    <Navigator>
+    <Navigator headerMode="none">
       <Screen
         name="DrawerNavigator"
         component={DrawerNavigator}
@@ -21,6 +21,7 @@ const RootStack = () => {
       <Screen
         name="CustomPushScreensStack"
         component={CustomPushScreensStack}
+        headerShown={false}
       />
     </Navigator>
   );
