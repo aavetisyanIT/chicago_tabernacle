@@ -12,11 +12,16 @@ import {
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import {AppContext} from './../context/app.context';
+import {actionTypes} from './../context/action.types';
 import CustomButton from './custom-button';
 import timeFormat from './../utils/trackPlayerUtils';
 
 //We get the total duration of the song every 250ms
 //even though the duration doesn’t change – need to be optimized later).
+
+// Issues:
+// Pause/play toggles when sliding on playing video
 
 const CustomTrackPlayer = ({
   title,
@@ -29,8 +34,9 @@ const CustomTrackPlayer = ({
 }) => {
   //state to manage whether track player is initialized or not
   //The play button stays disabled if the Track Player isn't initialized.
-  const [isTrackPlayerInit, setIsTrackPlayerInit] = React.useState(false),
-    [isPlaying, setIsPlaying] = React.useState(false),
+  const [state, dispatch] = React.useContext(AppContext),
+    {isTrackPlaying} = state,
+    [isTrackPlayerInit, setIsTrackPlayerInit] = React.useState(false),
     [timeStamp, setTimeStamp] = React.useState('00:00'),
     [trackTime, setTrackTime] = React.useState('00:00'),
     //the value of the slider should be between 0 and 1
@@ -98,24 +104,36 @@ const CustomTrackPlayer = ({
 
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], event => {
     if (event.state === STATE_PLAYING) {
-      setIsPlaying(true);
+      dispatch({
+        type: actionTypes.SET_TRACK_PLAYING,
+        payload: true,
+      });
     } else if (event.state === STATE_NONE) {
       hideTrackPlayer();
       setTimeStamp('00:00');
       setSliderValue(0);
     } else {
-      setIsPlaying(false);
+      dispatch({
+        type: actionTypes.SET_TRACK_PLAYING,
+        payload: false,
+      });
     }
   });
 
   //start playing the TrackPlayer when the play button is pressed
   const onPlayButtonPressed = () => {
-    if (!isPlaying) {
+    if (!isTrackPlaying) {
       TrackPlayer.play();
-      setIsPlaying(true);
+      dispatch({
+        type: actionTypes.SET_TRACK_PLAYING,
+        payload: true,
+      });
     } else {
       TrackPlayer.pause();
-      setIsPlaying(false);
+      dispatch({
+        type: actionTypes.SET_TRACK_PLAYING,
+        payload: false,
+      });
     }
   };
 
@@ -151,7 +169,7 @@ const CustomTrackPlayer = ({
       />
       <Text style={styles.text}>{trackTime}</Text>
       <TouchableOpacity style={styles.buttons} onPress={onPlayButtonPressed}>
-        {isPlaying ? pauseIcon : playIcon}
+        {isTrackPlaying ? pauseIcon : playIcon}
       </TouchableOpacity>
     </View>
   ) : (
