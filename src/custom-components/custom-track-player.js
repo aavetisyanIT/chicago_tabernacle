@@ -30,7 +30,7 @@ const CustomTrackPlayer = ({
   //state to manage whether track player is initialized or not
   //The play button stays disabled if the Track Player isn't initialized.
   const [state, dispatch] = React.useContext(AppContext),
-    {isTrackPlaying} = state,
+    {isTrackPlaying, isVideoPaused} = state,
     [isTrackPlayerInit, setIsTrackPlayerInit] = React.useState(false),
     [timeStamp, setTimeStamp] = React.useState('00:00'),
     [trackTime, setTrackTime] = React.useState('00:00'),
@@ -41,6 +41,17 @@ const CustomTrackPlayer = ({
     //useTrackPlayerProgress is a hook which provides the current position
     //and duration of the track player. These values will update every 250ms
     {position, duration} = useTrackPlayerProgress(250);
+
+  // Pause media when video starts playing
+  React.useEffect(() => {
+    if (!isVideoPaused) {
+      dispatch({
+        type: actionTypes.SET_TRACK_PLAYING,
+        payload: false,
+      });
+      TrackPlayer.pause();
+    }
+  }, [isVideoPaused]);
 
   //function to initialize the Track Player
   const trackPlayerInit = async url => {
