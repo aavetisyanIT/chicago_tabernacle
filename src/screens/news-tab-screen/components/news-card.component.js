@@ -3,10 +3,21 @@ import {Linking, StyleSheet, Text} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 
-import articles from './../../../assets/articles';
 import CustomCard from '../../../custom-components/custom-card';
+import {getAllArticles} from './../../../utils/api';
 
 const NewsCard = ({announcement, navigation, announcementData}) => {
+  const [articles, setArticles] = React.useState({});
+
+  //Fetch all articles
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const fetchedData = await getAllArticles();
+      setArticles(fetchedData.data);
+    };
+    fetchData();
+  }, []);
+
   const findArticleByAnnouncementObjectId = (announcementData, articles) => {
     let articleId = announcementData.id;
     let foundArticle = null;

@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
-import {getAllArticles} from '../../utils/api';
+import {getAllAnnouncements} from '../../utils/api';
 
-import announcementsData from './../../assets/announcementsData';
 import NewsCard from './components/news-card.component';
 
-const data = announcementsData;
-
 const NewsTab = ({navigation}) => {
-  // Test fetching articles
-  // console.log('---------------------------');
-  // const testData = getAllArticles();
-  // testData.then(res => {
-  //   console.log(res.data.items[1]);
-  // });
-  // promise is returned when data is expected
+  const [refreshing, setRefreshing] = React.useState(false),
+    [data, setData] = React.useState({});
 
-  const [refreshing, setRefreshing] = useState(false);
+  // Fetching all announcements
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const announcements = await getAllAnnouncements();
+      setData(announcements.data);
+    };
+    fetchData();
+  }, []);
+
   const renderNewsCard = announcement => {
     let announcementData = null;
     switch (announcement.item.type) {

@@ -1,18 +1,31 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {FlatList, RefreshControl, View, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import articles from '../../assets/articles';
 import SermonCard from './components/sermon-card.component';
-
-const data = articles;
+import {getAllArticles} from './../../utils/api';
 
 const SermonsListTab = ({navigation}) => {
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false),
+    // empty object in the initial state is needed for the first render
+    // till useEffect runs and fetches the data from API
+    [sermons, setSermons] = React.useState({items: [{image: {url: ''}}]});
+
+  // Fetch all articles
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const fetchedData = await getAllArticles();
+      setSermons(fetchedData.data);
+    };
+    fetchData();
+  }, []);
+
   const renderSermon = sermon => {
     return <SermonCard sermon={sermon} navigation={navigation} />;
   };
-  const imageUrl = data.items[0].image.url;
+
+  console.log(sermons);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -20,14 +33,17 @@ const SermonsListTab = ({navigation}) => {
         ListHeaderComponent={
           <>
             <FastImage
-              source={{uri: `${imageUrl}`, priority: FastImage.priority.normal}}
+              source={{
+                uri: `${sermons.items[0].image.url}`,
+                priority: FastImage.priority.normal,
+              }}
               style={styles.image}
               resizeMode={FastImage.resizeMode.contain}
             />
           </>
         }
         ListHeaderComponentStyle={styles.imageContainer}
-        data={data.items}
+        data={sermons.items}
         renderItem={renderSermon}
         keyExtractor={sermon => {
           return sermon.id;
