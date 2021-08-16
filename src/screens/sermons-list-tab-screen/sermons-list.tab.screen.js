@@ -7,9 +7,11 @@ import {getAllArticles} from './../../utils/api';
 
 const SermonsListTab = ({navigation}) => {
   const [refreshing, setRefreshing] = React.useState(false),
-    // empty object in the initial state is needed for the first render
+    // empty object(including id) in the initial state is needed for the first render
     // till useEffect runs and fetches the data from API
-    [sermons, setSermons] = React.useState({items: [{image: {url: ''}}]});
+    [sermons, setSermons] = React.useState({
+      items: [{image: {url: ''}, id: '1'}],
+    });
 
   // Fetch all articles
   React.useEffect(() => {
@@ -23,8 +25,6 @@ const SermonsListTab = ({navigation}) => {
   const renderSermon = sermon => {
     return <SermonCard sermon={sermon} navigation={navigation} />;
   };
-
-  console.log(sermons);
 
   return (
     <View style={styles.container}>
