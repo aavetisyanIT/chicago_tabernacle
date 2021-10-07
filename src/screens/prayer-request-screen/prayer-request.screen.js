@@ -3,8 +3,23 @@ import {View, StyleSheet} from 'react-native';
 import {Divider, Text, TextInput, Button, Checkbox} from 'react-native-paper';
 
 export default function PrayerRequestScreen() {
-  const [text, setText] = React.useState('');
+  // local state used only in this component
   const [checked, setChecked] = React.useState(true);
+  const [inputOnFocus, setInputOnFocus] = React.useState(false);
+
+  //temporary state that needs to move to Redux
+  const [text, setText] = React.useState('');
+
+  const handleOnBlur = () => {
+    if (!text) {
+      setInputOnFocus(false);
+    }
+  };
+
+  const handleOnFocus = () => {
+    console.log('onFocus');
+    setInputOnFocus(true);
+  };
   const handleOnChangeText = text => {
     setText(text);
     console.log(text);
@@ -24,6 +39,8 @@ export default function PrayerRequestScreen() {
       <TextInput
         label="Prayer"
         value={text}
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
         onChangeText={handleOnChangeText}
         style={styles.textInput}
       />
@@ -40,8 +57,9 @@ export default function PrayerRequestScreen() {
       <Divider />
       <Button
         style={styles.button}
-        color="lightgray"
-        mode="outlined"
+        labelStyle={{color: 'white'}}
+        mode="contained"
+        disabled={!inputOnFocus}
         onPress={handleSubmit}>
         Submit
       </Button>
