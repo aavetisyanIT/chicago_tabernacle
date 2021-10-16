@@ -3,7 +3,7 @@ import React from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {navigationRef} from './navigation/RootNavigation';
 import RootStack from './navigation/RootStack';
