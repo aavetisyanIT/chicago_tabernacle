@@ -4,6 +4,7 @@ const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
 const initialState = {
+  isUserAuthenticated: false,
   isFullScreenVideo: false,
   // might not be needed
   isHorisontalVideoView: false,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, ImageBackground, Linking} from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
-import {Drawer} from 'react-native-paper';
+import {Drawer, Avatar} from 'react-native-paper';
 
 import * as RootNavigation from './RootNavigation';
 
@@ -13,7 +13,8 @@ const DrawerContent = props => {
       <View style={styles.drawerContent}>
         {/* <ImageBackground
           source={require('./../assets/blue1.jpg')}
-          style={styles.image}>
+          style={styles.image}> */}
+        <Drawer.Section style={styles.drawerSection}>
           <View style={styles.userInfoSection}>
             <Avatar.Image
               source={{
@@ -21,10 +22,11 @@ const DrawerContent = props => {
               }}
               size={75}
             />
-            <Title style={styles.title}>Rukmoni Nagarajan</Title>
-            <Caption style={styles.caption}>@rukstech</Caption>
+            {/* <Title style={styles.title}>Rukmoni Nagarajan</Title>
+            <Caption style={styles.caption}>@rukstech</Caption> */}
           </View>
-        </ImageBackground> */}
+        </Drawer.Section>
+        {/* </ImageBackground> */}
         <Drawer.Section style={styles.drawerSection}>
           <DrawerItem
             label="WHAT'S NEW"
