@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ImageBackground, Linking} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  Linking,
+} from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer, Avatar} from 'react-native-paper';
 
@@ -15,22 +21,23 @@ const DrawerContent = props => {
       {...props}
       contentContainerStyle={{paddingTop: 0, marginTop: 0}}>
       <View style={styles.drawerContent}>
-        {/* <ImageBackground
-          source={require('./../assets/blue1.jpg')}
-          style={styles.image}> */}
         <Drawer.Section style={styles.drawerSection}>
-          <View style={styles.userInfoSection}>
-            <Avatar.Image
-              source={
-                isUserAuthenticated
-                  ? userGooglePhotoURL
-                  : require('../assets/demo_icon.png')
-              }
-              size={75}
-            />
-            {/* <Title style={styles.title}>Rukmoni Nagarajan</Title>
-            <Caption style={styles.caption}>@rukstech</Caption> */}
-          </View>
+          <TouchableWithoutFeedback onPress={() => alert('Pressed')}>
+            <View style={styles.userInfoSection}>
+              <Avatar.Image
+                source={
+                  isUserAuthenticated
+                    ? userGooglePhotoURL
+                    : require('../assets/demo_icon.png')
+                }
+                size={60}
+                style={styles.icon}
+              />
+              <Text style={styles.signInMessage}>
+                Log in using your gmail account
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         </Drawer.Section>
         {/* </ImageBackground> */}
         <Drawer.Section style={styles.drawerSection}>
@@ -75,7 +82,7 @@ const DrawerContent = props => {
           />
         </Drawer.Section>
         <Drawer.Section>
-          <DrawerItem label="Log Out" onPress={() => {}} />
+          <DrawerItem label="Log Out" onPress={() => alert('Signing out')} />
         </Drawer.Section>
       </View>
     </DrawerContentScrollView>
@@ -88,26 +95,19 @@ const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
   },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-  },
+
   userInfoSection: {
-    margin: 0,
-    paddingTop: 80,
-    paddingLeft: 20,
-    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: 12,
   },
-  title: {
-    color: '#fff',
-    fontWeight: 'bold',
+  icon: {
+    marginBottom: 35,
   },
-  caption: {
-    color: '#fff',
-    fontSize: 14,
-    lineHeight: 14,
-    paddingBottom: 20,
+  signInMessage: {
+    color: '#787879',
+    fontSize: 16,
   },
   row: {
     marginBottom: 10,
