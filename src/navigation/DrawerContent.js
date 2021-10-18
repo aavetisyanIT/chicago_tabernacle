@@ -4,8 +4,12 @@ import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer, Avatar} from 'react-native-paper';
 
 import * as RootNavigation from './RootNavigation';
+import {AppContext} from './../context/app.context';
 
 const DrawerContent = props => {
+  const [state, dispatch] = React.useContext(AppContext);
+  const {isUserAuthenticated, userGooglePhotoURL} = state;
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -17,9 +21,11 @@ const DrawerContent = props => {
         <Drawer.Section style={styles.drawerSection}>
           <View style={styles.userInfoSection}>
             <Avatar.Image
-              source={{
-                uri: 'https://avatars.githubusercontent.com/u/71193796?v=4',
-              }}
+              source={
+                isUserAuthenticated
+                  ? userGooglePhotoURL
+                  : require('../assets/demo_icon.png')
+              }
               size={75}
             />
             {/* <Title style={styles.title}>Rukmoni Nagarajan</Title>
