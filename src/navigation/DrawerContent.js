@@ -8,13 +8,35 @@ import {
 } from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer, Avatar} from 'react-native-paper';
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import * as RootNavigation from './RootNavigation';
 import {AppContext} from './../context/app.context';
 
+GoogleSignin.configure({
+  //need to set up environment variables
+  webClientId: `1027043919366-447750v7uibt9opppjd82q2lgs7c6jd4.apps.googleusercontent.com`,
+});
+
+const onGoogleButtonPress = async () => {
+  const {idToken} = await GoogleSignin.signIn();
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  return auth().signInWithCredential(googleCredential);
+};
+
 const DrawerContent = props => {
   const [state, dispatch] = React.useContext(AppContext);
   const {isUserAuthenticated, userGooglePhotoURL} = state;
+
+  const handleSignInTouchableArea = async () => {
+    try {
+      const result = await onGoogleButtonPress();
+      console.log('Result: ' + JSON.stringify(result));
+    } catch (error) {
+      console.log('Error: ' + error.message);
+    }
+  };
 
   return (
     <DrawerContentScrollView
@@ -22,7 +44,7 @@ const DrawerContent = props => {
       contentContainerStyle={{paddingTop: 0, marginTop: 0}}>
       <View style={styles.drawerContent}>
         <Drawer.Section style={styles.drawerSection}>
-          <TouchableWithoutFeedback onPress={() => alert('Pressed')}>
+          <TouchableWithoutFeedback onPress={handleSignInTouchableArea}>
             <View style={styles.userInfoSection}>
               <Avatar.Image
                 source={
