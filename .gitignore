@@ -57,5 +57,8 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
-# firebase
+# Firebase
 /src/config/firebase_config.js
+
+# Environment variables
+.env
