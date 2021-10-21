@@ -13,10 +13,10 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import * as RootNavigation from './RootNavigation';
 import {AppContext} from './../context/app.context';
+import devEnvironmentVariables from './../config/env';
 
 GoogleSignin.configure({
-  //need to set up environment variables
-  webClientId: `1027043919366-447750v7uibt9opppjd82q2lgs7c6jd4.apps.googleusercontent.com`,
+  webClientId: devEnvironmentVariables.DEV_WEBCLIENTID,
 });
 
 const onGoogleButtonPress = async () => {
