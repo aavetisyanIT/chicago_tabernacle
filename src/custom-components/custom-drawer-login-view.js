@@ -3,7 +3,6 @@ import {View, StyleSheet, Text, TouchableWithoutFeedback} from 'react-native';
 import {Avatar} from 'react-native-paper';
 
 const CustomDrawerLoginView = ({user, initializing, onTouchableClick}) => {
-  console.log(JSON.stringify(user));
   return (
     <TouchableWithoutFeedback onPress={onTouchableClick}>
       <View style={styles.userInfoSection}>
