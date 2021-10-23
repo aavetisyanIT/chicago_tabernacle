@@ -14,6 +14,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import * as RootNavigation from './RootNavigation';
 import {AppContext} from './../context/app.context';
 import devEnvironmentVariables from './../config/env';
+import {actionTypes} from './../context/action.types';
 
 GoogleSignin.configure({
   webClientId: devEnvironmentVariables.DEV_WEBCLIENTID,
@@ -26,17 +27,39 @@ const onGoogleButtonPress = async () => {
 };
 
 const DrawerContent = props => {
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = React.useState(true);
   const [state, dispatch] = React.useContext(AppContext);
-  const {isUserAuthenticated, userGooglePhotoURL} = state;
+  const {user} = state;
+
+  const onAuthStateChanged = user => {
+    dispatch({type: actionTypes.SET_USER, payload: user});
+    if (initializing) setInitializing(false);
+  };
 
   const handleSignInTouchableArea = async () => {
     try {
       const result = await onGoogleButtonPress();
-      console.log('Result: ' + JSON.stringify(result));
+      dispatch({type: actionTypes.SET_USER, payload: result});
     } catch (error) {
       console.log('Error: ' + error.message);
     }
   };
+
+  const handleSignOut = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        dispatch({type: actionTypes.SET_USER, payload: null});
+        setInitializing(true);
+        alert('Signing out!');
+      });
+  };
+
+  React.useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   return (
     <DrawerContentScrollView
@@ -48,8 +71,8 @@ const DrawerContent = props => {
             <View style={styles.userInfoSection}>
               <Avatar.Image
                 source={
-                  isUserAuthenticated
-                    ? userGooglePhotoURL
+                  user && !initializing
+                    ? {uri: user.photoURL}
                     : require('../assets/demo_icon.png')
                 }
                 size={60}
@@ -104,7 +127,7 @@ const DrawerContent = props => {
           />
         </Drawer.Section>
         <Drawer.Section>
-          <DrawerItem label="Log Out" onPress={() => alert('Signing out')} />
+          <DrawerItem label="Log Out" onPress={handleSignOut} />
         </Drawer.Section>
       </View>
     </DrawerContentScrollView>
