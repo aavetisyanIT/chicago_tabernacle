@@ -4,8 +4,8 @@ const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
 const initialState = {
-  isUserAuthenticated: false,
-  userGooglePhotoURL: 'https://avatars.githubusercontent.com/u/71193796?v=4',
+  user: null,
+  // might not be needed cause user object is added
   isFullScreenVideo: false,
   // might not be needed
   isHorisontalVideoView: false,

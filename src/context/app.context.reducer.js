@@ -2,10 +2,8 @@ import {actionTypes} from './action.types';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.SET_USER_IS_AUTHENTICATED:
-      return {...state, isUserAuthenticated: action.payload};
-    case actionTypes.SET_USER_GOOGLE_PHOTO_URL:
-      return {...state, userGooglePhotoURL: action.payload};
+    case actionTypes.SET_USER:
+      return {...state, user: action.payload};
     case actionTypes.SET_FULLSCREEN_VIDEO:
       return {...state, isFullScreenVideo: action.payload};
     case actionTypes.TOGGLE_FULLSCREEN_VIDEO:
