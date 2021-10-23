@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  Linking,
-} from 'react-native';
+import {View, StyleSheet, Linking} from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
-import {Drawer, Avatar} from 'react-native-paper';
+import {Drawer} from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
@@ -15,6 +9,7 @@ import * as RootNavigation from './RootNavigation';
 import {AppContext} from './../context/app.context';
 import devEnvironmentVariables from './../config/env';
 import {actionTypes} from './../context/action.types';
+import CustomDrawerLoginView from './../custom-components/custom-drawer-login-view';
 
 GoogleSignin.configure({
   webClientId: devEnvironmentVariables.DEV_WEBCLIENTID,
@@ -38,11 +33,16 @@ const DrawerContent = props => {
   };
 
   const handleSignInTouchableArea = async () => {
-    try {
-      const result = await onGoogleButtonPress();
-      dispatch({type: actionTypes.SET_USER, payload: result});
-    } catch (error) {
-      console.log('Error: ' + error.message);
+    // issue with not displaying that user is logged in right away
+    if (!user) {
+      try {
+        const result = await onGoogleButtonPress();
+        dispatch({type: actionTypes.SET_USER, payload: result});
+      } catch (error) {
+        console.log('Error: ' + error.message);
+      }
+    } else {
+      alert('Already logged in');
     }
   };
 
@@ -67,24 +67,12 @@ const DrawerContent = props => {
       contentContainerStyle={{paddingTop: 0, marginTop: 0}}>
       <View style={styles.drawerContent}>
         <Drawer.Section style={styles.drawerSection}>
-          <TouchableWithoutFeedback onPress={handleSignInTouchableArea}>
-            <View style={styles.userInfoSection}>
-              <Avatar.Image
-                source={
-                  user && !initializing
-                    ? {uri: user.photoURL}
-                    : require('../assets/demo_icon.png')
-                }
-                size={60}
-                style={styles.icon}
-              />
-              <Text style={styles.signInMessage}>
-                Log in using your gmail account
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
+          <CustomDrawerLoginView
+            user={user}
+            initializing={initializing}
+            onTouchableClick={handleSignInTouchableArea}
+          />
         </Drawer.Section>
-        {/* </ImageBackground> */}
         <Drawer.Section style={styles.drawerSection}>
           <DrawerItem
             label="WHAT'S NEW"
@@ -139,20 +127,6 @@ export default DrawerContent;
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
-  },
-
-  userInfoSection: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: 12,
-  },
-  icon: {
-    marginBottom: 35,
-  },
-  signInMessage: {
-    color: '#787879',
-    fontSize: 16,
   },
   row: {
     marginBottom: 10,
