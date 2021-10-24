@@ -4,6 +4,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_USER:
       return {...state, user: action.payload};
+    case actionTypes.SET_INITIALIZING_AUTH:
+      return {...state, initializingAuth: action.payload};
     case actionTypes.SET_FULLSCREEN_VIDEO:
       return {...state, isFullScreenVideo: action.payload};
     case actionTypes.TOGGLE_FULLSCREEN_VIDEO:

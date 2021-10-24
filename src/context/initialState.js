@@ -5,7 +5,7 @@ const screen = Dimensions.get('screen');
 
 const initialState = {
   user: null,
-  // might not be needed cause user object is added
+  initializingAuth: true,
   isFullScreenVideo: false,
   // might not be needed
   isHorisontalVideoView: false,
