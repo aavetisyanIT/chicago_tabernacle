@@ -3,58 +3,19 @@ import {View, StyleSheet, Linking} from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer} from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import * as RootNavigation from './RootNavigation';
 import {AppContext} from './../context/app.context';
-import devEnvironmentVariables from './../config/env';
-import {actionTypes} from './../context/action.types';
 import CustomDrawerLoginView from './../custom-components/custom-drawer-login-view';
-
-GoogleSignin.configure({
-  webClientId: devEnvironmentVariables.DEV_WEBCLIENTID,
-});
-
-const onGoogleButtonPress = async () => {
-  const {idToken} = await GoogleSignin.signIn();
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  return auth().signInWithCredential(googleCredential);
-};
+import {AuthContext} from '../authentication/AuthProvider';
 
 const DrawerContent = props => {
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = React.useState(true);
-  const [state, dispatch] = React.useContext(AppContext);
-  const {user} = state;
-
-  const onAuthStateChanged = user => {
-    dispatch({type: actionTypes.SET_USER, payload: user});
-    if (initializing) setInitializing(false);
-  };
-
-  const handleSignInTouchableArea = async () => {
-    // issue with not displaying that user is logged in right away
-    if (!user) {
-      try {
-        const result = await onGoogleButtonPress();
-        dispatch({type: actionTypes.SET_USER, payload: result});
-      } catch (error) {
-        console.log('Error: ' + error.message);
-      }
-    } else {
-      alert('Already logged in');
-    }
-  };
-
-  const handleSignOut = () => {
-    auth()
-      .signOut()
-      .then(() => {
-        dispatch({type: actionTypes.SET_USER, payload: null});
-        setInitializing(true);
-        alert('Signing out!');
-      });
-  };
+  const [{user, initializingAuth}] = React.useContext(AppContext);
+  const {
+    onGoogleSignInPress,
+    onGoogleSignOutPress,
+    onAuthStateChanged,
+  } = React.useContext(AuthContext);
 
   React.useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -69,8 +30,8 @@ const DrawerContent = props => {
         <Drawer.Section style={styles.drawerSection}>
           <CustomDrawerLoginView
             user={user}
-            initializing={initializing}
-            onTouchableClick={handleSignInTouchableArea}
+            initializing={initializingAuth}
+            onTouchableClick={onGoogleSignInPress}
           />
         </Drawer.Section>
         <Drawer.Section style={styles.drawerSection}>
@@ -115,7 +76,7 @@ const DrawerContent = props => {
           />
         </Drawer.Section>
         <Drawer.Section>
-          <DrawerItem label="Log Out" onPress={handleSignOut} />
+          <DrawerItem label="Log Out" onPress={onGoogleSignOutPress} />
         </Drawer.Section>
       </View>
     </DrawerContentScrollView>
