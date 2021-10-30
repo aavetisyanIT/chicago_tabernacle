@@ -1,40 +1,62 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import devEnvironmentVariables from './../config/env';
 
-GoogleSignin.configure({
-  webClientId: devEnvironmentVariables.DEV_WEBCLIENTID,
-});
-
-const handleGoogleSignIn = async () => {
-  try {
-    const {idToken} = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    return auth().signInWithCredential(googleCredential);
-  } catch (error) {
-    console.log(`handleGoogleSignIn error: ${error}`);
-  }
-};
+//Issues: different user object returned and set to state
+//initializing is not working
+//running line after signing in
 
 const AuthProvider = ({children}) => {
   const [{initializingAuth}, dispatch] = React.useContext(AppContext);
 
+  React.useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: devEnvironmentVariables.DEV_WEBCLIENTID,
+      offlineAccess: true,
+      forceConsentPrompt: true,
+      hostedDomain: '',
+      accountName: '',
+    });
+  }, []);
+
   const onGoogleSignInPress = async () => {
     try {
-      const user = await handleGoogleSignIn();
-      dispatch({type: actionTypes.SET_USER, payload: user});
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      dispatch({type: actionTypes.SET_USER, payload: userInfo.user});
+      console.log('User: ' + JSON.stringify(userInfo.user));
+      const googleCredential = auth.GoogleAuthProvider.credential(
+        userInfo.idToken,
+      );
+      return auth().signInWithCredential(googleCredential);
     } catch (error) {
-      console.log(`onGoogleSignInPress error: ${error}`);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log(`onGoogleSignInPress error: User cancelled the login flow`);
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log(
+          `onGoogleSignInPress error: Operation google sign in is in progress already`,
+        );
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log(
+          `onGoogleSignInPress error: Play services not available or outdated`,
+        );
+      } else {
+        console.log(`onGoogleSignInPress error: ${error}`);
+      }
     }
   };
 
   const onGoogleSignOutPress = async () => {
     try {
-      await auth().signOut();
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
       dispatch({type: actionTypes.SET_USER, payload: null});
       dispatch({type: actionTypes.SET_INITIALIZING_AUTH, payload: true});
       alert('Signing out!');

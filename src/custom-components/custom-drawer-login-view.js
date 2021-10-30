@@ -9,7 +9,7 @@ const CustomDrawerLoginView = ({user, initializing, onTouchableClick}) => {
         <Avatar.Image
           source={
             user && !initializing
-              ? {uri: user.photoURL}
+              ? {uri: user.photo}
               : require('../assets/demo_icon.png')
           }
           size={45}
@@ -17,7 +17,7 @@ const CustomDrawerLoginView = ({user, initializing, onTouchableClick}) => {
         />
         {user && !initializing ? (
           <View>
-            <Text style={styles.userDisplayName}>{user.displayName}</Text>
+            <Text style={styles.userDisplayName}>{user.name}</Text>
             <Text style={styles.userEmail}>{user.email}</Text>
           </View>
         ) : (

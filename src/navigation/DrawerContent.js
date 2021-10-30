@@ -18,6 +18,7 @@ const DrawerContent = props => {
   } = React.useContext(AuthContext);
 
   React.useEffect(() => {
+    //possible issue with this call
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
@@ -30,7 +31,8 @@ const DrawerContent = props => {
         <Drawer.Section style={styles.drawerSection}>
           <CustomDrawerLoginView
             user={user}
-            initializing={initializingAuth}
+            //initializing is set to false cause onAuthStateChanged method issue
+            initializing={false}
             onTouchableClick={onGoogleSignInPress}
           />
         </Drawer.Section>
