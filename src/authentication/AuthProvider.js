@@ -31,10 +31,12 @@ const AuthProvider = ({children}) => {
   const onGoogleSignInPress = async () => {
     try {
       if (!user) {
-        await GoogleSignin.hasPlayServices();
+        await GoogleSignin.hasPlayServices({
+          showPlayServicesUpdateDialog: true,
+        }); // if google services are not installed propmt will pop up
         const userInfo = await GoogleSignin.signIn();
         dispatch({type: actionTypes.SET_USER, payload: userInfo.user});
-        console.log('User: ' + JSON.stringify(userInfo.user));
+        dispatch({type: actionTypes.SET_INITIALIZING_AUTH, payload: false});
         const googleCredential = auth.GoogleAuthProvider.credential(
           userInfo.idToken,
         );
@@ -74,13 +76,23 @@ const AuthProvider = ({children}) => {
     }
   };
 
-  const onAuthStateChanged = user => {
-    dispatch({type: actionTypes.SET_USER, payload: user});
-    if (initializingAuth) {
+  const getCurrentUserInfo = async () => {
+    try {
+      const {user} = await GoogleSignin.signInSilently();
+      dispatch({type: actionTypes.SET_USER, payload: user});
       dispatch({
         type: actionTypes.SET_INITIALIZING_AUTH,
         payload: false,
       });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        console.log(`getCurrentUserInfo error: User is not signed in`);
+      } else {
+        dispatch({
+          type: actionTypes.SET_INITIALIZING_AUTH,
+          payload: true,
+        });
+      }
     }
   };
 
@@ -89,7 +101,7 @@ const AuthProvider = ({children}) => {
       value={{
         onGoogleSignInPress,
         onGoogleSignOutPress,
-        onAuthStateChanged,
+        getCurrentUserInfo,
       }}>
       {children}
     </AuthContext.Provider>

@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet, Linking} from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer} from 'react-native-paper';
-import auth from '@react-native-firebase/auth';
 
 import * as RootNavigation from './RootNavigation';
 import {AppContext} from './../context/app.context';
@@ -14,13 +13,11 @@ const DrawerContent = props => {
   const {
     onGoogleSignInPress,
     onGoogleSignOutPress,
-    onAuthStateChanged,
+    getCurrentUserInfo,
   } = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    //possible issue with this call
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    getCurrentUserInfo();
   }, []);
 
   return (
@@ -31,8 +28,7 @@ const DrawerContent = props => {
         <Drawer.Section style={styles.drawerSection}>
           <CustomDrawerLoginView
             user={user}
-            //initializing is set to false cause onAuthStateChanged method issue
-            initializing={false}
+            initializing={initializingAuth}
             onTouchableClick={onGoogleSignInPress}
           />
         </Drawer.Section>
