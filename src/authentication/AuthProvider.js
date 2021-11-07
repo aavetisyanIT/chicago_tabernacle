@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import auth from '@react-native-firebase/auth';
 import {
   GoogleSignin,
@@ -9,14 +9,8 @@ import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import devEnvironmentVariables from './../config/env';
 
-//Issues:
-//different user object returned and set to state:
-//     doesn't seem to happen any more if app is loaded correctly. Only happens when state is changing
-//     keep watching for now
-//initializing is not working
-
 const AuthProvider = ({children}) => {
-  const [{initializingAuth, user}, dispatch] = React.useContext(AppContext);
+  const [{user}, dispatch] = React.useContext(AppContext);
 
   React.useEffect(() => {
     GoogleSignin.configure({
