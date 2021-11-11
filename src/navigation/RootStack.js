@@ -5,12 +5,13 @@ import DrawerNavigator from './DrawerNavigator';
 import TopTabsSermonStack from './TopTabsSermonStack';
 import TopTabsStack from './TopTabsStack';
 import CustomPushScreensStack from './CustomPushScreensStack';
+import NonLoggedInModal from './components/non-logged-in-modal';
 
 const {Navigator, Screen} = createStackNavigator();
 
 const RootStack = () => {
   return (
-    <Navigator headerMode="none">
+    <Navigator mode="modal" headerMode="none">
       <Screen
         name="DrawerNavigator"
         component={DrawerNavigator}
@@ -23,6 +24,7 @@ const RootStack = () => {
         component={CustomPushScreensStack}
         headerShown={false}
       />
+      <Screen name="NotLoggedInModal" component={NonLoggedInModal} />
     </Navigator>
   );
 };

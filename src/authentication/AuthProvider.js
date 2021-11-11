@@ -5,6 +5,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
+import * as RootNavigation from '../navigation/RootNavigation';
 import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import devEnvironmentVariables from './../config/env';
@@ -61,10 +62,9 @@ const AuthProvider = ({children}) => {
         await GoogleSignin.signOut();
         dispatch({type: actionTypes.SET_USER, payload: null});
         dispatch({type: actionTypes.SET_INITIALIZING_AUTH, payload: true});
-        alert('Signing out!');
         return;
       }
-      alert('Please sign in!');
+      RootNavigation.navigate('NotLoggedInModal');
     } catch (error) {
       console.log(`onGoogleSignOutPress error: ${error.message}`);
     }
