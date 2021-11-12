@@ -9,6 +9,8 @@ import NonLoggedInModal from './components/non-logged-in-modal';
 
 const {Navigator, Screen} = createStackNavigator();
 
+//test
+
 const RootStack = () => {
   return (
     <Navigator mode="modal" headerMode="none">
