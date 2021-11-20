@@ -2,6 +2,8 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Divider, Text, TextInput, Button, Checkbox} from 'react-native-paper';
 
+import PrayerScreenText from './components/prayer-screen-text';
+
 export default function PrayerRequestScreen() {
   // local state used only in this component
   const [checked, setChecked] = React.useState(true);
@@ -11,30 +13,29 @@ export default function PrayerRequestScreen() {
   const [text, setText] = React.useState('');
 
   const handleOnBlur = () => {
-    if (!text) {
-      setInputOnFocus(false);
-    }
+    if (text) return;
+    setInputOnFocus(false);
   };
 
   const handleOnFocus = () => {
-    console.log('onFocus');
     setInputOnFocus(true);
   };
+
   const handleOnChangeText = text => {
     setText(text);
-    console.log(text);
   };
-  const handleSubmit = () => {};
+
+  const handleCheckBoxOnPress = () => {
+    setChecked(!checked);
+  };
+
+  const handleSubmit = () => {
+    setText('');
+  };
   return (
     <View style={styles.container}>
       <Divider />
-      <Text style={styles.header}>How Can We Pray For You</Text>
-      <Text style={styles.pageContent}>
-        If you have a prayer request, please submit it to us; we will pray for
-        your request for thirty days at our prayer meetings, as will the
-        Intercession Ministry. Prayer request cards are also available at the
-        church office or at any of our weekly services.
-      </Text>
+      <PrayerScreenText />
       <Divider />
       <TextInput
         label="Prayer"
@@ -48,9 +49,7 @@ export default function PrayerRequestScreen() {
         <Checkbox
           status={checked ? 'checked' : 'unchecked'}
           color="#bc9665"
-          onPress={() => {
-            setChecked(!checked);
-          }}
+          onPress={handleCheckBoxOnPress}
         />
         <Text style={styles.checkboxLabelText}>Please make anonymous</Text>
       </View>
@@ -69,8 +68,6 @@ export default function PrayerRequestScreen() {
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
-  header: {margin: 15, fontSize: 25, fontFamily: 'Roboto-Light'},
-  pageContent: {margin: 15, fontSize: 18, fontFamily: 'Roboto-Light'},
   textInput: {backgroundColor: '#fff'},
   checkboxContainer: {
     flexDirection: 'row',
