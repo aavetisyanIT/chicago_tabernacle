@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    margin: 12,
+    // margin: 12,
   },
   buttonText: {color: '#bc9665', fontSize: 15, marginHorizontal: 5},
 });
