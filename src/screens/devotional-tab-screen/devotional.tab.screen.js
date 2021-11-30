@@ -47,6 +47,7 @@ const DevotionalTab = () => {
         data={PARAGRAPHSDATA}
         renderItem={renderItem}
         keyExtractor={paragraph => paragraph.id}
+        style={styles.flatList}
       />
     </View>
   );
@@ -59,4 +60,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  flatList: {marginBottom: 15},
 });

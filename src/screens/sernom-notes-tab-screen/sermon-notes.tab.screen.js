@@ -41,6 +41,7 @@ const SermonNotesTab = ({route}) => {
         renderItem={renderItem}
         scrollEnabled={isFullScreenVideo ? false : true}
         keyExtractor={item => item.id}
+        style={styles.flatList}
       />
     </View>
   );
@@ -50,4 +51,5 @@ export default SermonNotesTab;
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
+  flatList: {marginBottom: 15},
 });
