@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  TouchableNativeFeedback,
+  TouchableWithoutFeedback,
   Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,9 +16,8 @@ import {videoPlayerActionTypes} from './video-player-context/video.player.action
 
 const PlayerLayersProvider = props => {
   const [state, dispatch] = React.useContext(AppContext),
-    [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-      VideoPlayerContext,
-    ),
+    [videoPlayerState, dispatchToVideoPlayer] =
+      React.useContext(VideoPlayerContext),
     {isOverlayView, isVideoPaused, dismissTimerId, isTrackPlaying} = state,
     {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
 
@@ -176,12 +175,12 @@ const PlayerLayersProvider = props => {
         ) : (
           /* Hidden View Controllers */
           <View style={styles.hiddenControllersContainer}>
-            <TouchableNativeFeedback onPress={hiddenJumpBackward}>
+            <TouchableWithoutFeedback onPress={hiddenJumpBackward}>
               <View style={styles.hiddenController}></View>
-            </TouchableNativeFeedback>
-            <TouchableNativeFeedback onPress={hiddenJumpFrontward}>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={hiddenJumpFrontward}>
               <View style={styles.hiddenController}></View>
-            </TouchableNativeFeedback>
+            </TouchableWithoutFeedback>
           </View>
         )}
       </View>
