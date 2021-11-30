@@ -10,9 +10,8 @@ import {actionTypes} from './../../context/action.types';
 import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
 
 const PlayerSlider = () => {
-  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-      VideoPlayerContext,
-    ),
+  const [videoPlayerState, dispatchToVideoPlayer] =
+      React.useContext(VideoPlayerContext),
     [state, dispatch] = React.useContext(AppContext),
     {isFullScreenVideo} = state,
     {videoDuration, currentVideoPlayTime, videoPlayer} = videoPlayerState;
@@ -32,10 +31,12 @@ const PlayerSlider = () => {
   return (
     <View style={styles.sliderContainer}>
       <View style={styles.timeStampsContainer}>
-        <Text style={styles.durationTimeText}>{timeFormat(videoDuration)}</Text>
+        <Text style={styles.currentTimeText}>
+          {timeFormat(currentVideoPlayTime)}{' '}
+        </Text>
         <View style={styles.timeStampsInnerContainer}>
-          <Text style={styles.currentTimeText}>
-            {timeFormat(currentVideoPlayTime)}{' '}
+          <Text style={styles.durationTimeText}>
+            {timeFormat(videoDuration)}
           </Text>
           <Icon
             style={styles.fullscreenIcon}

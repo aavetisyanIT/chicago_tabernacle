@@ -41,7 +41,7 @@ const PlayerLayersProvider = props => {
       dispatch({
         type: actionTypes.TOGGLE_OVERLAY_VIEW,
       });
-    }, 3000);
+    }, 2000);
     dispatch({
       type: actionTypes.SET_DISMISS_TIMER_ID,
       payload: timerId,
