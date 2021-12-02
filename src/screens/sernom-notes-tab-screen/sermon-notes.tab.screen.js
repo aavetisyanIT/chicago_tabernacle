@@ -7,25 +7,30 @@ import CustomAddNoteModal from './../../custom-components/custom-add-note-modal'
 import {AppContext} from './../../context/app.context';
 
 const SermonNotesTab = ({route}) => {
-  const [state] = React.useContext(AppContext);
-  const {isFullScreenVideo} = state;
+  const [state] = React.useContext(AppContext),
+    {isFullScreenVideo} = state,
+    {article} = route.params,
+    PARAGRAPHDATA = article.paragraphs,
+    [modalVisible, setModalVisible] = React.useState(false),
+    [currentSermonHTML, setCurrentSermonHTML] = React.useState(''),
+    flatListRef = React.useRef(),
+    showModal = () => setModalVisible(true),
+    hideModal = () => setModalVisible(false),
+    renderItem = props => (
+      <SermonNote
+        {...props}
+        showModal={showModal}
+        setCurrentSermonHTML={setCurrentSermonHTML}
+      />
+    );
 
-  const {article} = route.params;
-  const PARAGRAPHDATA = article.paragraphs;
-
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [currentSermonHTML, setCurrentSermonHTML] = React.useState('');
-
-  const showModal = () => setModalVisible(true);
-  const hideModal = () => setModalVisible(false);
-
-  const renderItem = props => (
-    <SermonNote
-      {...props}
-      showModal={showModal}
-      setCurrentSermonHTML={setCurrentSermonHTML}
-    />
-  );
+  // Fixes issue when fullscreen is clicked on scrolled flatlist
+  React.useEffect(() => {
+    if (isFullScreenVideo) {
+      //moves to the top of the screen
+      flatListRef.current.scrollToOffset({x: 0, y: 0, animated: true});
+    }
+  }, [isFullScreenVideo]);
 
   return (
     <View style={styles.container}>
@@ -37,6 +42,7 @@ const SermonNotesTab = ({route}) => {
       />
       <FlatList
         ListHeaderComponent={<SermonNoteListHeader article={article} />}
+        ref={flatListRef}
         data={PARAGRAPHDATA}
         renderItem={renderItem}
         scrollEnabled={isFullScreenVideo ? false : true}

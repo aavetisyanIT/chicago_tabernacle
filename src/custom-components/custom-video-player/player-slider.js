@@ -14,19 +14,17 @@ const PlayerSlider = () => {
       React.useContext(VideoPlayerContext),
     [state, dispatch] = React.useContext(AppContext),
     {isFullScreenVideo} = state,
-    {videoDuration, currentVideoPlayTime, videoPlayer} = videoPlayerState;
-
-  const handleSlide = slide => {
-    videoPlayer.seek(slide * videoDuration);
-    dispatchToVideoPlayer({
-      type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
-      payload: slide * videoDuration,
-    });
-  };
-
-  const handleFullScreen = () => {
-    dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
-  };
+    {videoDuration, currentVideoPlayTime, videoPlayer} = videoPlayerState,
+    handleSlide = slide => {
+      videoPlayer.seek(slide * videoDuration);
+      dispatchToVideoPlayer({
+        type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+        payload: slide * videoDuration,
+      });
+    },
+    handleFullScreen = () => {
+      dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
+    };
 
   return (
     <View style={styles.sliderContainer}>
