@@ -4,22 +4,25 @@ import {View, StyleSheet} from 'react-native';
 import HiddenText from './hidden-text';
 import CustomButton from './../../../custom-components/custom-button';
 import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
+import CustomImage from '../../../custom-components/custom-image';
 
 const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
   let PARAGRAPHHTML = item.text,
     paragraphContent = null;
-  //doublecheck with Andrei on actionType === null
-  if (item.actionType === 'button' || item.actionType === null) {
+  if (item.type === 'attributedText') {
     paragraphContent = (
       <CustomParagraphHtmlToText paragraphHtml={PARAGRAPHHTML} />
     );
-  } else if (item.actionType === 'hiddenText') {
+  } else if (item.actionType === 'hiddenText' && item.type === 'action') {
     paragraphContent = (
       <HiddenText text={item.text} hiddenText={item.actionString} />
     );
     //remove "%@" and add hidden text when open custom-add-note-modal for hidden-text component
     PARAGRAPHHTML = `${PARAGRAPHHTML.slice(0, -2)} ${item.actionString}`;
+  } else if (item.type === 'image') {
+    paragraphContent = <CustomImage url={item.mediaObject.url} />;
   }
+
   return (
     <View style={styles.container}>
       {paragraphContent}
