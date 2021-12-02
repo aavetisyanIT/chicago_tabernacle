@@ -8,12 +8,11 @@ import CustomParagraphHtmlToText from './custom-paragraph-html-to-text-component
 import {AppContext} from './../context/app.context';
 
 const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
-  const [userNote, setUserNote] = React.useState('');
-  const [{user}, dispatch] = React.useContext(AppContext);
-
-  const handleChangeText = text => {
-    console.log(text);
-  };
+  const [userNote, setUserNote] = React.useState(''),
+    [{user}, dispatch] = React.useContext(AppContext),
+    handleChangeText = text => {
+      console.log(text);
+    };
 
   return (
     <Modal
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
-
     backgroundColor: '#bc9665',
     margin: 15,
   },

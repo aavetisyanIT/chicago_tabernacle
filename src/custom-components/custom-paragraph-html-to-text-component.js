@@ -29,6 +29,11 @@ const CustomParagraphHtmlToText = ({paragraphHtml}) => {
         }}
         contentWidth={contentWidth}
         renderers={renderers}
+        //custom styling for rich text elements
+        tagsStyles={{
+          p: {color: 'black'},
+          h2: {color: 'black', margin: 5},
+        }}
       />
     </View>
   );
@@ -37,10 +42,17 @@ const CustomParagraphHtmlToText = ({paragraphHtml}) => {
 export default CustomParagraphHtmlToText;
 
 const styles = StyleSheet.create({
-  supContainer: {flexDirection: 'row', alignItems: 'flex-start'},
+  supContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
   supText: {
     fontSize: 11,
     lineHeight: 14,
     textAlignVertical: 'top',
+  },
+  paragraphContainer: {flex: 1, borderWidth: 2},
+  paragraphText: {
+    color: 'red',
   },
 });

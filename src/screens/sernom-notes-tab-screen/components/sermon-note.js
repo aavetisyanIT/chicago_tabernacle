@@ -6,9 +6,8 @@ import CustomButton from './../../../custom-components/custom-button';
 import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
 
 const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
-  let PARAGRAPHHTML = item.text;
-
-  let paragraphContent = null;
+  let PARAGRAPHHTML = item.text,
+    paragraphContent = null;
   //doublecheck with Andrei on actionType === null
   if (item.actionType === 'button' || item.actionType === null) {
     paragraphContent = (
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    // margin: 12,
+    margin: 5,
   },
   buttonText: {color: '#bc9665', fontSize: 15, marginHorizontal: 5},
 });
