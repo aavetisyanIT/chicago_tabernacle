@@ -41,7 +41,7 @@ const SermonNotesTab = ({route}) => {
         renderItem={renderItem}
         scrollEnabled={isFullScreenVideo ? false : true}
         keyExtractor={item => item.id}
-        style={styles.flatList}
+        style={!isFullScreenVideo && styles.flatList}
       />
     </View>
   );

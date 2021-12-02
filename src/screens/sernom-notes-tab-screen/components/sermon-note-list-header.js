@@ -74,6 +74,6 @@ export default SermonNoteListHeader;
 
 const styles = StyleSheet.create({
   image: {height: 250, width: '100%'},
-  headerContent: {padding: 13},
+  headerContent: {paddingBottom: 0, padding: 13},
   description: {fontFamily: 'Roboto-Thin'},
 });
