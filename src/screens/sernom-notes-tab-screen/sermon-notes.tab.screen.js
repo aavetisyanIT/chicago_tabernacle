@@ -24,7 +24,7 @@ const SermonNotesTab = ({route}) => {
       />
     );
 
-  // Fixes issue when fullscreen is clicked on scrolled flatlist
+  // Fixes issue when fullscreen is clicked on scrolled screen
   React.useEffect(() => {
     if (isFullScreenVideo) {
       //moves to the top of the screen
