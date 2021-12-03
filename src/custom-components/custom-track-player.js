@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import TrackPlayer, {
   TrackPlayerEvents,
@@ -83,7 +83,7 @@ const CustomTrackPlayer = ({
   };
 
   //initialize the TrackPlayer when "AUDIO PLAYER" is clicked
-  useEffect(() => {
+  React.useEffect(() => {
     const startPlayer = async () => {
       let isInit = await trackPlayerInit(url);
       setIsTrackPlayerInit(isInit);
@@ -93,16 +93,16 @@ const CustomTrackPlayer = ({
 
   //this hook updates the value of the slider whenever
   //the current position of the song changes
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isSeeking && position && duration) {
       setSliderValue(position / duration);
     }
     setTimeStamp(timeFormat(position));
     setTrackTime(timeFormat(duration));
-  }, [position, duration]);
+  }, [position]);
 
   //Unmount track player when leaving a sceen
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       TrackPlayer.destroy();
     };
@@ -127,13 +127,21 @@ const CustomTrackPlayer = ({
   });
 
   //start playing the TrackPlayer when the play button is pressed
-  const onPlayButtonPressed = () => {
+  const onPlayButtonPressed = async () => {
     if (!isTrackPlaying) {
-      TrackPlayer.play();
-      dispatch({
-        type: actionTypes.SET_TRACK_PLAYING,
-        payload: true,
-      });
+      try {
+        //line 134-136 sets position of player if slided is used before play pressed first time
+        const trackDuration = await TrackPlayer.getDuration();
+        await TrackPlayer.seekTo(sliderValue * trackDuration);
+        setTimeStamp(timeFormat(sliderValue * trackDuration));
+        await TrackPlayer.play();
+        dispatch({
+          type: actionTypes.SET_TRACK_PLAYING,
+          payload: true,
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
     } else {
       TrackPlayer.pause();
       dispatch({
@@ -150,10 +158,14 @@ const CustomTrackPlayer = ({
 
   //this function is called when the user stops sliding the seekbar
   const slidingCompleted = async value => {
-    await TrackPlayer.seekTo(value * duration);
-    setSliderValue(value);
-    setTimeStamp(timeFormat(value * duration));
-    setIsSeeking(false);
+    try {
+      await TrackPlayer.seekTo(value * duration);
+      setSliderValue(value);
+      setTimeStamp(timeFormat(value * duration));
+      setIsSeeking(false);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const playIcon = <Icon name="play-arrow" size={30} color="#fff" />,

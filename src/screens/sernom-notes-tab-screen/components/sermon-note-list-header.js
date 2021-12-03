@@ -31,10 +31,7 @@ const SermonNoteListHeader = ({article}) => {
     });
   }, []);
 
-  let articleHasAudio = null;
-  article.audio.type === 'audio'
-    ? (articleHasAudio = true)
-    : (articleHasAudio = false);
+  let articleHasAudio = article.audio.type === 'audio';
 
   return (
     <>
