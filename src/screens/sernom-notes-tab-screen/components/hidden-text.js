@@ -8,9 +8,10 @@ const HiddenText = ({text, hiddenText}) => {
     <Pressable onPress={showHiddenText}>
       <View style={styles.container}>
         <Text style={styles.text}>
+          {/* Remove "%@" from shown text  */}
           {text.slice(0, -2)}
           {isHiddenTextVisible ? (
-            <Text style={{textDecorationLine: 'underline'}}>{hiddenText}</Text>
+            <Text style={styles.hiddenText}>{hiddenText}</Text>
           ) : (
             <View style={styles.textBlocker(hiddenText.length)} />
           )}
@@ -25,6 +26,7 @@ export default HiddenText;
 const styles = StyleSheet.create({
   container: {flex: 1, flexDirection: 'row', flexWrap: 'wrap'},
   text: {color: 'lightblue', fontSize: 16},
+  hiddenText: {textDecorationLine: 'underline'},
   textBlocker: length => ({
     width: length * 8,
     height: 13,
