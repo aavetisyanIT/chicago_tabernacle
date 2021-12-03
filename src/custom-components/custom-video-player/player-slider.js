@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import timeFormat from './../../utils/trackPlayerUtils';
+import {timeFormat} from './../../utils/trackPlayerUtils';
 import {AppContext} from './../../context/app.context';
 import {VideoPlayerContext} from './video-player-context/video.player.context';
 import {actionTypes} from './../../context/action.types';

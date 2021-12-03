@@ -1,5 +1,7 @@
+import TrackPlayer from 'react-native-track-player';
+
 //Build timestamp
-const timeFormat = time => {
+export const timeFormat = time => {
   var date = new Date(time * 1000);
   var hh = date.getUTCHours();
   var mm = date.getUTCMinutes();
@@ -38,4 +40,31 @@ export const handleDoubleTap = (doubleTapCallback, signleTapCallback) => {
   return null;
 };
 
-export default timeFormat;
+//function to initialize the Track Player
+export const trackPlayerInit = async (url, trackId, title, image) => {
+  await TrackPlayer.setupPlayer();
+  //Controlling The Music From Outside
+  TrackPlayer.updateOptions({
+    stopWithApp: true,
+    capabilities: [
+      TrackPlayer.CAPABILITY_PLAY,
+      TrackPlayer.CAPABILITY_PAUSE,
+      TrackPlayer.CAPABILITY_JUMP_FORWARD,
+      TrackPlayer.CAPABILITY_JUMP_BACKWARD,
+      TrackPlayer.CAPABILITY_STOP,
+    ],
+    compactCapabilities: [
+      TrackPlayer.CAPABILITY_PLAY,
+      TrackPlayer.CAPABILITY_PAUSE,
+      TrackPlayer.CAPABILITY_STOP,
+    ],
+  });
+  await TrackPlayer.add({
+    id: trackId,
+    url: url,
+    type: 'default',
+    title: title,
+    artwork: image,
+  });
+  return true;
+};

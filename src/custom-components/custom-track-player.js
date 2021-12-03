@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import CustomButton from './custom-button';
-import timeFormat from './../utils/trackPlayerUtils';
+import {timeFormat, trackPlayerInit} from './../utils/trackPlayerUtils';
 
 const CustomTrackPlayer = ({
   title,
@@ -53,40 +53,16 @@ const CustomTrackPlayer = ({
     }
   }, [isVideoPaused]);
 
-  //function to initialize the Track Player
-  const trackPlayerInit = async url => {
-    await TrackPlayer.setupPlayer();
-    //Controlling The Music From Outside
-    TrackPlayer.updateOptions({
-      stopWithApp: true,
-      capabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_JUMP_FORWARD,
-        TrackPlayer.CAPABILITY_JUMP_BACKWARD,
-        TrackPlayer.CAPABILITY_STOP,
-      ],
-      compactCapabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_STOP,
-      ],
-    });
-    await TrackPlayer.add({
-      id: trackId,
-      url: url,
-      type: 'default',
-      title: title,
-      artwork: image,
-    });
-    return true;
-  };
-
   //initialize the TrackPlayer when "AUDIO PLAYER" is clicked
   React.useEffect(() => {
     const startPlayer = async () => {
-      let isInit = await trackPlayerInit(url);
-      setIsTrackPlayerInit(isInit);
+      try {
+        //function to initialize the Track Player
+        let isInit = await trackPlayerInit(url, trackId, title, image);
+        setIsTrackPlayerInit(isInit);
+      } catch (error) {
+        console.log(error.message);
+      }
     };
     if (trackPlayerVisible) startPlayer();
   }, [trackPlayerVisible]);
