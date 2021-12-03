@@ -10,11 +10,9 @@ const HiddenText = ({text, hiddenText}) => {
         <Text style={styles.text}>
           {text.slice(0, -2)}
           {isHiddenTextVisible ? (
-            hiddenText
+            <Text style={{textDecorationLine: 'underline'}}>{hiddenText}</Text>
           ) : (
-            <View style={styles.textBlocker(hiddenText.length)}>
-              <View style={styles.textBlockerInnerView} />
-            </View>
+            <View style={styles.textBlocker(hiddenText.length)} />
           )}
         </Text>
       </View>
@@ -29,15 +27,7 @@ const styles = StyleSheet.create({
   text: {color: 'lightblue', fontSize: 16},
   textBlocker: length => ({
     width: length * 8,
-    height: 14,
+    height: 13,
     backgroundColor: 'lightgrey',
-    paddingBottom: 2,
   }),
-  textBlockerInnerView: {
-    padding: 1,
-    width: '100%',
-    height: '90%',
-    borderBottomColor: '#bc9665',
-    borderBottomWidth: 1,
-  },
 });
