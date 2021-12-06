@@ -1,52 +1,55 @@
+import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 import React from 'react';
-import {View, StyleSheet, Text, TouchableWithoutFeedback} from 'react-native';
-import {Avatar} from 'react-native-paper';
+import {View, StyleSheet} from 'react-native';
+import {Avatar, Button} from 'react-native-paper';
+import {AuthContext} from '../authentication/AuthProvider';
 
-const CustomDrawerLoginView = ({user, initializing, onTouchableClick}) => {
+const CustomDrawerLoginView = ({user, initializing}) => {
+  const {onGoogleSignInPress, onGoogleSignOutPress} =
+      React.useContext(AuthContext),
+    isloggedIn = user && !initializing;
+
   return (
-    <TouchableWithoutFeedback onPress={onTouchableClick}>
-      <View style={styles.userInfoSection}>
-        <Avatar.Image
-          source={
-            user && !initializing
-              ? {uri: user.photo}
-              : require('../assets/demo_icon.png')
-          }
-          size={45}
-          style={styles.icon}
+    <View style={styles.container}>
+      <Avatar.Image
+        source={
+          isloggedIn ? {uri: user.photo} : require('../assets/demo_icon.png')
+        }
+        size={45}
+        style={styles.icon}
+      />
+      {isloggedIn ? (
+        <Button
+          mode="outlined"
+          color="#787879"
+          uppercase
+          onPress={onGoogleSignOutPress}>
+          Sign Out
+        </Button>
+      ) : (
+        <GoogleSigninButton
+          onPress={onGoogleSignInPress}
+          style={styles.googleSignInButton}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Light}
         />
-        {user && !initializing ? (
-          <View>
-            <Text style={styles.userDisplayName}>{user.name}</Text>
-            <Text style={styles.userEmail}>{user.email}</Text>
-          </View>
-        ) : (
-          <Text style={styles.signInMessage}>
-            Log in using your gmail account
-          </Text>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+      )}
+    </View>
   );
 };
 
 export default CustomDrawerLoginView;
 
 const styles = StyleSheet.create({
-  userInfoSection: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-start',
     padding: 12,
     paddingTop: 15,
   },
-  userDisplayName: {fontSize: 20, color: '#787879'},
-  userEmail: {fontSize: 15, color: '#787879'},
-  signInMessage: {
-    color: '#787879',
-    fontSize: 16,
-  },
   icon: {
-    marginBottom: 35,
+    marginBottom: 15,
   },
+  googleSignInButton: {width: '80%', height: 48},
 });

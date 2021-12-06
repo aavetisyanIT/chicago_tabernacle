@@ -5,7 +5,8 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-import * as RootNavigation from '../navigation/RootNavigation';
+//Currently not used
+// import * as RootNavigation from '../navigation/RootNavigation';
 import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import devEnvironmentVariables from './../config/env';
@@ -64,7 +65,8 @@ const AuthProvider = ({children}) => {
         dispatch({type: actionTypes.SET_INITIALIZING_AUTH, payload: true});
         return;
       }
-      RootNavigation.navigate('NotLoggedInModal');
+      //Currently not used
+      // RootNavigation.navigate('NotLoggedInModal');
     } catch (error) {
       console.log(`onGoogleSignOutPress error: ${error.message}`);
     }

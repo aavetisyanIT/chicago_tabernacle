@@ -41,7 +41,7 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
           </>
         ) : (
           <>
-            <Text style={styles.notLoggedInText}>You are not Logged in.</Text>
+            <Text style={styles.notLoggedInText}>You are not signed in</Text>
             <CustomButton
               onPress={hideModal}
               title={'OK'}

@@ -5,6 +5,9 @@ import CustomButton from './../../custom-components/custom-button';
 
 import * as RootNavigation from '../RootNavigation';
 
+// Currently not used
+//Whole component
+
 const NonLoggedInModal = () => {
   const [modalVisible, setModalVisible] = React.useState(true);
 
@@ -16,7 +19,7 @@ const NonLoggedInModal = () => {
   return (
     <Modal isVisible={modalVisible}>
       <View style={styles.modal}>
-        <Text style={styles.warningText}>You are not Logged in.</Text>
+        <Text style={styles.warningText}>You are not Logged in</Text>
         <CustomButton
           onPress={handleOnPress}
           title={'OK'}

@@ -10,11 +10,7 @@ import {AuthContext} from '../authentication/AuthProvider';
 
 const DrawerContent = props => {
   const [{user, initializingAuth}] = React.useContext(AppContext);
-  const {
-    onGoogleSignInPress,
-    onGoogleSignOutPress,
-    getCurrentUserInfo,
-  } = React.useContext(AuthContext);
+  const {getCurrentUserInfo} = React.useContext(AuthContext);
 
   React.useEffect(() => {
     getCurrentUserInfo();
@@ -26,11 +22,7 @@ const DrawerContent = props => {
       contentContainerStyle={{paddingTop: 0, marginTop: 0}}>
       <View style={styles.drawerContent}>
         <Drawer.Section style={styles.drawerSection}>
-          <CustomDrawerLoginView
-            user={user}
-            initializing={initializingAuth}
-            onTouchableClick={onGoogleSignInPress}
-          />
+          <CustomDrawerLoginView user={user} initializing={initializingAuth} />
         </Drawer.Section>
         <Drawer.Section style={styles.drawerSection}>
           <DrawerItem
@@ -72,9 +64,6 @@ const DrawerContent = props => {
               Linking.openURL('https://www.instagram.com/chicagotab/')
             }
           />
-        </Drawer.Section>
-        <Drawer.Section>
-          <DrawerItem label="Log Out" onPress={onGoogleSignOutPress} />
         </Drawer.Section>
       </View>
     </DrawerContentScrollView>
