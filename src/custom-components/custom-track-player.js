@@ -44,7 +44,7 @@ const CustomTrackPlayer = ({
 
   // Pause media when video starts playing
   React.useEffect(() => {
-    if (!isVideoPaused) {
+    if (!isVideoPaused && isTrackPlayerInit) {
       dispatch({
         type: actionTypes.SET_TRACK_PLAYING,
         payload: false,
@@ -55,11 +55,20 @@ const CustomTrackPlayer = ({
 
   //initialize the TrackPlayer when "AUDIO PLAYER" is clicked
   React.useEffect(() => {
+    //function to initialize the Track Player and pause video player
     const startPlayer = async () => {
       try {
-        //function to initialize the Track Player
+        dispatch({
+          type: actionTypes.SET_PAUSE_VIDEO,
+          payload: true,
+        });
+        dispatch({
+          type: actionTypes.SET_OVERLAY_VIEW,
+          payload: true,
+        });
         let isInit = await trackPlayerInit(url, trackId, title, image);
         setIsTrackPlayerInit(isInit);
+        await TrackPlayer.play();
       } catch (error) {
         console.log(error.message);
       }
@@ -102,19 +111,27 @@ const CustomTrackPlayer = ({
     }
   });
 
-  //start playing the TrackPlayer when the play button is pressed
+  //start playing the TrackPlayer when the play button is pressed and stop video player
   const onPlayButtonPressed = async () => {
     if (!isTrackPlaying) {
       try {
-        //line 134-136 sets position of player if slided is used before play pressed first time
-        const trackDuration = await TrackPlayer.getDuration();
-        await TrackPlayer.seekTo(sliderValue * trackDuration);
-        setTimeStamp(timeFormat(sliderValue * trackDuration));
-        await TrackPlayer.play();
         dispatch({
           type: actionTypes.SET_TRACK_PLAYING,
           payload: true,
         });
+        dispatch({
+          type: actionTypes.SET_PAUSE_VIDEO,
+          payload: true,
+        });
+        dispatch({
+          type: actionTypes.SET_OVERLAY_VIEW,
+          payload: true,
+        });
+        //sets position of player if slided is used before play pressed first time. Next 3 lines
+        const trackDuration = await TrackPlayer.getDuration();
+        await TrackPlayer.seekTo(sliderValue * trackDuration);
+        setTimeStamp(timeFormat(sliderValue * trackDuration));
+        await TrackPlayer.play();
       } catch (error) {
         console.log(error.message);
       }
