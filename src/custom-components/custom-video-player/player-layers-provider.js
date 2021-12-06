@@ -124,11 +124,10 @@ const PlayerLayersProvider = props => {
 
   const hiddenJumpBackward = () => {
     if (currentVideoPlayTime <= 10) {
-      videoPlayer.seek(0.1);
-      return dispatchToVideoPlayer({
-        type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
-        payload: 0,
+      dispatch({
+        type: actionTypes.TOGGLE_OVERLAY_VIEW,
       });
+      return;
     }
     handleDoubleTap(
       () => {
