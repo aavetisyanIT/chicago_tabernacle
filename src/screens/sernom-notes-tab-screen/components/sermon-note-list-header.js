@@ -14,9 +14,9 @@ const SermonNoteListHeader = ({article}) => {
   const showAudioPlayer = () => setAudioPlayerVisible(true);
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
 
-  const audioUrl = article.audio.url;
-  const audioId = article.audio.id;
-  const videoUrl = article.video.url;
+  const audioUrl = article.audio?.url;
+  const audioId = article.audio?.id;
+  const videoUrl = article.video?.url;
   const sermonTitle = article.headline;
   const sermonImage = article.image.url;
 
@@ -31,7 +31,7 @@ const SermonNoteListHeader = ({article}) => {
     });
   }, []);
 
-  let articleHasAudio = article.audio.type === 'audio';
+  let articleHasAudio = article.audio?.type === 'audio' && article.audio;
 
   return (
     <>
