@@ -73,7 +73,6 @@ const NewsCard = ({announcement, navigation, announcementData}) => {
               priority: FastImage.priority.normal,
             }}
             style={styles.image}
-            resizeMode={FastImage.resizeMode.contain}
           />
           <Text style={styles.title}>{announcement.item.title}</Text>
           <Text style={styles.description}>{announcement.item.desc}</Text>
@@ -87,7 +86,9 @@ export default NewsCard;
 
 const styles = StyleSheet.create({
   image: {
-    height: 215,
+    flex: 1,
+    height: 220,
+    width: null,
   },
   content: {
     paddingVertical: 10,

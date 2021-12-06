@@ -6,7 +6,7 @@ import NewsCard from './components/news-card.component';
 
 const NewsTab = ({navigation}) => {
   const [refreshing, setRefreshing] = React.useState(false),
-    [data, setData] = React.useState({});
+    [data, setData] = React.useState({items: {}});
 
   // Fetching all announcements
   React.useEffect(() => {
@@ -46,25 +46,25 @@ const NewsTab = ({navigation}) => {
     );
   };
   return (
-    <>
-      <View style={styles.container}>
-        <FlatList
-          ItemSeparatorComponent={() => <View style={{height: 8}} />}
-          data={data.items}
-          renderItem={renderNewsCard}
-          keyExtractor={announcement => {
-            return announcement.id;
-          }}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={() => {}}
-              colors={['#bc9665']}
-            />
-          }
-        />
-      </View>
-    </>
+    <View style={styles.container}>
+      <FlatList
+        ItemSeparatorComponent={() => <View style={{height: 8}} />}
+        data={data.items}
+        renderItem={renderNewsCard}
+        keyExtractor={announcement => {
+          return announcement.id;
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => {
+              alert('Refreshing. Empty function');
+            }}
+            colors={['#bc9665']}
+          />
+        }
+      />
+    </View>
   );
 };
 
