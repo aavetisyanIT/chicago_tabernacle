@@ -21,20 +21,6 @@ const PlayerLayersProvider = props => {
     {isOverlayView, isVideoPaused, dismissTimerId, isTrackPlaying} = state,
     {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
 
-  // Pause video and show overlay when track starts playing
-  // React.useEffect(() => {
-  //   if (isTrackPlaying) {
-  //     dispatch({
-  //       type: actionTypes.SET_PAUSE_VIDEO,
-  //       payload: true,
-  //     });
-  //     dispatch({
-  //       type: actionTypes.SET_OVERLAY_VIEW,
-  //       payload: true,
-  //     });
-  //   }
-  // }, [isTrackPlaying]);
-
   const setUpDismissTimer = () => {
     clearTimeout(dismissTimerId);
     let timerId = setTimeout(() => {
