@@ -161,8 +161,8 @@ const CustomTrackPlayer = ({
     }
   };
 
-  const playIcon = <Icon name="play-arrow" size={30} color="#fff" />,
-    pauseIcon = <Icon name="pause" size={30} color="#fff" />;
+  const playIcon = <Icon name="play-arrow" size={40} color="#fff" />,
+    pauseIcon = <Icon name="pause" size={40} color="#fff" />;
 
   return trackPlayerVisible ? (
     <View style={styles.container}>
@@ -174,7 +174,9 @@ const CustomTrackPlayer = ({
         value={sliderValue}
         minimumTrackTintColor="black"
         maximumTrackTintColor="white"
-        thumbTintColor="black"
+        //thumbImage size can't be configured by props
+        //it depends on size of the image in thumbImage prop
+        thumbImage={require('../assets/track_player_thumb_size_48.png')}
         onSlidingStart={slidingStarted}
         onSlidingComplete={slidingCompleted}
       />
@@ -189,7 +191,7 @@ const CustomTrackPlayer = ({
       title="AUDIO PLAYER"
       textStyle={styles.audioButtonText}
       icon="volume-high-outline"
-      iconSize={20}
+      iconSize={22}
       onPress={showTrackPlayer}
     />
   );
@@ -204,16 +206,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     backgroundColor: '#bc9665',
-    height: 60,
+    height: 80,
   },
   text: {
-    marginHorizontal: 10,
+    marginHorizontal: 12,
     color: '#fff',
     fontFamily: 'Roboto-Medium',
-    fontSize: 14,
+    fontSize: 16,
   },
   slider: {width: '55%', height: 5, backgroundColor: '#bc9665'},
-  buttons: {marginLeft: 0},
+  buttons: {marginLeft: 0, marginRight: 7},
   audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
   audioButtonText: {
     color: '#bc9665',
