@@ -176,7 +176,7 @@ const CustomTrackPlayer = ({
         maximumTrackTintColor="white"
         //thumbImage size can't be configured by props
         //it depends on size of the image in thumbImage prop
-        thumbImage={require('../assets/track_player_thumb_size_16.png')}
+        thumbImage={require('../assets/track_player_thumb_size_17.png')}
         onSlidingStart={slidingStarted}
         onSlidingComplete={slidingCompleted}
       />
