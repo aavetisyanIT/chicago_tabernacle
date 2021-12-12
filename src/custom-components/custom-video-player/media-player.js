@@ -8,15 +8,10 @@ import {videoPlayerActionTypes} from './video-player-context/video.player.action
 
 const MediaPlayer = () => {
   const [state, dispatch] = React.useContext(AppContext),
-    [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-      VideoPlayerContext,
-    ),
-    {
-      isVideoPaused,
-      articleVideoUrl,
-      articleImageUrl,
-      isFullScreenVideo,
-    } = state,
+    [videoPlayerState, dispatchToVideoPlayer] =
+      React.useContext(VideoPlayerContext),
+    {isVideoPaused, articleVideoUrl, articleImageUrl, isFullScreenVideo} =
+      state,
     videoPlayer = React.useRef(null);
 
   React.useEffect(() => {
@@ -60,13 +55,16 @@ const MediaPlayer = () => {
     <Video
       fullscreen={isFullScreenVideo}
       paused={isVideoPaused}
-      style={{flex: 1}}
+      style={{
+        flex: 1,
+      }}
       source={{
         uri: articleVideoUrl
           ? articleVideoUrl
           : 'https://player.vimeo.com/external/535955445.m3u8?s=9b15c3f1d9565e47615953db6c46c27b79c686fb',
       }}
-      resizeMode="contain"
+      resizeMode="stretch"
+      posterResizeMode="stretch"
       poster={
         articleImageUrl
           ? articleImageUrl

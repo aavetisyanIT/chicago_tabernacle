@@ -8,8 +8,8 @@ import {actionTypes} from './../../context/action.types';
 const PlayerFullscreenProvider = props => {
   const [state, dispatch] = React.useContext(AppContext),
     {screenDimensions, isFullScreenVideo} = state,
-    screenHeight = screenDimensions.window.height,
-    screenWidth = screenDimensions.window.width,
+    screenHeight = screenDimensions.screen.height,
+    screenWidth = screenDimensions.screen.width,
     dismissTimerId = state.dismissTimerId,
     width = React.useRef(new Animated.Value(screenWidth)).current,
     height = React.useRef(new Animated.Value(screenHeight)).current;
@@ -32,8 +32,7 @@ const PlayerFullscreenProvider = props => {
       useNativeDriver: false,
     }).start();
     Animated.timing(height, {
-      // adding 1 to hide little stripe
-      toValue: screenWidth + 1,
+      toValue: screenWidth,
       duration: 0,
       easing: Easing.linear,
       useNativeDriver: false,
@@ -75,13 +74,13 @@ const PlayerFullscreenProvider = props => {
       style={
         isFullScreenVideo
           ? {
-              ...styles.fullscreenContainer,
-              height: height,
-              marginTop: -1,
+              flex: 1,
+              height: screenWidth,
             }
           : {
-              ...styles.container,
+              flex: 1,
               height: width,
+              width: height,
             }
       }>
       <View style={styles.childrenContainer}>{props.children}</View>
@@ -92,7 +91,6 @@ const PlayerFullscreenProvider = props => {
 export default PlayerFullscreenProvider;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, marginTop: 9},
   fullscreenContainer: {
     flex: 1,
   },
