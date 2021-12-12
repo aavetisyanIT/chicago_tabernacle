@@ -176,12 +176,14 @@ const CustomTrackPlayer = ({
         maximumTrackTintColor="white"
         //thumbImage size can't be configured by props
         //it depends on size of the image in thumbImage prop
-        thumbImage={require('../assets/track_player_thumb_size_48.png')}
+        thumbImage={require('../assets/track_player_thumb_size_16.png')}
         onSlidingStart={slidingStarted}
         onSlidingComplete={slidingCompleted}
       />
       <Text style={styles.text}>{trackTime}</Text>
-      <TouchableOpacity style={styles.buttons} onPress={onPlayButtonPressed}>
+      <TouchableOpacity
+        style={styles.playPauseButton}
+        onPress={onPlayButtonPressed}>
         {isTrackPlaying ? pauseIcon : playIcon}
       </TouchableOpacity>
     </View>
@@ -203,19 +205,19 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     marginTop: 10,
     backgroundColor: '#bc9665',
     height: 80,
+    paddingHorizontal: 5,
   },
   text: {
-    marginHorizontal: 12,
     color: '#fff',
     fontFamily: 'Roboto-Medium',
     fontSize: 16,
   },
-  slider: {width: '55%', height: 5, backgroundColor: '#bc9665'},
-  buttons: {marginLeft: 0, marginRight: 7},
+  slider: {width: '55%', backgroundColor: '#bc9665'},
+  playPauseButton: {marginLeft: 0},
   audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
   audioButtonText: {
     color: '#bc9665',
