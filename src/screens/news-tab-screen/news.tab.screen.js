@@ -17,7 +17,7 @@ const NewsTab = ({navigation}) => {
     fetchData();
   }, []);
 
-  const renderNewsCard = announcement => {
+  const newsCard = announcement => {
     let announcementData = null;
     switch (announcement.item.type) {
       case 'devo':
@@ -45,6 +45,9 @@ const NewsTab = ({navigation}) => {
       />
     );
   };
+
+  const renderNewsCard = React.useCallback(newsCard, [data]);
+
   return (
     <View style={styles.container}>
       <FlatList
