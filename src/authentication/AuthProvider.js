@@ -1,5 +1,6 @@
 import React from 'react';
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import {
   GoogleSignin,
   statusCodes,
@@ -10,6 +11,7 @@ import {
 import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import devEnvironmentVariables from './../config/env';
+import SideMenuButton from './../navigation/components/side-menu-button';
 
 const AuthProvider = ({children}) => {
   const [{user}, dispatch] = React.useContext(AppContext);
@@ -22,6 +24,24 @@ const AuthProvider = ({children}) => {
       hostedDomain: '',
       accountName: '',
     });
+  }, []);
+
+  //populate database when user logs in
+  const onAuthStateChanged = async ({uid, email}) => {
+    try {
+      await database().ref(`/users/${uid}`).set({
+        email: email,
+        firebaseUid: uid,
+      });
+    } catch (error) {
+      console.log('AuthProvide onAuthStateChanged');
+      console.log('Error: ', error.message);
+    }
+  };
+
+  React.useEffect(() => {
+    auth().onAuthStateChanged(onAuthStateChanged);
+    // return user;
   }, []);
 
   const onGoogleSignInPress = async () => {
