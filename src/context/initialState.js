@@ -16,6 +16,7 @@ const initialState = {
   articleImageUrl: '',
   dismissTimerId: 0,
   isTrackPlaying: false,
+  currentArticleId: '',
 };
 
 export default initialState;
