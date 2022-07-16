@@ -3,8 +3,21 @@ import {StyleSheet, View} from 'react-native';
 
 import CustomButton from './../../../custom-components/custom-button';
 import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
+import {actionTypes} from './../../../context/action.types';
+import {AppContext} from './../../../context/app.context';
 
 const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
+  const [state, dispatch] = React.useContext(AppContext);
+
+  React.useEffect(() => {
+    if (item.allowNotes) {
+      dispatch({
+        type: actionTypes.SET_CURRENT_ARTICLE_ID,
+        payload: item.id,
+      });
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <CustomParagraphHtmlToText paragraphHtml={item.text} />

@@ -1,3 +1,4 @@
+import {STATE_PAUSED} from 'react-native-track-player';
 import {actionTypes} from './action.types';
 
 const reducer = (state, action) => {
@@ -53,6 +54,8 @@ const reducer = (state, action) => {
       };
     case actionTypes.SET_CURRENT_ARTICLE_ID:
       return {...state, currentArticleId: action.payload};
+    case actionTypes.SET_USER_UID:
+      return {...STATE_PAUSED, userUid: action.payload};
     default:
       throw new Error();
   }

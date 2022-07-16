@@ -17,6 +17,7 @@ const initialState = {
   dismissTimerId: 0,
   isTrackPlaying: false,
   currentArticleId: '',
+  userUid: '',
 };
 
 export default initialState;
