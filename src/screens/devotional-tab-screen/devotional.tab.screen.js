@@ -5,6 +5,8 @@ import {useNavigationState} from '@react-navigation/native';
 import DevotionalHeader from './components/devotional-header';
 import DevotionalContent from './components/devotional-content';
 import CustomAddNoteModal from '../../custom-components/custom-add-note-modal';
+import {AppContext} from './../../context/app.context';
+import {actionTypes} from './../../context/action.types';
 
 const DevotionalTab = () => {
   //making use of useNavigation hook to retrive current acticle
@@ -15,11 +17,20 @@ const DevotionalTab = () => {
   const {devoContent} = article;
   const PARAGRAPHSDATA = devoContent[0].paragraphs;
 
+  const [state, dispatch] = React.useContext(AppContext);
+
   const [modalVisible, setModalVisible] = React.useState(false);
   const [currentParagraphHTML, setCurrentParagraphHTML] = React.useState('');
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
+
+  React.useEffect(() => {
+    dispatch({
+      type: actionTypes.SET_CURRENT_ARTICLE_ID,
+      payload: devoContent[0].id,
+    });
+  }, []);
 
   const renderItem = props => (
     <DevotionalContent

@@ -9,14 +9,13 @@ import {AppContext} from './../../../context/app.context';
 const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
   const [state, dispatch] = React.useContext(AppContext);
 
-  React.useEffect(() => {
-    if (item.allowNotes) {
-      dispatch({
-        type: actionTypes.SET_CURRENT_ARTICLE_ID,
-        payload: item.id,
-      });
-    }
-  }, []);
+  const onAddNotePress = () => {
+    dispatch({
+      type: actionTypes.SET_CURRENT_PARAGRAPH_ID,
+      payload: item.id,
+    });
+    showModal();
+  };
 
   return (
     <View style={styles.container}>
@@ -24,7 +23,7 @@ const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
       {item.allowNotes ? (
         <CustomButton
           title="Add Note"
-          onPress={showModal}
+          onPress={onAddNotePress}
           setCurrentHTML={setCurrentParagraphHTML}
           currentHTML={item.text}
           style={styles.button}

@@ -1,17 +1,34 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
-
+import database from '@react-native-firebase/database';
 import ModalTextInput from './modal-text-input';
+
 import CustomButton from './custom-button';
 import CustomParagraphHtmlToText from './custom-paragraph-html-to-text-component';
 import {AppContext} from './../context/app.context';
 
 const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
   const [userNote, setUserNote] = React.useState(''),
-    [{user}, dispatch] = React.useContext(AppContext),
-    handleChangeText = text => {
-      console.log(text);
+    [{currentParagraphId, currentArticleId, user, userUid}, dispatch] =
+      React.useContext(AppContext),
+    handleChangeText = text => setUserNote(text),
+    onPressDoneButton = async () => {
+      if (userNote) {
+        try {
+          const noteRef = await database().ref(
+            `/users/${userUid}/articles/${currentArticleId}/notes`,
+          );
+          noteRef.child(currentParagraphId).update({
+            text: userNote,
+          });
+        } catch (error) {
+          console.log('CustomAddNoteModal onPressDoneButton');
+          console.log('Error: ', error.message);
+        }
+      }
+      hideModal();
+      setUserNote('');
     };
 
   return (
@@ -33,7 +50,7 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
               onChangeText={text => handleChangeText(text)}
             />
             <CustomButton
-              onPress={hideModal}
+              onPress={onPressDoneButton}
               title={'DONE'}
               style={styles.button}
               textStyle={styles.buttonText}
