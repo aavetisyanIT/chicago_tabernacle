@@ -52,6 +52,8 @@ const reducer = (state, action) => {
         ...state,
         isTrackPlaying: action.payload,
       };
+    case actionTypes.SET_CURRENT_PARAGRAPH_ID:
+      return {...state, currentParagraphId: action.payload};
     case actionTypes.SET_CURRENT_ARTICLE_ID:
       return {...state, currentArticleId: action.payload};
     case actionTypes.SET_USER_UID:
