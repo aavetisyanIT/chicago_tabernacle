@@ -11,8 +11,6 @@ const reducer = (state, action) => {
       return {...state, isFullScreenVideo: action.payload};
     case actionTypes.TOGGLE_FULLSCREEN_VIDEO:
       return {...state, isFullScreenVideo: !state.isFullScreenVideo};
-    case actionTypes.HORIZONTAL_VIEW_VIDEO:
-      return {...state, isHorisontalVideoView: action.payload};
     case actionTypes.TOGGLE_PAUSE_VIDEO:
       return {
         ...state,
@@ -57,7 +55,7 @@ const reducer = (state, action) => {
     case actionTypes.SET_CURRENT_ARTICLE_ID:
       return {...state, currentArticleId: action.payload};
     case actionTypes.SET_USER_UID:
-      return {...STATE_PAUSED, userUid: action.payload};
+      return {...state, userUid: action.payload};
     default:
       throw new Error();
   }
