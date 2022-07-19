@@ -16,10 +16,23 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
     onPressDoneButton = async () => {
       if (userNote) {
         try {
+          const currentDate = new Date();
           const noteRef = database().ref(
             `/users/${userUid}/articles/${currentArticleId}/notes`,
           );
           noteRef.child(currentParagraphId).update({
+            dateModified: {
+              date: currentDate.getDate(),
+              day: currentDate.getDay(),
+              hours: currentDate.getHours(),
+              minutes: currentDate.getMinutes(),
+              month: currentDate.getMonth(),
+              seconds: currentDate.getSeconds(),
+              time: currentDate.getMilliseconds(),
+              timezoneOffset: currentDate.getTimezoneOffset(),
+              year: currentDate.getFullYear(),
+            },
+            paragraphId: currentParagraphId,
             text: userNote,
           });
         } catch (error) {
