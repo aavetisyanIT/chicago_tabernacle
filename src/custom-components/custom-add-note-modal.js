@@ -16,7 +16,7 @@ const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
     onPressDoneButton = async () => {
       if (userNote) {
         try {
-          const noteRef = await database().ref(
+          const noteRef = database().ref(
             `/users/${userUid}/articles/${currentArticleId}/notes`,
           );
           noteRef.child(currentParagraphId).update({

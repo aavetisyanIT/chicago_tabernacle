@@ -6,12 +6,9 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-//Currently not used
-// import * as RootNavigation from '../navigation/RootNavigation';
 import {AppContext} from './../context/app.context';
 import {actionTypes} from './../context/action.types';
 import devEnvironmentVariables from './../config/env';
-import SideMenuButton from './../navigation/components/side-menu-button';
 
 const AuthProvider = ({children}) => {
   const [{user}, dispatch] = React.useContext(AppContext);
@@ -29,10 +26,12 @@ const AuthProvider = ({children}) => {
   //populate database when user logs in
   const onAuthStateChanged = async ({uid, email}) => {
     try {
-      await database().ref(`/users/${uid}`).set({
-        email: email,
-        firebaseUid: uid,
+      dispatch({
+        type: actionTypes.SET_USER_UID,
+        payload: uid,
       });
+      const usersRef = database().ref(`/users`);
+      usersRef.child(uid).update({email: email, firebaseUid: uid});
     } catch (error) {
       console.log('AuthProvide onAuthStateChanged');
       console.log('Error: ', error.message);
