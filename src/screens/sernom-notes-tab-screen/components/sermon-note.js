@@ -5,8 +5,11 @@ import HiddenText from './hidden-text';
 import CustomButton from './../../../custom-components/custom-button';
 import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
 import CustomImage from '../../../custom-components/custom-image';
+import {AppContext} from './../../../context/app.context';
+import {actionTypes} from './../../../context/action.types';
 
 const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
+  const [state, dispatch] = React.useContext(AppContext);
   let PARAGRAPHHTML = item.text,
     paragraphContent = null;
   if (item.type === 'attributedText') {
@@ -23,13 +26,21 @@ const SermonNote = ({item, showModal, setCurrentSermonHTML}) => {
     paragraphContent = <CustomImage url={item.mediaObject.url} />;
   }
 
+  const onAddNotePress = () => {
+    dispatch({
+      type: actionTypes.SET_CURRENT_SERMON_PARAG_ID,
+      payload: item.id,
+    });
+    showModal();
+  };
+
   return (
     <View style={styles.container}>
       {paragraphContent}
       {item.allowNotes ? (
         <CustomButton
           title="Add Note"
-          onPress={showModal}
+          onPress={onAddNotePress}
           setCurrentHTML={setCurrentSermonHTML}
           currentHTML={PARAGRAPHHTML}
           style={styles.button}

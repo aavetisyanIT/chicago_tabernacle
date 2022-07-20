@@ -16,26 +16,34 @@ const CustomAddNoteModal = ({
   articleType,
 }) => {
   const [userNote, setUserNote] = React.useState(''),
-    [{currentDevotionalParagId, currentDevotionalId, user, userUid}, dispatch] =
-      React.useContext(AppContext),
+    [
+      {
+        currentDevotionalParagId,
+        currentDevotionalId,
+        currentSermonId,
+        currentSermonParagId,
+        user,
+        userUid,
+      },
+    ] = React.useContext(AppContext),
     handleChangeText = text => setUserNote(text),
     currentArticleId = React.useMemo(() => {
       if (articleType === 'devotional') {
         return currentDevotionalId;
-        //here add new state:
       } else if (articleType === 'sermon') {
-        return '';
+        return currentSermonId;
       }
     }, []),
     currentParagraphId = React.useMemo(() => {
       if (articleType === 'devotional') {
         return currentDevotionalParagId;
-        //here add new state:
       } else if (articleType === 'sermon') {
-        return '';
+        return currentSermonParagId;
       }
     }, []),
     onPressDoneButton = async () => {
+      console.log('currentArticleId: ', currentArticleId);
+      console.log('currentParagraphId: ', currentParagraphId);
       if (userNote) {
         try {
           const currentDate = new Date();

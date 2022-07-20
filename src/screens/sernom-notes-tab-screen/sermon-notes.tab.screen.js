@@ -5,9 +5,10 @@ import SermonNote from './components/sermon-note';
 import SermonNoteListHeader from './components/sermon-note-list-header';
 import CustomAddNoteModal from './../../custom-components/custom-add-note-modal';
 import {AppContext} from './../../context/app.context';
+import {actionTypes} from './../../context/action.types';
 
 const SermonNotesTab = ({route}) => {
-  const [state] = React.useContext(AppContext),
+  const [state, dispatch] = React.useContext(AppContext),
     {isFullScreenVideo} = state,
     {article} = route.params,
     PARAGRAPHDATA = article.paragraphs,
@@ -25,7 +26,10 @@ const SermonNotesTab = ({route}) => {
     );
 
   React.useEffect(() => {
-    console.log('SermonNotesTab');
+    dispatch({
+      type: actionTypes.SET_CURRENT_SERMON_ID,
+      payload: article.id,
+    });
   }, []);
 
   // Fixes issue when fullscreen is clicked on scrolled screen

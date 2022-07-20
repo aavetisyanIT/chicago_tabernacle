@@ -26,7 +26,6 @@ const DevotionalTab = () => {
   const hideModal = () => setModalVisible(false);
 
   React.useEffect(() => {
-    console.log('DevotionalTab');
     dispatch({
       type: actionTypes.SET_CURRENT_DEVOTIONAL_ID,
       payload: devoContent[0].id,

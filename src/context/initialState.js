@@ -16,6 +16,8 @@ const initialState = {
   isTrackPlaying: false,
   currentDevotionalParagId: '',
   currentDevotionalId: '',
+  currentSermonParagId: '',
+  currentSermonId: '',
   userUid: '',
 };
 

@@ -9,13 +9,13 @@ import {AppContext} from './../../../context/app.context';
 const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
   const [state, dispatch] = React.useContext(AppContext);
 
-  const onAddNotePress = () => {
+  const onAddNotePress = React.useCallback(() => {
     dispatch({
       type: actionTypes.SET_CURRENT_DEVOTIONAL_PARAG_ID,
       payload: item.id,
     });
     showModal();
-  };
+  }, []);
 
   return (
     <View style={styles.container}>
