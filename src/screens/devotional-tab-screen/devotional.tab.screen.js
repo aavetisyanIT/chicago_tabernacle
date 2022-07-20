@@ -26,8 +26,9 @@ const DevotionalTab = () => {
   const hideModal = () => setModalVisible(false);
 
   React.useEffect(() => {
+    console.log('DevotionalTab');
     dispatch({
-      type: actionTypes.SET_CURRENT_ARTICLE_ID,
+      type: actionTypes.SET_CURRENT_DEVOTIONAL_ID,
       payload: devoContent[0].id,
     });
   }, []);
@@ -47,6 +48,7 @@ const DevotionalTab = () => {
         hideModal={hideModal}
         placeholder="Your Note"
         HTML={currentParagraphHTML}
+        articleType="devotional"
       />
       <FlatList
         ListHeaderComponent={

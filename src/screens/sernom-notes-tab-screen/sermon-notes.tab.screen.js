@@ -24,6 +24,10 @@ const SermonNotesTab = ({route}) => {
       />
     );
 
+  React.useEffect(() => {
+    console.log('SermonNotesTab');
+  }, []);
+
   // Fixes issue when fullscreen is clicked on scrolled screen
   React.useEffect(() => {
     if (isFullScreenVideo) {
@@ -39,6 +43,7 @@ const SermonNotesTab = ({route}) => {
         hideModal={hideModal}
         placeholder="Your Note"
         HTML={currentSermonHTML}
+        articleType="sermon"
       />
       <FlatList
         ListHeaderComponent={<SermonNoteListHeader article={article} />}

@@ -14,8 +14,8 @@ const initialState = {
   articleImageUrl: '',
   dismissTimerId: 0,
   isTrackPlaying: false,
-  currentParagraphId: '',
-  currentArticleId: '',
+  currentDevotionalParagId: '',
+  currentDevotionalId: '',
   userUid: '',
 };
 

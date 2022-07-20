@@ -11,7 +11,7 @@ const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
 
   const onAddNotePress = () => {
     dispatch({
-      type: actionTypes.SET_CURRENT_PARAGRAPH_ID,
+      type: actionTypes.SET_CURRENT_DEVOTIONAL_PARAG_ID,
       payload: item.id,
     });
     showModal();

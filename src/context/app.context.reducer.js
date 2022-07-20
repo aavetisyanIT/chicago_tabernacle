@@ -50,10 +50,10 @@ const reducer = (state, action) => {
         ...state,
         isTrackPlaying: action.payload,
       };
-    case actionTypes.SET_CURRENT_PARAGRAPH_ID:
-      return {...state, currentParagraphId: action.payload};
-    case actionTypes.SET_CURRENT_ARTICLE_ID:
-      return {...state, currentArticleId: action.payload};
+    case actionTypes.SET_CURRENT_DEVOTIONAL_PARAG_ID:
+      return {...state, currentDevotionalParagId: action.payload};
+    case actionTypes.SET_CURRENT_DEVOTIONAL_ID:
+      return {...state, currentDevotionalId: action.payload};
     case actionTypes.SET_USER_UID:
       return {...state, userUid: action.payload};
     default:

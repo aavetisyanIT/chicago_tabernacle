@@ -8,11 +8,33 @@ import CustomButton from './custom-button';
 import CustomParagraphHtmlToText from './custom-paragraph-html-to-text-component';
 import {AppContext} from './../context/app.context';
 
-const CustomAddNoteModal = ({modalVisible, hideModal, placeholder, HTML}) => {
+const CustomAddNoteModal = ({
+  modalVisible,
+  hideModal,
+  placeholder,
+  HTML,
+  articleType,
+}) => {
   const [userNote, setUserNote] = React.useState(''),
-    [{currentParagraphId, currentArticleId, user, userUid}, dispatch] =
+    [{currentDevotionalParagId, currentDevotionalId, user, userUid}, dispatch] =
       React.useContext(AppContext),
     handleChangeText = text => setUserNote(text),
+    currentArticleId = React.useMemo(() => {
+      if (articleType === 'devotional') {
+        return currentDevotionalId;
+        //here add new state:
+      } else if (articleType === 'sermon') {
+        return '';
+      }
+    }, []),
+    currentParagraphId = React.useMemo(() => {
+      if (articleType === 'devotional') {
+        return currentDevotionalParagId;
+        //here add new state:
+      } else if (articleType === 'sermon') {
+        return '';
+      }
+    }, []),
     onPressDoneButton = async () => {
       if (userNote) {
         try {
