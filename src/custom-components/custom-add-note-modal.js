@@ -33,17 +33,15 @@ const CustomAddNoteModal = ({
       } else if (articleType === 'sermon') {
         return currentSermonId;
       }
-    }, []),
+    }, [articleType, currentDevotionalId, currentSermonId]),
     currentParagraphId = React.useMemo(() => {
       if (articleType === 'devotional') {
         return currentDevotionalParagId;
       } else if (articleType === 'sermon') {
         return currentSermonParagId;
       }
-    }, []),
+    }, [articleType, currentDevotionalParagId, currentSermonParagId]),
     onPressDoneButton = async () => {
-      console.log('currentArticleId: ', currentArticleId);
-      console.log('currentParagraphId: ', currentParagraphId);
       if (userNote) {
         try {
           const currentDate = new Date();

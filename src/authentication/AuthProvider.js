@@ -24,7 +24,7 @@ const AuthProvider = ({children}) => {
   }, []);
 
   //populate database when user logs in
-  const onAuthStateChanged = async ({uid, email}) => {
+  const onAuthStateChanged = ({uid, email}) => {
     try {
       dispatch({
         type: actionTypes.SET_USER_UID,

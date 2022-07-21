@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
+import database from '@react-native-firebase/database';
 
 import SermonNote from './components/sermon-note';
 import SermonNoteListHeader from './components/sermon-note-list-header';
@@ -8,8 +9,8 @@ import {AppContext} from './../../context/app.context';
 import {actionTypes} from './../../context/action.types';
 
 const SermonNotesTab = ({route}) => {
-  const [state, dispatch] = React.useContext(AppContext),
-    {isFullScreenVideo} = state,
+  const [{isFullScreenVideo, user, userUid}, dispatch] =
+      React.useContext(AppContext),
     {article} = route.params,
     PARAGRAPHDATA = article.paragraphs,
     [modalVisible, setModalVisible] = React.useState(false),
@@ -26,10 +27,19 @@ const SermonNotesTab = ({route}) => {
     );
 
   React.useEffect(() => {
-    dispatch({
-      type: actionTypes.SET_CURRENT_SERMON_ID,
-      payload: article.id,
-    });
+    if (user) {
+      dispatch({
+        type: actionTypes.SET_CURRENT_SERMON_ID,
+        payload: article.id,
+      });
+      try {
+        const userArticlesRef = database().ref(`/users/${userUid}/articles`);
+        userArticlesRef.child(article.id).update({read: true});
+      } catch (error) {
+        console.log('SermonNotesTab useEffect');
+        console.log('Error: ', error.message);
+      }
+    }
   }, []);
 
   // Fixes issue when fullscreen is clicked on scrolled screen

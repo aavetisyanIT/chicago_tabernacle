@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {useNavigationState} from '@react-navigation/native';
+import database from '@react-native-firebase/database';
 
 import DevotionalHeader from './components/devotional-header';
 import DevotionalContent from './components/devotional-content';
@@ -17,7 +18,7 @@ const DevotionalTab = () => {
   const {devoContent} = article;
   const PARAGRAPHSDATA = devoContent[0].paragraphs;
 
-  const [state, dispatch] = React.useContext(AppContext);
+  const [{user, userUid}, dispatch] = React.useContext(AppContext);
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const [currentParagraphHTML, setCurrentParagraphHTML] = React.useState('');
@@ -26,10 +27,19 @@ const DevotionalTab = () => {
   const hideModal = () => setModalVisible(false);
 
   React.useEffect(() => {
-    dispatch({
-      type: actionTypes.SET_CURRENT_DEVOTIONAL_ID,
-      payload: devoContent[0].id,
-    });
+    if (user) {
+      dispatch({
+        type: actionTypes.SET_CURRENT_DEVOTIONAL_ID,
+        payload: devoContent[0].id,
+      });
+      try {
+        const userArticlesRef = database().ref(`/users/${userUid}/articles`);
+        userArticlesRef.child(devoContent[0].id).update({read: true});
+      } catch (error) {
+        console.log('DevotionalTab useEffect');
+        console.log('Error: ', error.message);
+      }
+    }
   }, []);
 
   const renderItem = props => (

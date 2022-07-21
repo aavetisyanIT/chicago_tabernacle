@@ -14,10 +14,10 @@ const initialState = {
   articleImageUrl: '',
   dismissTimerId: 0,
   isTrackPlaying: false,
-  currentDevotionalParagId: '',
   currentDevotionalId: '',
-  currentSermonParagId: '',
+  currentDevotionalParagId: '',
   currentSermonId: '',
+  currentSermonParagId: '',
   userUid: '',
 };
 
