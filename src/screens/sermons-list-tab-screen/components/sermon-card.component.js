@@ -42,7 +42,8 @@ const SermonCard = ({sermon, navigation}) => {
         <View style={styles.content}>
           <Text style={styles.headLine}>
             {sermon.item.headline}
-            {isViewed ? '' : '*'}
+            {'  '}
+            {isViewed ? '' : <View style={styles.yellowDot} />}
           </Text>
           <Text style={styles.description}>{sermon.item.desc}</Text>
         </View>
@@ -58,4 +59,10 @@ const styles = StyleSheet.create({
   content: {padding: 13},
   headLine: {fontFamily: 'Roboto-Medium'},
   description: {fontFamily: 'Roboto-Thin'},
+  yellowDot: {
+    width: 9,
+    height: 9,
+    borderRadius: 50,
+    backgroundColor: '#bc9665',
+  },
 });
