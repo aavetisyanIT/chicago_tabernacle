@@ -22,11 +22,10 @@ const SermonsListTab = ({navigation}) => {
     fetchData();
   }, []);
 
-  const sermon = sermon => {
-    return <SermonCard sermon={sermon} navigation={navigation} />;
-  };
-
-  const renderSermon = React.useCallback(sermon, [sermons]);
+  const renderSermon = React.useCallback(
+    sermon => <SermonCard sermon={sermon} navigation={navigation} />,
+    [sermons],
+  );
 
   return (
     <View style={styles.container}>
