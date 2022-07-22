@@ -49,7 +49,7 @@ function CustomAddNoteModal({
       try {
         const currentDate = new Date();
         const noteRef = database().ref(
-          `/users/${userUid}/articles/${currentArticleId}/notes`
+          `/users/${userUid}/articles/${currentArticleId}/notes`,
         );
         noteRef.child(currentParagraphId).update({
           dateModified: {

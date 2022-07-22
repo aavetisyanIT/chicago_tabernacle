@@ -9,7 +9,7 @@ import { videoPlayerActionTypes } from './video-player-context/video.player.acti
 function MediaPlayer() {
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-    VideoPlayerContext
+    VideoPlayerContext,
   );
   const {
     isVideoPaused,

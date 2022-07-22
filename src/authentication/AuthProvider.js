@@ -6,12 +6,12 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-import {AppContext} from './../context/app.context';
-import {actionTypes} from './../context/action.types';
+import { AppContext } from './../context/app.context';
+import { actionTypes } from './../context/action.types';
 import devEnvironmentVariables from './../config/env';
 
-const AuthProvider = ({children}) => {
-  const [{user}, dispatch] = React.useContext(AppContext);
+const AuthProvider = ({ children }) => {
+  const [{ user }, dispatch] = React.useContext(AppContext);
 
   React.useEffect(() => {
     GoogleSignin.configure({
@@ -24,14 +24,14 @@ const AuthProvider = ({children}) => {
   }, []);
 
   //populate database when user logs in
-  const onAuthStateChanged = ({uid, email}) => {
+  const onAuthStateChanged = ({ uid, email }) => {
     try {
       dispatch({
         type: actionTypes.SET_USER_UID,
         payload: uid,
       });
       const usersRef = database().ref(`/users`);
-      usersRef.child(uid).update({email: email, firebaseUid: uid});
+      usersRef.child(uid).update({ email: email, firebaseUid: uid });
     } catch (error) {
       console.log('AuthProvide onAuthStateChanged');
       console.log('Error: ', error.message);
@@ -50,8 +50,14 @@ const AuthProvider = ({children}) => {
           showPlayServicesUpdateDialog: true,
         }); // if google services are not installed propmt will pop up
         const userInfo = await GoogleSignin.signIn();
-        dispatch({type: actionTypes.SET_USER, payload: userInfo.user});
-        dispatch({type: actionTypes.SET_INITIALIZING_AUTH, payload: false});
+        dispatch({
+          type: actionTypes.SET_USER,
+          payload: userInfo.user,
+        });
+        dispatch({
+          type: actionTypes.SET_INITIALIZING_AUTH,
+          payload: false,
+        });
         const googleCredential = auth.GoogleAuthProvider.credential(
           userInfo.idToken,
         );
@@ -60,12 +66,16 @@ const AuthProvider = ({children}) => {
       alert(`You are already signed in with ${user.email}`);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log(`onGoogleSignInPress error: User cancelled the login flow`);
+        console.log(
+          `onGoogleSignInPress error: User cancelled the login flow`,
+        );
       } else if (error.code === statusCodes.IN_PROGRESS) {
         console.log(
           `onGoogleSignInPress error: Operation google sign in is in progress already`,
         );
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      } else if (
+        error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE
+      ) {
         console.log(
           `onGoogleSignInPress error: Play services not available or outdated`,
         );
@@ -80,8 +90,11 @@ const AuthProvider = ({children}) => {
       if (user) {
         await GoogleSignin.revokeAccess();
         await GoogleSignin.signOut();
-        dispatch({type: actionTypes.SET_USER, payload: null});
-        dispatch({type: actionTypes.SET_INITIALIZING_AUTH, payload: true});
+        dispatch({ type: actionTypes.SET_USER, payload: null });
+        dispatch({
+          type: actionTypes.SET_INITIALIZING_AUTH,
+          payload: true,
+        });
         return;
       }
       //Currently not used
@@ -93,15 +106,17 @@ const AuthProvider = ({children}) => {
 
   const getCurrentUserInfo = async () => {
     try {
-      const {user} = await GoogleSignin.signInSilently();
-      dispatch({type: actionTypes.SET_USER, payload: user});
+      const { user } = await GoogleSignin.signInSilently();
+      dispatch({ type: actionTypes.SET_USER, payload: user });
       dispatch({
         type: actionTypes.SET_INITIALIZING_AUTH,
         payload: false,
       });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        console.log(`getCurrentUserInfo error: User is not signed in`);
+        console.log(
+          `getCurrentUserInfo error: User is not signed in`,
+        );
       } else {
         dispatch({
           type: actionTypes.SET_INITIALIZING_AUTH,
@@ -117,7 +132,8 @@ const AuthProvider = ({children}) => {
         onGoogleSignInPress,
         onGoogleSignOutPress,
         getCurrentUserInfo,
-      }}>
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

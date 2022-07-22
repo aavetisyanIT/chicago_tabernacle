@@ -11,7 +11,7 @@ import { videoPlayerActionTypes } from './video-player-context/video.player.acti
 
 function PlayerSlider() {
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-    VideoPlayerContext
+    VideoPlayerContext,
   );
   const [state, dispatch] = React.useContext(AppContext);
   const { isFullScreenVideo } = state;

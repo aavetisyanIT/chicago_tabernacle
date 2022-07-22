@@ -27,7 +27,7 @@ let lastTap = 0;
 let timerId = 0;
 export const handleDoubleTap = (
   doubleTapCallback,
-  signleTapCallback
+  signleTapCallback,
 ) => {
   const now = Date.now();
   const DOUBLE_PRESS_DELAY = 300;

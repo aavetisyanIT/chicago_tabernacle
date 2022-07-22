@@ -19,7 +19,7 @@ function PlayerFullscreenProvider(props) {
   const { dismissTimerId } = state;
   const width = React.useRef(new Animated.Value(screenWidth)).current;
   const height = React.useRef(
-    new Animated.Value(screenHeight)
+    new Animated.Value(screenHeight),
   ).current;
 
   // This useEffect needs to be above others so overlay wouldn't

@@ -76,7 +76,7 @@ function DrawerContent(props) {
             icon={() => createDrawerIcon('heart')}
             onPress={() =>
               Linking.openURL(
-                'https://www.chicagotabernacle.org/give/'
+                'https://www.chicagotabernacle.org/give/',
               )
             }
           />

@@ -17,7 +17,7 @@ import { videoPlayerActionTypes } from './video-player-context/video.player.acti
 function PlayerLayersProvider(props) {
   const [state, dispatch] = React.useContext(AppContext);
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
-    VideoPlayerContext
+    VideoPlayerContext,
   );
   const {
     isOverlayView,
@@ -110,7 +110,7 @@ function PlayerLayersProvider(props) {
         dispatch({
           type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });
-      }
+      },
     );
     return null;
   };
@@ -135,7 +135,7 @@ function PlayerLayersProvider(props) {
         dispatch({
           type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });
-      }
+      },
     );
     return null;
   };

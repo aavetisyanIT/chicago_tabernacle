@@ -40,7 +40,7 @@ function SermonNote({ item, showModal, setCurrentSermonHTML }) {
     try {
       const text = await database()
         .ref(
-          `/users/${userUid}/articles/${currentSermonId}/notes/${item.id}`
+          `/users/${userUid}/articles/${currentSermonId}/notes/${item.id}`,
         )
         .once('value');
       text.val() ? setEditText(text.val().text) : setEditText('');

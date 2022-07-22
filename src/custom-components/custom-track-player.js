@@ -79,7 +79,7 @@ function CustomTrackPlayer({
           url,
           trackId,
           title,
-          image
+          image,
         );
         setIsTrackPlayerInit(isInit);
         await TrackPlayer.play();
@@ -105,7 +105,7 @@ function CustomTrackPlayer({
     () => () => {
       TrackPlayer.destroy();
     },
-    []
+    [],
   );
 
   useTrackPlayerEvents(
@@ -126,7 +126,7 @@ function CustomTrackPlayer({
           payload: false,
         });
       }
-    }
+    },
   );
 
   // start playing the TrackPlayer when the play button is pressed and stop video player

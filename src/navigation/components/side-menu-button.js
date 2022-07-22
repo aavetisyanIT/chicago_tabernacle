@@ -14,6 +14,7 @@ function SideMenuButton() {
       onPress={() => {
         navigation.openDrawer();
       }}
+      ti
     />
   );
 }

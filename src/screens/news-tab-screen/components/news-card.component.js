@@ -20,18 +20,18 @@ function NewsCard({ announcement, navigation, announcementData }) {
 
   const findArticleByAnnouncementObjectId = (
     announcementData,
-    articles
+    articles,
   ) => {
     const articleId = announcementData.id;
     let foundArticle = null;
     if (announcementData.type === 'devo') {
       return (foundArticle = articles.items.find(
-        (article) => article.devoContent[0].id === articleId
+        (article) => article.devoContent[0].id === articleId,
       ));
     }
     if (announcementData.type === 'article') {
       return (foundArticle = articles.items.find(
-        (article) => article.id === articleId
+        (article) => article.id === articleId,
       ));
     }
   };
@@ -39,7 +39,7 @@ function NewsCard({ announcement, navigation, announcementData }) {
   const handlePress = () => {
     const currentArticle = findArticleByAnnouncementObjectId(
       announcementData,
-      articles
+      articles,
     );
     switch (announcementData.type) {
       case 'link':

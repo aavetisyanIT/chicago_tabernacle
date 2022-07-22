@@ -45,7 +45,7 @@ function SermonNotesTab({ route }) {
       });
       try {
         const userArticlesRef = database().ref(
-          `/users/${userUid}/articles`
+          `/users/${userUid}/articles`,
         );
         userArticlesRef.child(article.id).update({ read: true });
       } catch (error) {

@@ -35,7 +35,7 @@ function DevotionalTab() {
       });
       try {
         const userArticlesRef = database().ref(
-          `/users/${userUid}/articles`
+          `/users/${userUid}/articles`,
         );
         userArticlesRef
           .child(devoContent[0].id)
