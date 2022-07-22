@@ -1,12 +1,12 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import DevotionalTab from './../screens/devotional-tab-screen/devotional.tab.screen';
+import DevotionalTab from '../screens/devotional-tab-screen/devotional.tab.screen';
 import LazyPlaceholder from './components/lazy-placeholder.component';
 
-const {Navigator, Screen} = createStackNavigator();
+const { Navigator, Screen } = createStackNavigator();
 
-const CustomPushScreensStack = () => {
+function CustomPushScreensStack() {
   return (
     <Navigator headerMode="none">
       <Screen
@@ -17,6 +17,6 @@ const CustomPushScreensStack = () => {
       />
     </Navigator>
   );
-};
+}
 
 export default CustomPushScreensStack;

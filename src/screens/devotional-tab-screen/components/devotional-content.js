@@ -1,12 +1,16 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import CustomButton from './../../../custom-components/custom-button';
+import CustomButton from '../../../custom-components/custom-button';
 import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
-import {actionTypes} from './../../../context/action.types';
-import {AppContext} from './../../../context/app.context';
+import { actionTypes } from '../../../context/action.types';
+import { AppContext } from '../../../context/app.context';
 
-const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
+function DevotionalContent({
+  item,
+  showModal,
+  setCurrentParagraphHTML,
+}) {
   const [state, dispatch] = React.useContext(AppContext);
 
   const onAddNotePress = React.useCallback(() => {
@@ -34,7 +38,7 @@ const DevotionalContent = ({item, showModal, setCurrentParagraphHTML}) => {
       ) : null}
     </View>
   );
-};
+}
 
 export default DevotionalContent;
 
@@ -48,5 +52,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     margin: 5,
   },
-  buttonText: {color: '#bc9665', fontSize: 15, marginHorizontal: 5},
+  buttonText: { color: '#bc9665', fontSize: 15, marginHorizontal: 5 },
 });

@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-const CustomImage = ({url}) => {
+function CustomImage({ url }) {
   return (
     <FastImage
       source={{
@@ -13,10 +13,10 @@ const CustomImage = ({url}) => {
       resizeMode={FastImage.resizeMode.contain}
     />
   );
-};
+}
 
 export default CustomImage;
 
 const styles = StyleSheet.create({
-  image: {height: 250, width: '100%'},
+  image: { height: 250, width: '100%' },
 });

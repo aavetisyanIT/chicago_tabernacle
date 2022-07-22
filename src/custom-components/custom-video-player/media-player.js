@@ -1,18 +1,23 @@
 import React from 'react';
 import Video from 'react-native-video';
 
-import {AppContext} from './../../context/app.context';
-import {actionTypes} from './../../context/action.types';
-import {VideoPlayerContext} from './video-player-context/video.player.context';
-import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
+import { AppContext } from '../../context/app.context';
+import { actionTypes } from '../../context/action.types';
+import { VideoPlayerContext } from './video-player-context/video.player.context';
+import { videoPlayerActionTypes } from './video-player-context/video.player.action.types';
 
-const MediaPlayer = () => {
-  const [state, dispatch] = React.useContext(AppContext),
-    [videoPlayerState, dispatchToVideoPlayer] =
-      React.useContext(VideoPlayerContext),
-    {isVideoPaused, articleVideoUrl, articleImageUrl, isFullScreenVideo} =
-      state,
-    videoPlayer = React.useRef(null);
+function MediaPlayer() {
+  const [state, dispatch] = React.useContext(AppContext);
+  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+    VideoPlayerContext
+  );
+  const {
+    isVideoPaused,
+    articleVideoUrl,
+    articleImageUrl,
+    isFullScreenVideo,
+  } = state;
+  const videoPlayer = React.useRef(null);
 
   React.useEffect(() => {
     dispatchToVideoPlayer({
@@ -21,13 +26,13 @@ const MediaPlayer = () => {
     });
   }, [videoPlayer]);
 
-  const handleOnLoad = ({duration}) => {
+  const handleOnLoad = ({ duration }) => {
     dispatchToVideoPlayer({
       type: videoPlayerActionTypes.SET_VIDEO_DURATION,
       payload: duration,
     });
   };
-  const handleOnProgress = ({currentTime}) => {
+  const handleOnProgress = ({ currentTime }) => {
     dispatchToVideoPlayer({
       type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
       payload: currentTime,
@@ -39,7 +44,7 @@ const MediaPlayer = () => {
       type: actionTypes.SET_PAUSE_VIDEO,
       action: true,
     });
-    //videoPlayer object is stored in current property of refUse
+    // videoPlayer object is stored in current property of refUse
     videoPlayer.current.seek(0.1);
     dispatchToVideoPlayer({
       type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
@@ -59,16 +64,15 @@ const MediaPlayer = () => {
         flex: 1,
       }}
       source={{
-        uri: articleVideoUrl
-          ? articleVideoUrl
-          : 'https://player.vimeo.com/external/535955445.m3u8?s=9b15c3f1d9565e47615953db6c46c27b79c686fb',
+        uri:
+          articleVideoUrl ||
+          'https://player.vimeo.com/external/535955445.m3u8?s=9b15c3f1d9565e47615953db6c46c27b79c686fb',
       }}
       resizeMode="stretch"
       posterResizeMode="stretch"
       poster={
-        articleImageUrl
-          ? articleImageUrl
-          : 'https://chitab.org/wp-content/uploads/2020/09/CT-blank-slide.png'
+        articleImageUrl ||
+        'https://chitab.org/wp-content/uploads/2020/09/CT-blank-slide.png'
       }
       progressUpdateInterval={250.0}
       ref={videoPlayer}
@@ -77,6 +81,6 @@ const MediaPlayer = () => {
       onEnd={handleOnEnd}
     />
   );
-};
+}
 
 export default MediaPlayer;

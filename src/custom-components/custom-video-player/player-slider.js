@@ -1,30 +1,32 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {timeFormat} from './../../utils/trackPlayerUtils';
-import {AppContext} from './../../context/app.context';
-import {VideoPlayerContext} from './video-player-context/video.player.context';
-import {actionTypes} from './../../context/action.types';
-import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
+import { timeFormat } from '../../utils/trackPlayerUtils';
+import { AppContext } from '../../context/app.context';
+import { VideoPlayerContext } from './video-player-context/video.player.context';
+import { actionTypes } from '../../context/action.types';
+import { videoPlayerActionTypes } from './video-player-context/video.player.action.types';
 
-const PlayerSlider = () => {
-  const [videoPlayerState, dispatchToVideoPlayer] =
-      React.useContext(VideoPlayerContext),
-    [state, dispatch] = React.useContext(AppContext),
-    {isFullScreenVideo} = state,
-    {videoDuration, currentVideoPlayTime, videoPlayer} = videoPlayerState,
-    handleSlide = slide => {
-      videoPlayer.seek(slide * videoDuration);
-      dispatchToVideoPlayer({
-        type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
-        payload: slide * videoDuration,
-      });
-    },
-    handleFullScreen = () => {
-      dispatch({type: actionTypes.TOGGLE_FULLSCREEN_VIDEO});
-    };
+function PlayerSlider() {
+  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+    VideoPlayerContext
+  );
+  const [state, dispatch] = React.useContext(AppContext);
+  const { isFullScreenVideo } = state;
+  const { videoDuration, currentVideoPlayTime, videoPlayer } =
+    videoPlayerState;
+  const handleSlide = (slide) => {
+    videoPlayer.seek(slide * videoDuration);
+    dispatchToVideoPlayer({
+      type: videoPlayerActionTypes.SET_CURRENT_VIDEO_PLAY_TIME,
+      payload: slide * videoDuration,
+    });
+  };
+  const handleFullScreen = () => {
+    dispatch({ type: actionTypes.TOGGLE_FULLSCREEN_VIDEO });
+  };
 
   return (
     <View style={styles.sliderContainer}>
@@ -40,7 +42,9 @@ const PlayerSlider = () => {
             style={styles.fullscreenIcon}
             onPress={handleFullScreen}
             size={25}
-            name={isFullScreenVideo ? 'fullscreen-exit' : 'fullscreen'}
+            name={
+              isFullScreenVideo ? 'fullscreen-exit' : 'fullscreen'
+            }
           />
         </View>
       </View>
@@ -53,7 +57,7 @@ const PlayerSlider = () => {
       />
     </View>
   );
-};
+}
 
 export default PlayerSlider;
 
@@ -86,5 +90,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 1,
   },
-  fullscreenIcon: {color: 'white'},
+  fullscreenIcon: { color: 'white' },
 });

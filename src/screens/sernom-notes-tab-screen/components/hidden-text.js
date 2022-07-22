@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 
-const HiddenText = ({text, hiddenText}) => {
-  const [isHiddenTextVisible, setIsHiddenTextVisible] = React.useState(false);
+function HiddenText({ text, hiddenText }) {
+  const [isHiddenTextVisible, setIsHiddenTextVisible] =
+    React.useState(false);
   const showHiddenText = () => setIsHiddenTextVisible(true);
   return (
     <Pressable onPress={showHiddenText}>
@@ -19,15 +20,15 @@ const HiddenText = ({text, hiddenText}) => {
       </View>
     </Pressable>
   );
-};
+}
 
 export default HiddenText;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, flexDirection: 'row', flexWrap: 'wrap'},
-  text: {color: 'lightblue', fontSize: 16},
-  hiddenText: {textDecorationLine: 'underline'},
-  textBlocker: length => ({
+  container: { flex: 1, flexDirection: 'row', flexWrap: 'wrap' },
+  text: { color: 'lightblue', fontSize: 16 },
+  hiddenText: { textDecorationLine: 'underline' },
+  textBlocker: (length) => ({
     width: length * 8,
     height: 13,
     backgroundColor: 'lightgrey',

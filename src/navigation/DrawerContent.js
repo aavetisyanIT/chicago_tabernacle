@@ -1,54 +1,63 @@
 import React from 'react';
-import {View, StyleSheet, Linking} from 'react-native';
-import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
-import {Drawer} from 'react-native-paper';
+import { View, StyleSheet, Linking } from 'react-native';
+import {
+  DrawerItem,
+  DrawerContentScrollView,
+} from '@react-navigation/drawer';
+import { Drawer } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import HandHoldingHeartIcon from 'react-native-vector-icons/FontAwesome5';
 import ExchangeArrowsIcon from 'react-native-vector-icons/FontAwesome5';
 
 import * as RootNavigation from './RootNavigation';
-import {AppContext} from './../context/app.context';
-import CustomDrawerLoginView from './../custom-components/custom-drawer-login-view';
-import {AuthContext} from '../authentication/AuthProvider';
+import { AppContext } from '../context/app.context';
+import CustomDrawerLoginView from '../custom-components/custom-drawer-login-view';
+import { AuthContext } from '../authentication/AuthProvider';
 
-const DrawerContent = props => {
-  const [{user, initializingAuth}] = React.useContext(AppContext);
-  const {getCurrentUserInfo} = React.useContext(AuthContext);
+function DrawerContent(props) {
+  const [{ user, initializingAuth }] = React.useContext(AppContext);
+  const { getCurrentUserInfo } = React.useContext(AuthContext);
 
   React.useEffect(() => {
     getCurrentUserInfo();
   }, []);
 
-  const createDrawerIcon = name => {
-    return <Icon name={name} color="black" size={22} />;
-  };
-  const createHandHoldingHeartIcon = () => {
-    return (
-      <HandHoldingHeartIcon name="hand-holding-heart" color="black" size={22} />
-    );
-  };
-  const createExchangeArrowsIcon = () => {
-    return <ExchangeArrowsIcon name="exchange-alt" color="black" size={22} />;
-  };
+  const createDrawerIcon = (name) => (
+    <Icon name={name} color="black" size={22} />
+  );
+  const createHandHoldingHeartIcon = () => (
+    <HandHoldingHeartIcon
+      name="hand-holding-heart"
+      color="black"
+      size={22}
+    />
+  );
+  const createExchangeArrowsIcon = () => (
+    <ExchangeArrowsIcon name="exchange-alt" color="black" size={22} />
+  );
 
   return (
     <DrawerContentScrollView
       {...props}
-      contentContainerStyle={{paddingTop: 0, marginTop: 0}}>
+      contentContainerStyle={{ paddingTop: 0, marginTop: 0 }}
+    >
       <View style={styles.drawerContent}>
         <Drawer.Section style={styles.drawerSection}>
-          <CustomDrawerLoginView user={user} initializing={initializingAuth} />
+          <CustomDrawerLoginView
+            user={user}
+            initializing={initializingAuth}
+          />
         </Drawer.Section>
         <Drawer.Section style={styles.drawerSection}>
           <DrawerItem
             label="WHAT'S NEW"
-            labelStyle={{color: 'black'}}
+            labelStyle={{ color: 'black' }}
             icon={() => createDrawerIcon('flag')}
             onPress={() => RootNavigation.navigate("WHAT'S NEW")}
           />
           <DrawerItem
             label="SERMONS"
-            labelStyle={{color: 'black'}}
+            labelStyle={{ color: 'black' }}
             icon={() => createDrawerIcon('bookmark')}
             onPress={() => {
               RootNavigation.navigate('SERMONS');
@@ -58,7 +67,7 @@ const DrawerContent = props => {
         <Drawer.Section>
           <DrawerItem
             label="Prayer Request"
-            labelStyle={{color: 'black'}}
+            labelStyle={{ color: 'black' }}
             icon={createExchangeArrowsIcon}
             onPress={() => RootNavigation.navigate('PrayrRequest')}
           />
@@ -66,7 +75,9 @@ const DrawerContent = props => {
             label="Give"
             icon={() => createDrawerIcon('heart')}
             onPress={() =>
-              Linking.openURL('https://www.chicagotabernacle.org/give/')
+              Linking.openURL(
+                'https://www.chicagotabernacle.org/give/'
+              )
             }
           />
           <DrawerItem
@@ -104,7 +115,7 @@ const DrawerContent = props => {
       </View>
     </DrawerContentScrollView>
   );
-};
+}
 
 export default DrawerContent;
 

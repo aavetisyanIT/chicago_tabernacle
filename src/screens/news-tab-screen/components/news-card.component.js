@@ -1,15 +1,15 @@
 import React from 'react';
-import {Linking, StyleSheet, Text} from 'react-native';
-import {TouchableRipple} from 'react-native-paper';
+import { Linking, StyleSheet, Text } from 'react-native';
+import { TouchableRipple } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 
 import CustomCard from '../../../custom-components/custom-card';
-import {getAllArticles} from './../../../utils/api';
+import { getAllArticles } from '../../../utils/api';
 
-const NewsCard = ({announcement, navigation, announcementData}) => {
+function NewsCard({ announcement, navigation, announcementData }) {
   const [articles, setArticles] = React.useState({});
 
-  //Fetch all articles
+  // Fetch all articles
   React.useEffect(() => {
     const fetchData = async () => {
       const fetchedData = await getAllArticles();
@@ -18,16 +18,20 @@ const NewsCard = ({announcement, navigation, announcementData}) => {
     fetchData();
   }, []);
 
-  const findArticleByAnnouncementObjectId = (announcementData, articles) => {
-    let articleId = announcementData.id;
+  const findArticleByAnnouncementObjectId = (
+    announcementData,
+    articles
+  ) => {
+    const articleId = announcementData.id;
     let foundArticle = null;
     if (announcementData.type === 'devo') {
       return (foundArticle = articles.items.find(
-        article => article.devoContent[0].id === articleId,
+        (article) => article.devoContent[0].id === articleId
       ));
-    } else if (announcementData.type === 'article') {
+    }
+    if (announcementData.type === 'article') {
       return (foundArticle = articles.items.find(
-        article => article.id === articleId,
+        (article) => article.id === articleId
       ));
     }
   };
@@ -35,7 +39,7 @@ const NewsCard = ({announcement, navigation, announcementData}) => {
   const handlePress = () => {
     const currentArticle = findArticleByAnnouncementObjectId(
       announcementData,
-      articles,
+      articles
     );
     switch (announcementData.type) {
       case 'link':
@@ -62,10 +66,11 @@ const NewsCard = ({announcement, navigation, announcementData}) => {
   return (
     <CustomCard>
       <TouchableRipple
-        borderless={true}
-        centered={true}
+        borderless
+        centered
         onPress={handlePress}
-        rippleColor="rgba(0, 0, 0, .32)">
+        rippleColor="rgba(0, 0, 0, .32)"
+      >
         <>
           <FastImage
             source={{
@@ -75,12 +80,14 @@ const NewsCard = ({announcement, navigation, announcementData}) => {
             style={styles.image}
           />
           <Text style={styles.title}>{announcement.item.title}</Text>
-          <Text style={styles.description}>{announcement.item.desc}</Text>
+          <Text style={styles.description}>
+            {announcement.item.desc}
+          </Text>
         </>
       </TouchableRipple>
     </CustomCard>
   );
-};
+}
 
 export default NewsCard;
 
@@ -93,7 +100,11 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: 10,
   },
-  title: {paddingHorizontal: 12, paddingTop: 15, fontFamily: 'Roboto-Regular'},
+  title: {
+    paddingHorizontal: 12,
+    paddingTop: 15,
+    fontFamily: 'Roboto-Regular',
+  },
   description: {
     paddingHorizontal: 12,
     paddingBottom: 12,

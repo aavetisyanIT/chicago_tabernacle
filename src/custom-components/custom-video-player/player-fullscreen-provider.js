@@ -1,21 +1,29 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View, Animated, Easing} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Animated,
+  Easing,
+} from 'react-native';
 import Orientation from 'react-native-orientation';
 
-import {AppContext} from './../../context/app.context';
-import {actionTypes} from './../../context/action.types';
+import { AppContext } from '../../context/app.context';
+import { actionTypes } from '../../context/action.types';
 
-const PlayerFullscreenProvider = props => {
-  const [state, dispatch] = React.useContext(AppContext),
-    {screenDimensions, isFullScreenVideo} = state,
-    screenHeight = screenDimensions.screen.height,
-    screenWidth = screenDimensions.screen.width,
-    dismissTimerId = state.dismissTimerId,
-    width = React.useRef(new Animated.Value(screenWidth)).current,
-    height = React.useRef(new Animated.Value(screenHeight)).current;
+function PlayerFullscreenProvider(props) {
+  const [state, dispatch] = React.useContext(AppContext);
+  const { screenDimensions, isFullScreenVideo } = state;
+  const screenHeight = screenDimensions.screen.height;
+  const screenWidth = screenDimensions.screen.width;
+  const { dismissTimerId } = state;
+  const width = React.useRef(new Animated.Value(screenWidth)).current;
+  const height = React.useRef(
+    new Animated.Value(screenHeight)
+  ).current;
 
-  //This useEffect needs to be above others so overlay wouldn't
-  //be overriden to false
+  // This useEffect needs to be above others so overlay wouldn't
+  // be overriden to false
   React.useEffect(() => {
     Dimensions.addEventListener('change', onScreenRotation);
     toggleScreenModes();
@@ -62,10 +70,10 @@ const PlayerFullscreenProvider = props => {
     }
   };
 
-  const onScreenRotation = ({window, screen}) => {
+  const onScreenRotation = ({ window, screen }) => {
     dispatch({
       type: actionTypes.SET_SCREEN_DIMENSIONS,
-      payload: {window: window, screen: screen},
+      payload: { window, screen },
     });
   };
 
@@ -82,11 +90,12 @@ const PlayerFullscreenProvider = props => {
               height: width,
               width: height,
             }
-      }>
+      }
+    >
       <View style={styles.childrenContainer}>{props.children}</View>
     </Animated.View>
   );
-};
+}
 
 export default PlayerFullscreenProvider;
 
@@ -94,5 +103,5 @@ const styles = StyleSheet.create({
   fullscreenContainer: {
     flex: 1,
   },
-  childrenContainer: {flex: 1},
+  childrenContainer: { flex: 1 },
 });

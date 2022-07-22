@@ -1,8 +1,8 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import { Pressable, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const CustomButton = ({
+function CustomButton({
   title,
   style,
   textStyle,
@@ -11,8 +11,8 @@ const CustomButton = ({
   iconSize,
   setCurrentHTML,
   currentHTML,
-}) => {
-  const handlePress = currentHTML => {
+}) {
+  const handlePress = (currentHTML) => {
     onPress();
     currentHTML ? setCurrentHTML(currentHTML) : null;
   };
@@ -24,6 +24,6 @@ const CustomButton = ({
       <Text style={textStyle}>{title}</Text>
     </Pressable>
   );
-};
+}
 
 export default CustomButton;

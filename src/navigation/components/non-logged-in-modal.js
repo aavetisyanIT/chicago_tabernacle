@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Modal from 'react-native-modal';
-import CustomButton from './../../custom-components/custom-button';
+import CustomButton from '../../custom-components/custom-button';
 
 import * as RootNavigation from '../RootNavigation';
 
 // Currently not used
-//Whole component
+// Whole component
 
-const NonLoggedInModal = () => {
+function NonLoggedInModal() {
   const [modalVisible, setModalVisible] = React.useState(true);
 
   function handleOnPress() {
@@ -22,14 +22,14 @@ const NonLoggedInModal = () => {
         <Text style={styles.warningText}>You are not Logged in</Text>
         <CustomButton
           onPress={handleOnPress}
-          title={'OK'}
+          title="OK"
           style={styles.button}
           textStyle={styles.buttonText}
         />
       </View>
     </Modal>
   );
-};
+}
 
 export default NonLoggedInModal;
 
@@ -58,5 +58,5 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     color: '#fff',
   },
-  warningText: {margin: 10, fontSize: 16},
+  warningText: { margin: 10, fontSize: 16 },
 });

@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
-const ModalTextInput = ({placeholder, value, onChangeText, style}) => {
+function ModalTextInput({ placeholder, value, onChangeText, style }) {
   return (
     <TextInput
       mode="flat"
@@ -12,7 +12,7 @@ const ModalTextInput = ({placeholder, value, onChangeText, style}) => {
       style={[styles.input, style]}
     />
   );
-};
+}
 
 export default ModalTextInput;
 

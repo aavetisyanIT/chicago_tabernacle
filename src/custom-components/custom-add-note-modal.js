@@ -1,76 +1,79 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import database from '@react-native-firebase/database';
 import ModalTextInput from './modal-text-input';
 
 import CustomButton from './custom-button';
 import CustomParagraphHtmlToText from './custom-paragraph-html-to-text-component';
-import {AppContext} from './../context/app.context';
+import { AppContext } from '../context/app.context';
 
-const CustomAddNoteModal = ({
+function CustomAddNoteModal({
   modalVisible,
   hideModal,
   placeholder,
   HTML,
   articleType,
-}) => {
-  const [userNote, setUserNote] = React.useState(''),
-    [
-      {
-        currentDevotionalParagId,
-        currentDevotionalId,
-        currentSermonId,
-        currentSermonParagId,
-        user,
-        userUid,
-      },
-    ] = React.useContext(AppContext),
-    handleChangeText = text => setUserNote(text),
-    currentArticleId = React.useMemo(() => {
-      if (articleType === 'devotional') {
-        return currentDevotionalId;
-      } else if (articleType === 'sermon') {
-        return currentSermonId;
+  editNoteText,
+}) {
+  const [userNote, setUserNote] = React.useState(editNoteText);
+  const [
+    {
+      currentDevotionalParagId,
+      currentDevotionalId,
+      currentSermonId,
+      currentSermonParagId,
+      user,
+      userUid,
+    },
+  ] = React.useContext(AppContext);
+  const handleChangeText = (text) => setUserNote(text);
+  const currentArticleId = React.useMemo(() => {
+    if (articleType === 'devotional') {
+      return currentDevotionalId;
+    }
+    if (articleType === 'sermon') {
+      return currentSermonId;
+    }
+  }, [articleType, currentDevotionalId, currentSermonId]);
+  const currentParagraphId = React.useMemo(() => {
+    if (articleType === 'devotional') {
+      return currentDevotionalParagId;
+    }
+    if (articleType === 'sermon') {
+      return currentSermonParagId;
+    }
+  }, [articleType, currentDevotionalParagId, currentSermonParagId]);
+  const onPressDoneButton = async () => {
+    if (userNote) {
+      try {
+        const currentDate = new Date();
+        const noteRef = database().ref(
+          `/users/${userUid}/articles/${currentArticleId}/notes`
+        );
+        noteRef.child(currentParagraphId).update({
+          dateModified: {
+            date: currentDate.getDate(),
+            day: currentDate.getDay(),
+            hours: currentDate.getHours(),
+            minutes: currentDate.getMinutes(),
+            month: currentDate.getMonth(),
+            seconds: currentDate.getSeconds(),
+            time: currentDate.getMilliseconds(),
+            timezoneOffset: currentDate.getTimezoneOffset(),
+            year: currentDate.getFullYear(),
+          },
+          paragraphId: currentParagraphId,
+          text: userNote,
+        });
+      } catch (error) {
+        console.log('CustomAddNoteModal onPressDoneButton');
+        console.log('Error: ', error.message);
       }
-    }, [articleType, currentDevotionalId, currentSermonId]),
-    currentParagraphId = React.useMemo(() => {
-      if (articleType === 'devotional') {
-        return currentDevotionalParagId;
-      } else if (articleType === 'sermon') {
-        return currentSermonParagId;
-      }
-    }, [articleType, currentDevotionalParagId, currentSermonParagId]),
-    onPressDoneButton = async () => {
-      if (userNote) {
-        try {
-          const currentDate = new Date();
-          const noteRef = database().ref(
-            `/users/${userUid}/articles/${currentArticleId}/notes`,
-          );
-          noteRef.child(currentParagraphId).update({
-            dateModified: {
-              date: currentDate.getDate(),
-              day: currentDate.getDay(),
-              hours: currentDate.getHours(),
-              minutes: currentDate.getMinutes(),
-              month: currentDate.getMonth(),
-              seconds: currentDate.getSeconds(),
-              time: currentDate.getMilliseconds(),
-              timezoneOffset: currentDate.getTimezoneOffset(),
-              year: currentDate.getFullYear(),
-            },
-            paragraphId: currentParagraphId,
-            text: userNote,
-          });
-        } catch (error) {
-          console.log('CustomAddNoteModal onPressDoneButton');
-          console.log('Error: ', error.message);
-        }
-      }
-      hideModal();
-      setUserNote('');
-    };
+    }
+    hideModal();
+    setUserNote('');
+  };
 
   return (
     <Modal
@@ -80,7 +83,8 @@ const CustomAddNoteModal = ({
       animationOutTiming={1200}
       animationInTiming={700}
       backdropTransitionOutTiming={0}
-      onBackdropPress={() => hideModal()}>
+      onBackdropPress={() => hideModal()}
+    >
       <View style={styles.modal}>
         {user ? (
           <>
@@ -88,21 +92,23 @@ const CustomAddNoteModal = ({
             <ModalTextInput
               placeholder={placeholder}
               value={userNote}
-              onChangeText={text => handleChangeText(text)}
+              onChangeText={(text) => handleChangeText(text)}
             />
             <CustomButton
               onPress={onPressDoneButton}
-              title={'DONE'}
+              title="DONE"
               style={styles.button}
               textStyle={styles.buttonText}
             />
           </>
         ) : (
           <>
-            <Text style={styles.notLoggedInText}>You are not signed in</Text>
+            <Text style={styles.notLoggedInText}>
+              You are not signed in
+            </Text>
             <CustomButton
               onPress={hideModal}
-              title={'OK'}
+              title="OK"
               style={styles.button}
               textStyle={styles.buttonText}
             />
@@ -111,7 +117,7 @@ const CustomAddNoteModal = ({
       </View>
     </Modal>
   );
-};
+}
 
 export default CustomAddNoteModal;
 
@@ -139,5 +145,5 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     color: '#fff',
   },
-  notLoggedInText: {margin: 10, fontSize: 16},
+  notLoggedInText: { margin: 10, fontSize: 16 },
 });

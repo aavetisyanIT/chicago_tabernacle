@@ -7,23 +7,30 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {AppContext} from './../../context/app.context';
-import {VideoPlayerContext} from './video-player-context/video.player.context';
-import {actionTypes} from './../../context/action.types';
+import { AppContext } from '../../context/app.context';
+import { VideoPlayerContext } from './video-player-context/video.player.context';
+import { actionTypes } from '../../context/action.types';
 import MediaPlayer from './media-player';
-import {handleDoubleTap} from './../../utils/trackPlayerUtils';
-import {videoPlayerActionTypes} from './video-player-context/video.player.action.types';
+import { handleDoubleTap } from '../../utils/trackPlayerUtils';
+import { videoPlayerActionTypes } from './video-player-context/video.player.action.types';
 
-const PlayerLayersProvider = props => {
-  const [state, dispatch] = React.useContext(AppContext),
-    [videoPlayerState, dispatchToVideoPlayer] =
-      React.useContext(VideoPlayerContext),
-    {isOverlayView, isVideoPaused, dismissTimerId, isTrackPlaying} = state,
-    {currentVideoPlayTime, videoDuration, videoPlayer} = videoPlayerState;
+function PlayerLayersProvider(props) {
+  const [state, dispatch] = React.useContext(AppContext);
+  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+    VideoPlayerContext
+  );
+  const {
+    isOverlayView,
+    isVideoPaused,
+    dismissTimerId,
+    isTrackPlaying,
+  } = state;
+  const { currentVideoPlayTime, videoDuration, videoPlayer } =
+    videoPlayerState;
 
   const setUpDismissTimer = () => {
     clearTimeout(dismissTimerId);
-    let timerId = setTimeout(() => {
+    const timerId = setTimeout(() => {
       dispatch({
         type: actionTypes.TOGGLE_OVERLAY_VIEW,
       });
@@ -103,7 +110,7 @@ const PlayerLayersProvider = props => {
         dispatch({
           type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });
-      },
+      }
     );
     return null;
   };
@@ -128,7 +135,7 @@ const PlayerLayersProvider = props => {
         dispatch({
           type: actionTypes.TOGGLE_OVERLAY_VIEW,
         });
-      },
+      }
     );
     return null;
   };
@@ -138,7 +145,10 @@ const PlayerLayersProvider = props => {
       <MediaPlayer />
       <View style={styles.overlayContainer}>
         {isOverlayView ? (
-          <Pressable style={styles.iconContainer} onPress={closeOverlay}>
+          <Pressable
+            style={styles.iconContainer}
+            onPress={closeOverlay}
+          >
             {/* Overlay View Controllers */}
             <Icon
               name="skip-backward"
@@ -155,29 +165,31 @@ const PlayerLayersProvider = props => {
               onPress={handleSkipForward_10}
               style={styles.icon}
             />
-            <View style={styles.childrenContainer}>{props.children}</View>
+            <View style={styles.childrenContainer}>
+              {props.children}
+            </View>
           </Pressable>
         ) : (
           /* Hidden View Controllers */
           <View style={styles.hiddenControllersContainer}>
             <TouchableWithoutFeedback onPress={hiddenJumpBackward}>
-              <View style={styles.hiddenController}></View>
+              <View style={styles.hiddenController} />
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={hiddenJumpFrontward}>
-              <View style={styles.hiddenController}></View>
+              <View style={styles.hiddenController} />
             </TouchableWithoutFeedback>
           </View>
         )}
       </View>
     </View>
   );
-};
+}
 
 export default PlayerLayersProvider;
 
 const styles = StyleSheet.create({
-  container: {...StyleSheet.absoluteFill},
-  overlayContainer: {...StyleSheet.absoluteFill},
+  container: { ...StyleSheet.absoluteFill },
+  overlayContainer: { ...StyleSheet.absoluteFill },
   childrenContainer: {
     position: 'absolute',
     left: 5,
@@ -201,11 +213,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  hiddenController: {flex: 1},
+  hiddenController: { flex: 1 },
   closeIconContainer: {
     position: 'absolute',
     top: 0,
     margin: 5,
   },
-  closeIcon: {color: 'white'},
+  closeIcon: { color: 'white' },
 });

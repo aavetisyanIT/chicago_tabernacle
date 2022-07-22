@@ -1,14 +1,15 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import CustomTrackPlayer from '../../../custom-components/custom-track-player';
 import CustomVideoPlayer from './../../../custom-components/custom-video-player/custom-video-player';
-import {AppContext} from './../../../context/app.context';
-import {actionTypes} from './../../../context/action.types';
+import { AppContext } from './../../../context/app.context';
+import { actionTypes } from './../../../context/action.types';
 
-const SermonNoteListHeader = ({article}) => {
-  const [audioPlayerVisible, setAudioPlayerVisible] = React.useState(false);
+const SermonNoteListHeader = ({ article }) => {
+  const [audioPlayerVisible, setAudioPlayerVisible] =
+    React.useState(false);
   const [state, dispatch] = React.useContext(AppContext);
 
   const showAudioPlayer = () => setAudioPlayerVisible(true);
@@ -31,7 +32,8 @@ const SermonNoteListHeader = ({article}) => {
     });
   }, []);
 
-  let articleHasAudio = article.audio?.type === 'audio' && article.audio;
+  let articleHasAudio =
+    article.audio?.type === 'audio' && article.audio;
 
   return (
     <>
@@ -70,7 +72,7 @@ const SermonNoteListHeader = ({article}) => {
 export default SermonNoteListHeader;
 
 const styles = StyleSheet.create({
-  image: {height: 250, width: '100%'},
-  headerContent: {paddingBottom: 0, padding: 13},
-  description: {fontFamily: 'Roboto-Thin'},
+  image: { height: 250, width: '100%' },
+  headerContent: { paddingBottom: 0, padding: 13 },
+  description: { fontFamily: 'Roboto-Thin' },
 });

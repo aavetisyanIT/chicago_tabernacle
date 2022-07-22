@@ -1,5 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import TrackPlayer, {
   TrackPlayerEvents,
   STATE_PLAYING,
@@ -13,12 +18,15 @@ import {
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import {AppContext} from './../context/app.context';
-import {actionTypes} from './../context/action.types';
+import { AppContext } from '../context/app.context';
+import { actionTypes } from '../context/action.types';
 import CustomButton from './custom-button';
-import {timeFormat, trackPlayerInit} from './../utils/trackPlayerUtils';
+import {
+  timeFormat,
+  trackPlayerInit,
+} from '../utils/trackPlayerUtils';
 
-const CustomTrackPlayer = ({
+function CustomTrackPlayer({
   title,
   url,
   trackPlayerVisible,
@@ -26,21 +34,22 @@ const CustomTrackPlayer = ({
   hideTrackPlayer,
   trackId,
   image,
-}) => {
-  //state to manage whether track player is initialized or not
-  //The play button stays disabled if the Track Player isn't initialized.
-  const [state, dispatch] = React.useContext(AppContext),
-    {isTrackPlaying, isVideoPaused} = state,
-    [isTrackPlayerInit, setIsTrackPlayerInit] = React.useState(false),
-    [timeStamp, setTimeStamp] = React.useState('00:00'),
-    [trackTime, setTrackTime] = React.useState('00:00'),
-    //the value of the slider should be between 0 and 1
-    [sliderValue, setSliderValue] = React.useState(0),
-    //flag to check whether the use is sliding the seekbar or not
-    [isSeeking, setIsSeeking] = React.useState(false),
-    //useTrackPlayerProgress is a hook which provides the current position
-    //and duration of the track player. These values will update every 250ms
-    {position, duration} = useTrackPlayerProgress(250);
+}) {
+  // state to manage whether track player is initialized or not
+  // The play button stays disabled if the Track Player isn't initialized.
+  const [state, dispatch] = React.useContext(AppContext);
+  const { isTrackPlaying, isVideoPaused } = state;
+  const [isTrackPlayerInit, setIsTrackPlayerInit] =
+    React.useState(false);
+  const [timeStamp, setTimeStamp] = React.useState('00:00');
+  const [trackTime, setTrackTime] = React.useState('00:00');
+  // the value of the slider should be between 0 and 1
+  const [sliderValue, setSliderValue] = React.useState(0);
+  // flag to check whether the use is sliding the seekbar or not
+  const [isSeeking, setIsSeeking] = React.useState(false);
+  // useTrackPlayerProgress is a hook which provides the current position
+  // and duration of the track player. These values will update every 250ms
+  const { position, duration } = useTrackPlayerProgress(250);
 
   // Pause media when video starts playing
   React.useEffect(() => {
@@ -53,9 +62,9 @@ const CustomTrackPlayer = ({
     }
   }, [isVideoPaused]);
 
-  //initialize the TrackPlayer when "AUDIO PLAYER" is clicked
+  // initialize the TrackPlayer when "AUDIO PLAYER" is clicked
   React.useEffect(() => {
-    //function to initialize the Track Player and pause video player
+    // function to initialize the Track Player and pause video player
     const startPlayer = async () => {
       try {
         dispatch({
@@ -66,7 +75,12 @@ const CustomTrackPlayer = ({
           type: actionTypes.SET_OVERLAY_VIEW,
           payload: true,
         });
-        let isInit = await trackPlayerInit(url, trackId, title, image);
+        const isInit = await trackPlayerInit(
+          url,
+          trackId,
+          title,
+          image
+        );
         setIsTrackPlayerInit(isInit);
         await TrackPlayer.play();
       } catch (error) {
@@ -76,8 +90,8 @@ const CustomTrackPlayer = ({
     if (trackPlayerVisible) startPlayer();
   }, [trackPlayerVisible]);
 
-  //this hook updates the value of the slider whenever
-  //the current position of the song changes
+  // this hook updates the value of the slider whenever
+  // the current position of the song changes
   React.useEffect(() => {
     if (!isSeeking && position && duration) {
       setSliderValue(position / duration);
@@ -86,32 +100,36 @@ const CustomTrackPlayer = ({
     setTrackTime(timeFormat(duration));
   }, [position]);
 
-  //Unmount track player when leaving a sceen
-  React.useEffect(() => {
-    return () => {
+  // Unmount track player when leaving a sceen
+  React.useEffect(
+    () => () => {
       TrackPlayer.destroy();
-    };
-  }, []);
+    },
+    []
+  );
 
-  useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], event => {
-    if (event.state === STATE_PLAYING) {
-      dispatch({
-        type: actionTypes.SET_TRACK_PLAYING,
-        payload: true,
-      });
-    } else if (event.state === STATE_NONE) {
-      hideTrackPlayer();
-      setTimeStamp('00:00');
-      setSliderValue(0);
-    } else if (event.state === STATE_PAUSED) {
-      dispatch({
-        type: actionTypes.SET_TRACK_PLAYING,
-        payload: false,
-      });
+  useTrackPlayerEvents(
+    [TrackPlayerEvents.PLAYBACK_STATE],
+    (event) => {
+      if (event.state === STATE_PLAYING) {
+        dispatch({
+          type: actionTypes.SET_TRACK_PLAYING,
+          payload: true,
+        });
+      } else if (event.state === STATE_NONE) {
+        hideTrackPlayer();
+        setTimeStamp('00:00');
+        setSliderValue(0);
+      } else if (event.state === STATE_PAUSED) {
+        dispatch({
+          type: actionTypes.SET_TRACK_PLAYING,
+          payload: false,
+        });
+      }
     }
-  });
+  );
 
-  //start playing the TrackPlayer when the play button is pressed and stop video player
+  // start playing the TrackPlayer when the play button is pressed and stop video player
   const onPlayButtonPressed = async () => {
     if (!isTrackPlaying) {
       try {
@@ -127,7 +145,7 @@ const CustomTrackPlayer = ({
           type: actionTypes.SET_OVERLAY_VIEW,
           payload: true,
         });
-        //sets position of player if slided is used before play pressed first time. Next 3 lines
+        // sets position of player if slided is used before play pressed first time. Next 3 lines
         const trackDuration = await TrackPlayer.getDuration();
         await TrackPlayer.seekTo(sliderValue * trackDuration);
         setTimeStamp(timeFormat(sliderValue * trackDuration));
@@ -144,13 +162,13 @@ const CustomTrackPlayer = ({
     }
   };
 
-  //this function is called when the user starts to slide the seekbar
+  // this function is called when the user starts to slide the seekbar
   const slidingStarted = () => {
     setIsSeeking(true);
   };
 
-  //this function is called when the user stops sliding the seekbar
-  const slidingCompleted = async value => {
+  // this function is called when the user stops sliding the seekbar
+  const slidingCompleted = async (value) => {
     try {
       await TrackPlayer.seekTo(value * duration);
       setSliderValue(value);
@@ -161,8 +179,8 @@ const CustomTrackPlayer = ({
     }
   };
 
-  const playIcon = <Icon name="play-arrow" size={40} color="#fff" />,
-    pauseIcon = <Icon name="pause" size={40} color="#fff" />;
+  const playIcon = <Icon name="play-arrow" size={40} color="#fff" />;
+  const pauseIcon = <Icon name="pause" size={40} color="#fff" />;
 
   return trackPlayerVisible ? (
     <View style={styles.container}>
@@ -174,8 +192,8 @@ const CustomTrackPlayer = ({
         value={sliderValue}
         minimumTrackTintColor="black"
         maximumTrackTintColor="white"
-        //thumbImage size can't be configured by props
-        //it depends on size of the image in thumbImage prop
+        // thumbImage size can't be configured by props
+        // it depends on size of the image in thumbImage prop
         thumbImage={require('../assets/track_player_thumb_size_17.png')}
         onSlidingStart={slidingStarted}
         onSlidingComplete={slidingCompleted}
@@ -183,7 +201,8 @@ const CustomTrackPlayer = ({
       <Text style={styles.text}>{trackTime}</Text>
       <TouchableOpacity
         style={styles.playPauseButton}
-        onPress={onPlayButtonPressed}>
+        onPress={onPlayButtonPressed}
+      >
         {isTrackPlaying ? pauseIcon : playIcon}
       </TouchableOpacity>
     </View>
@@ -197,7 +216,7 @@ const CustomTrackPlayer = ({
       onPress={showTrackPlayer}
     />
   );
-};
+}
 
 export default CustomTrackPlayer;
 
@@ -216,9 +235,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     fontSize: 16,
   },
-  slider: {width: '55%', backgroundColor: '#bc9665'},
-  playPauseButton: {marginLeft: 0},
-  audioButton: {flexDirection: 'row', backgroundColor: '#fff', margin: 12},
+  slider: { width: '55%', backgroundColor: '#bc9665' },
+  playPauseButton: { marginLeft: 0 },
+  audioButton: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    margin: 12,
+  },
   audioButtonText: {
     color: '#bc9665',
     fontSize: 14,
