@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'react-native-paper';
 
-//react-native-paper app theme config
+// react-native-paper app theme config
 export const reactNativePaperTheme = {
   ...DefaultTheme,
   roundness: 2,

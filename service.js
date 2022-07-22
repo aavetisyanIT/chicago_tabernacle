@@ -15,7 +15,7 @@ module.exports = async () => {
 
   TrackPlayer.addEventListener('remote-jump-forward', async () => {
     let newPosition = await TrackPlayer.getPosition();
-    let duration = await TrackPlayer.getDuration();
+    const duration = await TrackPlayer.getDuration();
     newPosition += 10;
     if (newPosition > duration) {
       newPosition = duration;

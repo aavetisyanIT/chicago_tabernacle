@@ -83,17 +83,23 @@ function DrawerContent(props) {
           <DrawerItem
             label="Ministries"
             icon={() => createDrawerIcon('people')}
-            onPress={() => {}}
+            onPress={() => {
+              null;
+            }}
           />
           <DrawerItem
             label="Serve"
             icon={createHandHoldingHeartIcon}
-            onPress={() => {}}
+            onPress={() => {
+              null;
+            }}
           />
           <DrawerItem
             icon={() => createDrawerIcon('location-sharp')}
             label="About"
-            onPress={() => {}}
+            onPress={() => {
+              null;
+            }}
           />
         </Drawer.Section>
         <Drawer.Section>

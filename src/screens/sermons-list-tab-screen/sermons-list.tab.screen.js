@@ -11,7 +11,7 @@ import SermonCard from './components/sermon-card.component';
 import { getAllArticles } from '../../utils/api';
 
 function SermonsListTab({ navigation }) {
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing] = React.useState(false);
   // empty object(including id) in the initial state is needed for the first render
   // till useEffect runs and fetches the data from API
   const [sermons, setSermons] = React.useState({
@@ -59,7 +59,9 @@ function SermonsListTab({ navigation }) {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            onRefresh={() => {}}
+            onRefresh={() => {
+              null;
+            }}
             colors={['#bc9665']}
           />
         }
