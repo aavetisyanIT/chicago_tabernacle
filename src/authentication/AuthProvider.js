@@ -24,24 +24,29 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   //populate database when user logs in
-  const onAuthStateChanged = ({ uid, email }) => {
-    try {
-      dispatch({
-        type: actionTypes.SET_USER_UID,
-        payload: uid,
-      });
-      const usersRef = database().ref(`/users`);
-      usersRef.child(uid).update({ email: email, firebaseUid: uid });
-    } catch (error) {
-      console.log('AuthProvide onAuthStateChanged');
-      console.log('Error: ', error.message);
-    }
-  };
+  const onAuthStateChanged = React.useCallback(
+    ({ uid, email }) => {
+      try {
+        dispatch({
+          type: actionTypes.SET_USER_UID,
+          payload: uid,
+        });
+        const usersRef = database().ref(`/users`);
+        usersRef
+          .child(uid)
+          .update({ email: email, firebaseUid: uid });
+      } catch (error) {
+        console.log('AuthProvide onAuthStateChanged');
+        console.log('Error: ', error.message);
+      }
+    },
+    [dispatch],
+  );
 
   React.useEffect(() => {
     auth().onAuthStateChanged(onAuthStateChanged);
     // return user;
-  }, []);
+  }, [onAuthStateChanged]);
 
   const onGoogleSignInPress = async () => {
     try {
