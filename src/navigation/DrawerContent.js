@@ -20,7 +20,8 @@ function DrawerContent(props) {
 
   React.useEffect(() => {
     getCurrentUserInfo();
-  }, [getCurrentUserInfo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const createDrawerIcon = (name) => (
     <Icon name={name} color="black" size={22} />
