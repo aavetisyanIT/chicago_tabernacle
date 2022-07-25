@@ -45,7 +45,7 @@ function DevotionalTab() {
         console.log('Error: ', error.message);
       }
     }
-  }, []);
+  }, [devoContent, dispatch, user, userUid]);
 
   const renderItem = (props) => (
     <DevotionalContent

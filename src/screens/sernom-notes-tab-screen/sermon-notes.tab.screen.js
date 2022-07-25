@@ -53,7 +53,7 @@ function SermonNotesTab({ route }) {
         console.log('Error: ', error.message);
       }
     }
-  }, []);
+  }, [article, dispatch, user, userUid]);
 
   // Fixes issue when fullscreen is clicked on scrolled screen
   React.useEffect(() => {

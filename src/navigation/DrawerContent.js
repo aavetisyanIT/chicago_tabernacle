@@ -20,7 +20,7 @@ function DrawerContent(props) {
 
   React.useEffect(() => {
     getCurrentUserInfo();
-  }, []);
+  }, [getCurrentUserInfo]);
 
   const createDrawerIcon = (name) => (
     <Icon name={name} color="black" size={22} />

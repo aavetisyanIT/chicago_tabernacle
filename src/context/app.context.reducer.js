@@ -1,4 +1,3 @@
-import { STATE_PAUSED } from 'react-native-track-player';
 import { actionTypes } from './action.types';
 
 const reducer = (state, action) => {

@@ -25,12 +25,37 @@ function PlayerFullscreenProvider(props) {
   // This useEffect needs to be above others so overlay wouldn't
   // be overriden to false
   React.useEffect(() => {
+    const toggleScreenModes = () => {
+      if (isFullScreenVideo) {
+        Orientation.lockToLandscape();
+        clearTimeout(dismissTimerId);
+        dispatch({
+          type: actionTypes.SET_OVERLAY_VIEW,
+          payload: false,
+        });
+      } else {
+        Orientation.lockToPortrait();
+        clearTimeout(dismissTimerId);
+        dispatch({
+          type: actionTypes.SET_OVERLAY_VIEW,
+          payload: false,
+        });
+      }
+    };
+
+    const onScreenRotation = ({ window, screen }) => {
+      dispatch({
+        type: actionTypes.SET_SCREEN_DIMENSIONS,
+        payload: { window, screen },
+      });
+    };
+
     Dimensions.addEventListener('change', onScreenRotation);
     toggleScreenModes();
     return () => {
-      Dimensions.removeEventListener('change', onScreenRotation);
+      Dimensions.remove('change', onScreenRotation);
     };
-  }, [isFullScreenVideo]);
+  }, [isFullScreenVideo, dismissTimerId, dispatch]);
 
   React.useEffect(() => {
     Animated.timing(width, {
@@ -50,32 +75,7 @@ function PlayerFullscreenProvider(props) {
       type: actionTypes.SET_OVERLAY_VIEW,
       payload: true,
     });
-  }, []);
-
-  const toggleScreenModes = () => {
-    if (isFullScreenVideo) {
-      Orientation.lockToLandscape();
-      clearTimeout(dismissTimerId);
-      dispatch({
-        type: actionTypes.SET_OVERLAY_VIEW,
-        payload: false,
-      });
-    } else {
-      Orientation.lockToPortrait();
-      clearTimeout(dismissTimerId);
-      dispatch({
-        type: actionTypes.SET_OVERLAY_VIEW,
-        payload: false,
-      });
-    }
-  };
-
-  const onScreenRotation = ({ window, screen }) => {
-    dispatch({
-      type: actionTypes.SET_SCREEN_DIMENSIONS,
-      payload: { window, screen },
-    });
-  };
+  }, [dispatch, height, screenWidth, width]);
 
   return (
     <Animated.View

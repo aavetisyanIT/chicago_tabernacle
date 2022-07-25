@@ -20,17 +20,20 @@ const SermonCard = ({ sermon, navigation }) => {
     [isViewed, setIsViewed] = React.useState(false),
     isFocused = useIsFocused(); // makes component rerender on navigation stack change
 
-  React.useEffect(async () => {
-    try {
-      const data = await database()
-        .ref(`/users/${userUid}/articles/${sermon.item.id}`)
-        .once('value');
-      setIsViewed(data.val()?.read);
-    } catch (error) {
-      console.log('SermonCard isSermonViewed');
-      console.log('Error: ', error.message);
-    }
-  }, [isFocused]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await database()
+          .ref(`/users/${userUid}/articles/${sermon.item.id}`)
+          .once('value');
+        setIsViewed(data.val()?.read);
+      } catch (error) {
+        console.log('SermonCard isSermonViewed');
+        console.log('Error: ', error.message);
+      }
+    };
+    fetchData();
+  }, [isFocused, sermon, userUid]);
 
   return (
     <View style={styles.container}>

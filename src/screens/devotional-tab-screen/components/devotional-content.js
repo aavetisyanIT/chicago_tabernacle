@@ -11,7 +11,7 @@ function DevotionalContent({
   showModal,
   setCurrentParagraphHTML,
 }) {
-  const [state, dispatch] = React.useContext(AppContext);
+  const [, dispatch] = React.useContext(AppContext);
 
   const onAddNotePress = React.useCallback(() => {
     dispatch({
@@ -19,7 +19,7 @@ function DevotionalContent({
       payload: item.id,
     });
     showModal();
-  }, []);
+  }, [dispatch, item.id, showModal]);
 
   return (
     <View style={styles.container}>

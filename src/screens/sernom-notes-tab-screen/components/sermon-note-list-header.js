@@ -10,7 +10,7 @@ import { actionTypes } from './../../../context/action.types';
 const SermonNoteListHeader = ({ article }) => {
   const [audioPlayerVisible, setAudioPlayerVisible] =
     React.useState(false);
-  const [state, dispatch] = React.useContext(AppContext);
+  const [, dispatch] = React.useContext(AppContext);
 
   const showAudioPlayer = () => setAudioPlayerVisible(true);
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
@@ -30,7 +30,7 @@ const SermonNoteListHeader = ({ article }) => {
       type: actionTypes.SET_ARTICLE_IMAGE_URL,
       payload: sermonImage,
     });
-  }, []);
+  }, [dispatch, sermonImage, videoUrl]);
 
   let articleHasAudio =
     article.audio?.type === 'audio' && article.audio;

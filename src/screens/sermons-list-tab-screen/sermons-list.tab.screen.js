@@ -31,7 +31,7 @@ function SermonsListTab({ navigation }) {
     (sermon) => (
       <SermonCard sermon={sermon} navigation={navigation} />
     ),
-    [sermons],
+    [navigation],
   );
 
   return (

@@ -19,12 +19,7 @@ function PlayerLayersProvider(props) {
   const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
     VideoPlayerContext,
   );
-  const {
-    isOverlayView,
-    isVideoPaused,
-    dismissTimerId,
-    isTrackPlaying,
-  } = state;
+  const { isOverlayView, isVideoPaused, dismissTimerId } = state;
   const { currentVideoPlayTime, videoDuration, videoPlayer } =
     videoPlayerState;
 

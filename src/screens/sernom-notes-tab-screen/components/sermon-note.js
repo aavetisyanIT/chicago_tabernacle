@@ -35,20 +35,22 @@ function SermonNote({ item, showModal, setCurrentSermonHTML }) {
     paragraphContent = <CustomImage url={item.mediaObject.url} />;
   }
 
-  React.useEffect(async () => {
-    console.log('SermonNote useEffect that sets Edit Text');
-    try {
-      const text = await database()
-        .ref(
-          `/users/${userUid}/articles/${currentSermonId}/notes/${item.id}`,
-        )
-        .once('value');
-      text.val() ? setEditText(text.val().text) : setEditText('');
-    } catch (error) {
-      console.log('SermonNote useEffect');
-      console.log('Error: ', error.message);
-    }
-  }, [database, userUid, currentSermonId, item, setEditText]);
+  React.useEffect(() => {
+    const setEditNoteText = async () => {
+      try {
+        const text = await database()
+          .ref(
+            `/users/${userUid}/articles/${currentSermonId}/notes/${item.id}`,
+          )
+          .once('value');
+        text.val() ? setEditText(text.val().text) : setEditText('');
+      } catch (error) {
+        console.log('SermonNote useEffect');
+        console.log('Error: ', error.message);
+      }
+    };
+    setEditNoteText();
+  }, [userUid, currentSermonId, item, setEditText]);
 
   const onAddNotePress = () => {
     dispatch({

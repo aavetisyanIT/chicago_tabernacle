@@ -10,7 +10,7 @@ function CustomEditButton({
 }) {
   const onEditNotePress = React.useCallback(() => {
     showModal(editText);
-  }, []);
+  }, [editText, showModal]);
   return (
     <View>
       <Text>{editText}</Text>

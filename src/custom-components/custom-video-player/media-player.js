@@ -8,7 +8,7 @@ import { videoPlayerActionTypes } from './video-player-context/video.player.acti
 
 function MediaPlayer() {
   const [state, dispatch] = React.useContext(AppContext);
-  const [videoPlayerState, dispatchToVideoPlayer] = React.useContext(
+  const [, dispatchToVideoPlayer] = React.useContext(
     VideoPlayerContext,
   );
   const {
@@ -24,7 +24,7 @@ function MediaPlayer() {
       type: videoPlayerActionTypes.SET_VIDEO_PLAYER_OBJECT,
       payload: videoPlayer.current,
     });
-  }, [videoPlayer]);
+  }, [videoPlayer, dispatchToVideoPlayer]);
 
   const handleOnLoad = ({ duration }) => {
     dispatchToVideoPlayer({

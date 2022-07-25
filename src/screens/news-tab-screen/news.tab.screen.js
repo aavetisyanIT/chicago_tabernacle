@@ -10,7 +10,7 @@ import { getAllAnnouncements } from '../../utils/api';
 import NewsCard from './components/news-card.component';
 
 function NewsTab({ navigation }) {
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing] = React.useState(false);
   const [data, setData] = React.useState({ items: {} });
 
   // Fetching all announcements
@@ -51,7 +51,7 @@ function NewsTab({ navigation }) {
     );
   };
 
-  const renderNewsCard = React.useCallback(newsCard, [data]);
+  const renderNewsCard = React.useCallback(newsCard, [navigation]);
 
   return (
     <View style={styles.container}>

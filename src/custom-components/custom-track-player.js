@@ -60,7 +60,7 @@ function CustomTrackPlayer({
       });
       TrackPlayer.pause();
     }
-  }, [isVideoPaused]);
+  }, [isVideoPaused, dispatch, isTrackPlayerInit]);
 
   // initialize the TrackPlayer when "AUDIO PLAYER" is clicked
   React.useEffect(() => {
@@ -88,7 +88,7 @@ function CustomTrackPlayer({
       }
     };
     if (trackPlayerVisible) startPlayer();
-  }, [trackPlayerVisible]);
+  }, [trackPlayerVisible, dispatch, image, title, trackId, url]);
 
   // this hook updates the value of the slider whenever
   // the current position of the song changes
@@ -98,7 +98,7 @@ function CustomTrackPlayer({
     }
     setTimeStamp(timeFormat(position));
     setTrackTime(timeFormat(duration));
-  }, [position]);
+  }, [position, duration, isSeeking]);
 
   // Unmount track player when leaving a sceen
   React.useEffect(
