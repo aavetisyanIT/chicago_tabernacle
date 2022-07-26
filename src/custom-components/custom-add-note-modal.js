@@ -1,4 +1,9 @@
-import React from 'react';
+import React, {
+  useState,
+  useContext,
+  useMemo,
+  useEffect,
+} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import database from '@react-native-firebase/database';
@@ -16,10 +21,14 @@ function CustomAddNoteModal({
   placeholder,
   HTML,
   articleType,
+  modalEditText,
+  sermonOpenedParagId,
+  invokedBy,
 }) {
   count++;
   // console.log('CustomAddNoteModal', count);
-  const [userNote, setUserNote] = React.useState();
+
+  const [userNote, setUserNote] = useState('');
   const [
     {
       currentDevotionalParagId,
@@ -29,9 +38,14 @@ function CustomAddNoteModal({
       user,
       userUid,
     },
-  ] = React.useContext(AppContext);
+  ] = useContext(AppContext);
+
+  useEffect(() => {
+    setUserNote(modalEditText);
+  }, [modalEditText]);
+
   const handleChangeText = (text) => setUserNote(text);
-  const currentArticleId = React.useMemo(() => {
+  const currentArticleId = useMemo(() => {
     if (articleType === 'devotional') {
       return currentDevotionalId;
     }
@@ -39,14 +53,25 @@ function CustomAddNoteModal({
       return currentSermonId;
     }
   }, [articleType, currentDevotionalId, currentSermonId]);
-  const currentParagraphId = React.useMemo(() => {
+
+  const currentParagraphId = useMemo(() => {
     if (articleType === 'devotional') {
       return currentDevotionalParagId;
     }
     if (articleType === 'sermon') {
-      return currentSermonParagId;
+      if (invokedBy === 'EditButton') {
+        return sermonOpenedParagId;
+      } else {
+        return currentSermonParagId;
+      }
     }
-  }, [articleType, currentDevotionalParagId, currentSermonParagId]);
+  }, [
+    articleType,
+    currentDevotionalParagId,
+    currentSermonParagId,
+    invokedBy,
+    sermonOpenedParagId,
+  ]);
 
   const onPressDoneButton = async () => {
     if (userNote) {
@@ -70,15 +95,15 @@ function CustomAddNoteModal({
           paragraphId: currentParagraphId,
           text: userNote,
         });
-        hideModal(userNote);
+        hideModal();
+        setUserNote('');
         return;
       } catch (error) {
         console.log('CustomAddNoteModal onPressDoneButton');
         console.log('Error: ', error.message);
       }
     }
-    hideModal('');
-    setUserNote('');
+    hideModal();
   };
 
   return (

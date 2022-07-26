@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
@@ -7,14 +7,9 @@ import CustomVideoPlayer from './../../../custom-components/custom-video-player/
 import { AppContext } from './../../../context/app.context';
 import { actionTypes } from './../../../context/action.types';
 
-let count = 0;
-
 const SermonNoteListHeader = ({ article }) => {
-  count++;
-  // console.log('SermonNoteListHeader', count);
-  const [audioPlayerVisible, setAudioPlayerVisible] =
-    React.useState(false);
-  const [, dispatch] = React.useContext(AppContext);
+  const [audioPlayerVisible, setAudioPlayerVisible] = useState(false);
+  const [, dispatch] = useContext(AppContext);
 
   const showAudioPlayer = () => setAudioPlayerVisible(true);
   const hideAudioPlayer = () => setAudioPlayerVisible(false);
@@ -25,7 +20,7 @@ const SermonNoteListHeader = ({ article }) => {
   const sermonTitle = article.headline;
   const sermonImage = article.image.url;
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({
       type: actionTypes.SET_ARTICLE_VIDEO_URL,
       payload: videoUrl,

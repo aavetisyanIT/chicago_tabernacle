@@ -1,20 +1,35 @@
+import React, { useCallback, memo } from 'react';
 import { View, Text } from 'react-native';
-import React from 'react';
+
 import CustomButton from './custom-button';
 
 let count = 0;
 
 const CustomEditButton = ({
-  editText,
   showModal,
   setCurrentSermonHTML,
   paragraphHTML,
+  editText,
+  sermonParagId,
 }) => {
   count++;
-  // console.log('CustomEditButton: ', count);
-  const onEditNotePress = React.useCallback(() => {
-    showModal();
-  }, [showModal]);
+  console.log('CustomEditButton: ', count);
+
+  const onEditNotePress = useCallback(() => {
+    if (sermonParagId && editText) {
+      return showModal({
+        sermonParagId: sermonParagId,
+        sermonEditNote: editText,
+        invokedBy: 'EditButton',
+      });
+    }
+    showModal({
+      sermonParagId: '',
+      sermonEditNote: '',
+      invokedBy: 'EditButton',
+    });
+  }, [editText, sermonParagId, showModal]);
+
   return (
     <View>
       <Text>{editText}</Text>
@@ -30,4 +45,8 @@ const CustomEditButton = ({
   );
 };
 
-export default CustomEditButton;
+const areEqual = (prevProps, nextProps) => {
+  return nextProps.editText === prevProps.editText;
+};
+
+export default memo(CustomEditButton, areEqual);

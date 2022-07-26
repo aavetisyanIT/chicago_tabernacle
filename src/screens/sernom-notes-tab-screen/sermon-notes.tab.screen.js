@@ -1,4 +1,9 @@
-import React from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+} from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import database from '@react-native-firebase/database';
 
@@ -13,34 +18,66 @@ let count = 0;
 function SermonNotesTab({ route }) {
   count++;
   // console.log('SermontNotesTab', count);
+
   const [{ isFullScreenVideo, user, userUid }, dispatch] =
-    React.useContext(AppContext);
+    useContext(AppContext);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [sermonEditNote, serSermonEditNote] = useState('');
+  const [sermonOpenedParagId, setSermonOpenedParagId] = useState('');
+  const [invokedBy, setInvokedBy] = useState('');
+  const [isDataChanged, setIsDataChanged] = useState(false);
+  const [sermonNotes, setSermonNotes] = useState({});
+  const [currentSermonHTML, setCurrentSermonHTML] = useState('');
+
+  const flatListRef = useRef();
+
   const { article } = route.params;
   const PARAGRAPHDATA = article.paragraphs;
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [currentSermonHTML, setCurrentSermonHTML] =
-    React.useState('');
-  const [editNoteText, setEditNoteText] = React.useState('');
-  const flatListRef = React.useRef();
-  const showModal = () => setModalVisible(true);
 
-  const hideModal = React.useCallback((noteText) => {
-    if (noteText) {
-      setEditNoteText(noteText);
+  useEffect(() => {
+    database()
+      .ref(`/users/${userUid}/articles/${article.id}/notes`)
+      .once('value')
+      .then((val) => {
+        if (val.val()) setSermonNotes(val.val());
+      });
+  }, [article.id, userUid, isDataChanged]);
+
+  const showModal = ({
+    sermonParagId,
+    sermonEditNote,
+    invokedBy,
+  }) => {
+    setInvokedBy(invokedBy);
+    if (sermonParagId && sermonEditNote) {
+      setSermonOpenedParagId(sermonParagId);
+      serSermonEditNote(sermonEditNote);
     }
+    setModalVisible(true);
+  };
+  const hideModal = () => {
+    setIsDataChanged(!isDataChanged);
     setModalVisible(false);
-  }, []);
+  };
 
-  const renderItem = (props) => (
-    <SermonNote
-      {...props}
-      editNoteText={editNoteText}
-      showModal={showModal}
-      setCurrentSermonHTML={setCurrentSermonHTML}
-    />
-  );
+  const renderItem = (props) => {
+    let currentNoteText = '';
+    if (sermonNotes[props.item.id]) {
+      currentNoteText = sermonNotes[props.item.id].text;
+    }
+    return (
+      <SermonNote
+        {...props}
+        editNote={currentNoteText}
+        showModal={showModal}
+        setCurrentSermonHTML={setCurrentSermonHTML}
+      />
+    );
+  };
 
-  React.useEffect(() => {
+  //set current sermon id state and populate article read field in DB
+  useEffect(() => {
     if (user) {
       dispatch({
         type: actionTypes.SET_CURRENT_SERMON_ID,
@@ -59,7 +96,7 @@ function SermonNotesTab({ route }) {
   }, [article, dispatch, user, userUid]);
 
   // Fixes issue when fullscreen is clicked on scrolled screen
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFullScreenVideo) {
       // moves to the top of the screen
       flatListRef.current.scrollToOffset({
@@ -73,6 +110,9 @@ function SermonNotesTab({ route }) {
   return (
     <View style={styles.container}>
       <CustomAddNoteModal
+        modalEditText={sermonEditNote}
+        sermonOpenedParagId={sermonOpenedParagId}
+        invokedBy={invokedBy}
         modalVisible={modalVisible}
         hideModal={hideModal}
         placeholder="Your Note"
@@ -83,13 +123,14 @@ function SermonNotesTab({ route }) {
         ListHeaderComponent={
           <SermonNoteListHeader article={article} />
         }
+        initialNumToRender={3}
+        maxToRenderPerBatch={5}
         ref={flatListRef}
         data={PARAGRAPHDATA}
         renderItem={renderItem}
         scrollEnabled={!isFullScreenVideo}
         keyExtractor={(item) => item.id}
         style={!isFullScreenVideo && styles.flatList}
-        extraData={editNoteText}
       />
     </View>
   );
@@ -98,6 +139,9 @@ function SermonNotesTab({ route }) {
 export default SermonNotesTab;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   flatList: { marginBottom: 15 },
 });

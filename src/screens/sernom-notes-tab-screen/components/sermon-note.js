@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useContext, useState, useEffect, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import database from '@react-native-firebase/database';
 
 import HiddenText from './hidden-text';
 import CustomButton from '../../../custom-components/custom-button';
@@ -11,20 +10,21 @@ import { actionTypes } from '../../../context/action.types';
 import CustomEditButton from '../../../custom-components/custom-edit-button';
 let count = 0;
 
-function SermonNote({
+const SermonNote = ({
   item,
   showModal,
   setCurrentSermonHTML,
-  editNoteText,
-}) {
+  editNote,
+}) => {
   count++;
   // console.log('SermonNote', count);
 
-  console.log('editNoteText', editNoteText);
+  const [, dispatch] = useContext(AppContext);
+  const [editText, setEditText] = useState();
 
-  const [{ userUid, currentSermonId }, dispatch] =
-    React.useContext(AppContext);
-  const [editText, setEditText] = React.useState('');
+  useEffect(() => {
+    setEditText(editNote);
+  }, [editNote]);
 
   let PARAGRAPHHTML = item.text;
   let paragraphContent = null;
@@ -47,33 +47,16 @@ function SermonNote({
     paragraphContent = <CustomImage url={item.mediaObject.url} />;
   }
 
-  //get text for current note and set editText
-  React.useEffect(() => {
-    const setEditNoteText = async () => {
-      try {
-        const text = await database()
-          .ref(
-            `/users/${userUid}/articles/${currentSermonId}/notes/${item.id}`,
-          )
-          .once('value');
-        if (text.val()) {
-          return setEditText(text.val().text);
-        }
-        setEditText('');
-      } catch (error) {
-        console.log('SermonNote useEffect');
-        console.log('Error: ', error.message);
-      }
-    };
-    setEditNoteText();
-  }, [userUid, currentSermonId, item, setEditText]);
-
   const onAddNotePress = () => {
     dispatch({
       type: actionTypes.SET_CURRENT_SERMON_PARAG_ID,
       payload: item.id,
     });
-    showModal();
+    showModal({
+      sermonParagId: '',
+      sermonEditNote: '',
+      invokedBy: 'AddButton',
+    });
   };
 
   return (
@@ -84,6 +67,7 @@ function SermonNote({
           <CustomEditButton
             editText={editText}
             showModal={showModal}
+            sermonParagId={item.id}
             setCurrentSermonHTML={setCurrentSermonHTML}
             paragraphHTML={PARAGRAPHHTML}
           />
@@ -102,9 +86,13 @@ function SermonNote({
       ) : null}
     </View>
   );
-}
+};
 
-export default SermonNote;
+const areEqual = (prevProp, nextProp) => {
+  return nextProp.editNote === prevProp.editNote;
+};
+
+export default memo(SermonNote, areEqual);
 
 const styles = StyleSheet.create({
   container: {
