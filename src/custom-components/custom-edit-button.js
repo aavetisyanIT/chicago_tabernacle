@@ -2,15 +2,19 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import CustomButton from './custom-button';
 
-function CustomEditButton({
+let count = 0;
+
+const CustomEditButton = ({
   editText,
   showModal,
   setCurrentSermonHTML,
   paragraphHTML,
-}) {
+}) => {
+  count++;
+  // console.log('CustomEditButton: ', count);
   const onEditNotePress = React.useCallback(() => {
-    showModal(editText);
-  }, [editText, showModal]);
+    showModal();
+  }, [showModal]);
   return (
     <View>
       <Text>{editText}</Text>
@@ -24,6 +28,6 @@ function CustomEditButton({
       />
     </View>
   );
-}
+};
 
 export default CustomEditButton;

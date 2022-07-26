@@ -7,7 +7,11 @@ import CustomVideoPlayer from './../../../custom-components/custom-video-player/
 import { AppContext } from './../../../context/app.context';
 import { actionTypes } from './../../../context/action.types';
 
+let count = 0;
+
 const SermonNoteListHeader = ({ article }) => {
+  count++;
+  // console.log('SermonNoteListHeader', count);
   const [audioPlayerVisible, setAudioPlayerVisible] =
     React.useState(false);
   const [, dispatch] = React.useContext(AppContext);

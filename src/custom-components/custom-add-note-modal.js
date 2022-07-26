@@ -8,15 +8,18 @@ import CustomButton from './custom-button';
 import CustomParagraphHtmlToText from './custom-paragraph-html-to-text-component';
 import { AppContext } from '../context/app.context';
 
+let count = 0;
+
 function CustomAddNoteModal({
   modalVisible,
   hideModal,
   placeholder,
   HTML,
   articleType,
-  editNoteText,
 }) {
-  const [userNote, setUserNote] = React.useState(editNoteText);
+  count++;
+  // console.log('CustomAddNoteModal', count);
+  const [userNote, setUserNote] = React.useState();
   const [
     {
       currentDevotionalParagId,
@@ -44,6 +47,7 @@ function CustomAddNoteModal({
       return currentSermonParagId;
     }
   }, [articleType, currentDevotionalParagId, currentSermonParagId]);
+
   const onPressDoneButton = async () => {
     if (userNote) {
       try {
@@ -66,12 +70,14 @@ function CustomAddNoteModal({
           paragraphId: currentParagraphId,
           text: userNote,
         });
+        hideModal(userNote);
+        return;
       } catch (error) {
         console.log('CustomAddNoteModal onPressDoneButton');
         console.log('Error: ', error.message);
       }
     }
-    hideModal();
+    hideModal('');
     setUserNote('');
   };
 
@@ -79,11 +85,11 @@ function CustomAddNoteModal({
     <Modal
       isVisible={modalVisible}
       swipeDirection={['left', 'right', 'up', 'down']}
-      onSwipeComplete={() => hideModal()}
+      onSwipeComplete={onPressDoneButton}
       animationOutTiming={1200}
       animationInTiming={700}
       backdropTransitionOutTiming={0}
-      onBackdropPress={() => hideModal()}
+      onBackdropPress={onPressDoneButton}
     >
       <View style={styles.modal}>
         {user ? (

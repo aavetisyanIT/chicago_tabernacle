@@ -8,7 +8,11 @@ import CustomAddNoteModal from '../../custom-components/custom-add-note-modal';
 import { AppContext } from '../../context/app.context';
 import { actionTypes } from '../../context/action.types';
 
+let count = 0;
+
 function SermonNotesTab({ route }) {
+  count++;
+  // console.log('SermontNotesTab', count);
   const [{ isFullScreenVideo, user, userUid }, dispatch] =
     React.useContext(AppContext);
   const { article } = route.params;
@@ -18,20 +22,19 @@ function SermonNotesTab({ route }) {
     React.useState('');
   const [editNoteText, setEditNoteText] = React.useState('');
   const flatListRef = React.useRef();
-  const showModal = React.useCallback((noteText) => {
+  const showModal = () => setModalVisible(true);
+
+  const hideModal = React.useCallback((noteText) => {
     if (noteText) {
       setEditNoteText(noteText);
-    } else {
-      setEditNoteText('empty note for test');
     }
-    setModalVisible(true);
+    setModalVisible(false);
   }, []);
-
-  const hideModal = () => setModalVisible(false);
 
   const renderItem = (props) => (
     <SermonNote
       {...props}
+      editNoteText={editNoteText}
       showModal={showModal}
       setCurrentSermonHTML={setCurrentSermonHTML}
     />
@@ -72,7 +75,6 @@ function SermonNotesTab({ route }) {
       <CustomAddNoteModal
         modalVisible={modalVisible}
         hideModal={hideModal}
-        editNoteText={editNoteText}
         placeholder="Your Note"
         HTML={currentSermonHTML}
         articleType="sermon"
@@ -87,6 +89,7 @@ function SermonNotesTab({ route }) {
         scrollEnabled={!isFullScreenVideo}
         keyExtractor={(item) => item.id}
         style={!isFullScreenVideo && styles.flatList}
+        extraData={editNoteText}
       />
     </View>
   );

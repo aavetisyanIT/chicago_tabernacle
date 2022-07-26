@@ -9,11 +9,23 @@ import CustomImage from '../../../custom-components/custom-image';
 import { AppContext } from '../../../context/app.context';
 import { actionTypes } from '../../../context/action.types';
 import CustomEditButton from '../../../custom-components/custom-edit-button';
+let count = 0;
 
-function SermonNote({ item, showModal, setCurrentSermonHTML }) {
+function SermonNote({
+  item,
+  showModal,
+  setCurrentSermonHTML,
+  editNoteText,
+}) {
+  count++;
+  // console.log('SermonNote', count);
+
+  console.log('editNoteText', editNoteText);
+
   const [{ userUid, currentSermonId }, dispatch] =
     React.useContext(AppContext);
   const [editText, setEditText] = React.useState('');
+
   let PARAGRAPHHTML = item.text;
   let paragraphContent = null;
   if (item.type === 'attributedText') {
@@ -35,6 +47,7 @@ function SermonNote({ item, showModal, setCurrentSermonHTML }) {
     paragraphContent = <CustomImage url={item.mediaObject.url} />;
   }
 
+  //get text for current note and set editText
   React.useEffect(() => {
     const setEditNoteText = async () => {
       try {
@@ -43,7 +56,10 @@ function SermonNote({ item, showModal, setCurrentSermonHTML }) {
             `/users/${userUid}/articles/${currentSermonId}/notes/${item.id}`,
           )
           .once('value');
-        text.val() ? setEditText(text.val().text) : setEditText('');
+        if (text.val()) {
+          return setEditText(text.val().text);
+        }
+        setEditText('');
       } catch (error) {
         console.log('SermonNote useEffect');
         console.log('Error: ', error.message);
