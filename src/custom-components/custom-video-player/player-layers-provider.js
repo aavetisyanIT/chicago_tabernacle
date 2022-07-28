@@ -54,7 +54,6 @@ function PlayerLayersProvider(props) {
     setUpDismissTimer();
 
     if (currentVideoPlayTime >= videoDuration) {
-      setCurrentTime(duration);
       dispatchToVideoPlayer({
         type: videoPlayerActionTypes.SET_VIDEO_DURATION,
         payload: videoDuration,

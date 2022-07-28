@@ -4,13 +4,12 @@ import { useNavigationState } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 
 import DevotionalHeader from './components/devotional-header';
-import DevotionalContent from './components/devotional-content';
+import DevotionalNote from './components/devotional-note';
 import CustomAddNoteModal from '../../custom-components/custom-add-note-modal';
 import { AppContext } from '../../context/app.context';
 import { actionTypes } from '../../context/action.types';
 
 function DevotionalTab() {
-
   const [{ user, userUid }, dispatch] = useContext(AppContext);
 
   // making use of useNavigation hook to retrive current acticle
@@ -20,6 +19,7 @@ function DevotionalTab() {
   const { article } = routes[0].params;
   const { devoContent } = article;
   const PARAGRAPHSDATA = devoContent[0].paragraphs;
+  const devoId = devoContent[0].id;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [currentParagraphHTML, setCurrentParagraphHTML] =
@@ -30,12 +30,7 @@ function DevotionalTab() {
   const [devoOpenedParagId, setdevoOpenedParagId] = useState('');
   const [devoEditNote, setdevoEditNote] = useState('');
 
-
-  const showModal = ({
-    devoParagId,
-    devoEditNote,
-    invokedBy,
-  }) => {
+  const showModal = ({ devoParagId, devoEditNote, invokedBy }) => {
     setInvokedBy(invokedBy);
     if (devoParagId && devoEditNote) {
       setdevoOpenedParagId(devoParagId);
@@ -46,38 +41,36 @@ function DevotionalTab() {
   const hideModal = () => {
     setIsDataChanged(!isDataChanged);
     setModalVisible(false);
-  }
+  };
 
   //fetch notes for this devo and set state
   useEffect(() => {
     database()
-      .ref(`/users/${userUid}/articles/${article.id}/notes`)
+      .ref(`/users/${userUid}/articles/${devoId}/notes`)
       .once('value')
       .then((val) => {
         if (val.val()) setdevoNotes(val.val());
       });
-  }, [article.id, userUid, isDataChanged]);
+  }, [devoId, userUid, isDataChanged]);
 
   //set current devo id state and populate article read field in DB
   useEffect(() => {
     if (user) {
       dispatch({
         type: actionTypes.SET_CURRENT_DEVOTIONAL_ID,
-        payload: devoContent[0].id,
+        payload: devoId,
       });
       try {
         const userArticlesRef = database().ref(
           `/users/${userUid}/articles`,
         );
-        userArticlesRef
-          .child(devoContent[0].id)
-          .update({ read: true });
+        userArticlesRef.child(devoId).update({ read: true });
       } catch (error) {
         console.log('DevotionalTab useEffect');
         console.log('Error: ', error.message);
       }
     }
-  }, [devoContent, dispatch, user, userUid]);
+  }, [devoId, dispatch, user, userUid]);
 
   const renderItem = (props) => {
     let currentNoteText = '';
@@ -85,18 +78,19 @@ function DevotionalTab() {
       currentNoteText = devoNotes[props.item.id].text;
     }
     return (
-      <DevotionalContent
+      <DevotionalNote
         {...props}
         editNote={currentNoteText}
         showModal={showModal}
         setCurrentParagraphHTML={setCurrentParagraphHTML}
       />
-    )
+    );
   };
 
   return (
     <View style={styles.container}>
       <CustomAddNoteModal
+        articleType="devotional"
         modalEditText={devoEditNote}
         devoOpenedParagId={devoOpenedParagId}
         invokedBy={invokedBy}
@@ -104,7 +98,6 @@ function DevotionalTab() {
         hideModal={hideModal}
         placeholder="Your Note"
         HTML={currentParagraphHTML}
-        articleType="devotional"
       />
       <FlatList
         ListHeaderComponent={
@@ -113,8 +106,8 @@ function DevotionalTab() {
             imageUrl={devoContent[0].image.url}
           />
         }
-        initialNumToRender={3}
-        maxToRenderPerBatch={5}
+        initialNumToRender={8}
+        maxToRenderPerBatch={10}
         data={PARAGRAPHSDATA}
         renderItem={renderItem}
         keyExtractor={(paragraph) => paragraph.id}

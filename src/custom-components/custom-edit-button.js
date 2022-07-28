@@ -3,18 +3,14 @@ import { View, Text } from 'react-native';
 
 import CustomButton from './custom-button';
 
-let count = 0;
-
 const CustomEditButton = ({
   showModal,
   setCurrentSermonHTML,
-  paragraphHTML,
+  paraghHTML,
   editText,
   sermonParagId,
+  devoParagId,
 }) => {
-  count++;
-  console.log('CustomEditButton: ', count);
-
   const onEditNotePress = useCallback(() => {
     if (sermonParagId && editText) {
       return showModal({
@@ -23,12 +19,19 @@ const CustomEditButton = ({
         invokedBy: 'EditButton',
       });
     }
+    if (devoParagId && editText) {
+      return showModal({
+        devoParagId: devoParagId,
+        devoEditNote: editText,
+        invokedBy: 'EditButton',
+      });
+    }
     showModal({
       sermonParagId: '',
       sermonEditNote: '',
       invokedBy: 'EditButton',
     });
-  }, [editText, sermonParagId, showModal]);
+  }, [editText, sermonParagId, showModal, devoParagId]);
 
   return (
     <View>
@@ -37,7 +40,7 @@ const CustomEditButton = ({
         title="Edit Note"
         onPress={onEditNotePress}
         setCurrentHTML={setCurrentSermonHTML}
-        currentHTML={paragraphHTML}
+        currentHTML={paraghHTML}
         icon="md-pencil"
         iconSize={18}
       />

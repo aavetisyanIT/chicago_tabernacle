@@ -13,8 +13,6 @@ import CustomButton from './custom-button';
 import CustomParagraphHtmlToText from './custom-paragraph-html-to-text-component';
 import { AppContext } from '../context/app.context';
 
-let count = 0;
-
 function CustomAddNoteModal({
   modalVisible,
   hideModal,
@@ -23,11 +21,9 @@ function CustomAddNoteModal({
   articleType,
   modalEditText,
   sermonOpenedParagId,
+  devoOpenedParagId,
   invokedBy,
 }) {
-  count++;
-  // console.log('CustomAddNoteModal', count);
-
   const [userNote, setUserNote] = useState('');
   const [
     {
@@ -56,21 +52,24 @@ function CustomAddNoteModal({
 
   const currentParagraphId = useMemo(() => {
     if (articleType === 'devotional') {
+      if (invokedBy === 'EditButton') {
+        return devoOpenedParagId;
+      }
       return currentDevotionalParagId;
     }
     if (articleType === 'sermon') {
       if (invokedBy === 'EditButton') {
         return sermonOpenedParagId;
-      } else {
-        return currentSermonParagId;
       }
+      return currentSermonParagId;
     }
   }, [
-    articleType,
     currentDevotionalParagId,
     currentSermonParagId,
+    articleType,
     invokedBy,
     sermonOpenedParagId,
+    devoOpenedParagId,
   ]);
 
   const onPressDoneButton = async () => {
