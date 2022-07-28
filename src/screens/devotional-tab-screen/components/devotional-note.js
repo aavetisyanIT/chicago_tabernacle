@@ -48,7 +48,7 @@ function DevotionalNote({
             showModal={showModal}
             devoParagId={item.id}
             setCurrentSermonHTML={setCurrentParagraphHTML}
-            paraghHTML={item.text}
+            paragHTML={item.text}
           />
         ) : (
           <CustomButton

@@ -1,17 +1,18 @@
-import React, { useCallback, memo } from 'react';
-import { View, Text } from 'react-native';
-
-import CustomButton from './custom-button';
+import React, { memo } from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const CustomEditButton = ({
   showModal,
   setCurrentSermonHTML,
-  paraghHTML,
+  paragHTML,
   editText,
   sermonParagId,
   devoParagId,
 }) => {
-  const onEditNotePress = useCallback(() => {
+  const handlePress = (currentHTML) => {
+    console.log(currentHTML);
+    currentHTML ? setCurrentSermonHTML(currentHTML) : null;
     if (sermonParagId && editText) {
       return showModal({
         sermonParagId: sermonParagId,
@@ -31,20 +32,19 @@ const CustomEditButton = ({
       sermonEditNote: '',
       invokedBy: 'EditButton',
     });
-  }, [editText, sermonParagId, showModal, devoParagId]);
+  };
 
   return (
-    <View>
-      <Text>{editText}</Text>
-      <CustomButton
-        title="Edit Note"
-        onPress={onEditNotePress}
-        setCurrentHTML={setCurrentSermonHTML}
-        currentHTML={paraghHTML}
-        icon="md-pencil"
-        iconSize={18}
-      />
-    </View>
+    <Pressable
+      onPress={() => handlePress(paragHTML)}
+      style={styles.container}
+    >
+      <Text style={styles.noteText}>{editText}</Text>
+      <View style={styles.button}>
+        <Icon name="edit" size={18} color="#bc9665" />
+        <Text style={styles.iconText}>Edit Note</Text>
+      </View>
+    </Pressable>
   );
 };
 
@@ -53,3 +53,22 @@ const areEqual = (prevProps, nextProps) => {
 };
 
 export default memo(CustomEditButton, areEqual);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexWrap: 'wrap',
+    backgroundColor: 'lightgrey',
+    borderRadius: 3,
+  },
+  noteText: {
+    margin: 7,
+  },
+  iconText: {
+    color: '#bc9665',
+  },
+  button: {
+    flexDirection: 'row',
+    margin: 5,
+  },
+});
