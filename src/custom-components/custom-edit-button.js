@@ -11,7 +11,6 @@ const CustomEditButton = ({
   devoParagId,
 }) => {
   const handlePress = (currentHTML) => {
-    console.log(currentHTML);
     currentHTML ? setCurrentSermonHTML(currentHTML) : null;
     if (sermonParagId && editText) {
       return showModal({

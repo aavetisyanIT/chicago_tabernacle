@@ -6,6 +6,7 @@ function ModalTextInput({ placeholder, value, onChangeText, style }) {
   return (
     <TextInput
       mode="flat"
+      multiline={true}
       placeholder={placeholder}
       value={value}
       onChangeText={onChangeText}
@@ -19,7 +20,6 @@ export default ModalTextInput;
 const styles = StyleSheet.create({
   input: {
     fontSize: 15,
-    height: 50,
     backgroundColor: '#fff',
   },
 });
