@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import TrackPlayer from 'react-native-track-player';
 
 module.exports = async () => {
