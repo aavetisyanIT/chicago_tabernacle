@@ -1,26 +1,24 @@
 import React, {
-  useContext,
   useState,
-  useEffect,
+  useContext,
   useCallback,
+  useEffect,
   memo,
 } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import HiddenText from './hidden-text';
 import CustomButton from '../../../custom-components/custom-button';
 import CustomParagraphHtmlToText from '../../../custom-components/custom-paragraph-html-to-text-component';
-import CustomImage from '../../../custom-components/custom-image';
-import { AppContext } from '../../../context/app.context';
 import { actionTypes } from '../../../context/action.types';
+import { AppContext } from '../../../context/app.context';
 import CustomEditButton from '../../../custom-components/custom-edit-button';
 
-const SermonNote = ({
+function DevotionalNote({
   item,
   showModal,
-  setCurrentSermonHTML,
+  setCurrentParagraphHTML,
   editNote,
-}) => {
+}) {
   const [, dispatch] = useContext(AppContext);
   const [editText, setEditText] = useState();
 
@@ -30,55 +28,34 @@ const SermonNote = ({
 
   const onAddNotePress = useCallback(() => {
     dispatch({
-      type: actionTypes.SET_CURRENT_SERMON_PARAG_ID,
+      type: actionTypes.SET_CURRENT_DEVOTIONAL_PARAG_ID,
       payload: item.id,
     });
     showModal({
-      sermonParagId: '',
-      sermonEditNote: '',
+      devoParagId: '',
+      devoEditNote: '',
       invokedBy: 'AddButton',
     });
   }, [dispatch, item, showModal]);
 
-  let PARAGRAPHHTML = item.text;
-  let paragraphContent = null;
-  if (item.type === 'attributedText') {
-    paragraphContent = (
-      <CustomParagraphHtmlToText paragraphHtml={PARAGRAPHHTML} />
-    );
-  } else if (
-    item.actionType === 'hiddenText' &&
-    item.type === 'action'
-  ) {
-    paragraphContent = (
-      <HiddenText text={item.text} hiddenText={item.actionString} />
-    );
-    // remove "%@" and add hidden text when open custom-add-note-modal for hidden-text component
-    PARAGRAPHHTML = `${PARAGRAPHHTML.slice(0, -2)} ${
-      item.actionString
-    }`;
-  } else if (item.type === 'image') {
-    paragraphContent = <CustomImage url={item.mediaObject.url} />;
-  }
-
   return (
     <View style={styles.container}>
-      {paragraphContent}
+      <CustomParagraphHtmlToText paragraphHtml={item.text} />
       {item.allowNotes ? (
         editText ? (
           <CustomEditButton
             editText={editText}
             showModal={showModal}
-            sermonParagId={item.id}
-            setCurrentSermonHTML={setCurrentSermonHTML}
-            paragHTML={PARAGRAPHHTML}
+            devoParagId={item.id}
+            setCurrentSermonHTML={setCurrentParagraphHTML}
+            paraghHTML={item.text}
           />
         ) : (
           <CustomButton
             title="Add Note"
             onPress={onAddNotePress}
-            setCurrentHTML={setCurrentSermonHTML}
-            currentHTML={PARAGRAPHHTML}
+            setCurrentHTML={setCurrentParagraphHTML}
+            currentHTML={item.text}
             style={styles.button}
             textStyle={styles.buttonText}
             icon="md-pencil"
@@ -88,13 +65,13 @@ const SermonNote = ({
       ) : null}
     </View>
   );
-};
+}
 
 const areEqual = (prevProp, nextProp) => {
   return nextProp.editNote === prevProp.editNote;
 };
 
-export default memo(SermonNote, areEqual);
+export default memo(DevotionalNote, areEqual);
 
 const styles = StyleSheet.create({
   container: {

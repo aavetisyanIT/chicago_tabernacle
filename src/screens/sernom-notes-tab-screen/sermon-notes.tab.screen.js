@@ -13,12 +13,7 @@ import CustomAddNoteModal from '../../custom-components/custom-add-note-modal';
 import { AppContext } from '../../context/app.context';
 import { actionTypes } from '../../context/action.types';
 
-let count = 0;
-
 function SermonNotesTab({ route }) {
-  count++;
-  // console.log('SermontNotesTab', count);
-
   const [{ isFullScreenVideo, user, userUid }, dispatch] =
     useContext(AppContext);
 
@@ -110,6 +105,7 @@ function SermonNotesTab({ route }) {
   return (
     <View style={styles.container}>
       <CustomAddNoteModal
+        articleType="sermon"
         modalEditText={sermonEditNote}
         sermonOpenedParagId={sermonOpenedParagId}
         invokedBy={invokedBy}
@@ -117,14 +113,13 @@ function SermonNotesTab({ route }) {
         hideModal={hideModal}
         placeholder="Your Note"
         HTML={currentSermonHTML}
-        articleType="sermon"
       />
       <FlatList
         ListHeaderComponent={
           <SermonNoteListHeader article={article} />
         }
-        initialNumToRender={3}
-        maxToRenderPerBatch={5}
+        initialNumToRender={8}
+        maxToRenderPerBatch={10}
         ref={flatListRef}
         data={PARAGRAPHDATA}
         renderItem={renderItem}
