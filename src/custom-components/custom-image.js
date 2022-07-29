@@ -10,7 +10,7 @@ function CustomImage({ url }) {
         priority: FastImage.priority.normal,
       }}
       style={styles.image}
-      resizeMode={FastImage.resizeMode.contain}
+      resizeMode={FastImage.resizeMode.stretch}
     />
   );
 }
@@ -18,5 +18,9 @@ function CustomImage({ url }) {
 export default CustomImage;
 
 const styles = StyleSheet.create({
-  image: { height: 250, width: '100%' },
+  image: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 16 / 9,
+  },
 });
