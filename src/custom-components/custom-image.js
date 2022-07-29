@@ -1,16 +1,17 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import ImageModal from 'react-native-image-modal';
 
 function CustomImage({ url }) {
   return (
-    <FastImage
+    <ImageModal
+      swipeToDismiss={false}
+      resizeMode="contain"
+      imageBackgroundColor="#000000"
+      style={styles.image}
       source={{
         uri: url,
-        priority: FastImage.priority.normal,
       }}
-      style={styles.image}
-      resizeMode={FastImage.resizeMode.stretch}
     />
   );
 }
