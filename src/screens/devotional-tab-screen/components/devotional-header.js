@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
+import { Divider } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 
 function DevotionalHeader({ headLine, imageUrl }) {
   return (
-    <View>
+    <>
       <FastImage
         source={{
           uri: `${imageUrl}`,
@@ -14,7 +15,8 @@ function DevotionalHeader({ headLine, imageUrl }) {
         resizeMode={FastImage.resizeMode.contain}
       />
       <Text style={styles.headLine}>{headLine}</Text>
-    </View>
+      <Divider style={styles.divider} />
+    </>
   );
 }
 
@@ -34,4 +36,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     marginHorizontal: 5,
   },
+  divider: { marginBottom: 15, height: 3 },
 });

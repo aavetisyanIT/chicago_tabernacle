@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { Divider } from 'react-native-paper';
 
 import FastImage from 'react-native-fast-image';
 import CustomTrackPlayer from '../../../custom-components/custom-track-player';
@@ -64,6 +65,7 @@ const SermonNoteListHeader = ({ article }) => {
           />
         ) : null}
       </View>
+      <Divider style={styles.divider} />
     </>
   );
 };
@@ -74,4 +76,5 @@ const styles = StyleSheet.create({
   image: { height: 250, width: '100%' },
   headerContent: { paddingBottom: 0, padding: 13 },
   description: { fontFamily: 'Roboto-Thin' },
+  divider: { marginBottom: 15, height: 3 },
 });
