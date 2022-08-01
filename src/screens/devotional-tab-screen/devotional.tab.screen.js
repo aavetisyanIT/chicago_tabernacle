@@ -18,8 +18,8 @@ function DevotionalTab() {
 
   const { article } = routes[0].params;
   const { devoContent } = article;
-  const PARAGRAPHSDATA = devoContent[0].paragraphs;
-  const devoId = devoContent[0].id;
+  const PARAGRAPHSDATA = devoContent[0]?.paragraphs || [];
+  const devoId = devoContent[0]?.id || '';
 
   const [modalVisible, setModalVisible] = useState(false);
   const [currentParagraphHTML, setCurrentParagraphHTML] =
@@ -102,8 +102,8 @@ function DevotionalTab() {
       <FlatList
         ListHeaderComponent={
           <DevotionalHeader
-            headLine={devoContent[0].headline}
-            imageUrl={devoContent[0].image.url}
+            headLine={devoContent[0]?.headline || ''}
+            imageUrl={devoContent[0]?.image.url || ''}
           />
         }
         initialNumToRender={8}
