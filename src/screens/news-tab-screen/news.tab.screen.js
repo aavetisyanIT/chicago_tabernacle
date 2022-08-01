@@ -5,8 +5,8 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { getAllAnnouncements } from '../../utils/api';
 
+import { getAllAnnouncements } from '../../utils/api';
 import NewsCard from './components/news-card.component';
 
 function NewsTab({ navigation }) {

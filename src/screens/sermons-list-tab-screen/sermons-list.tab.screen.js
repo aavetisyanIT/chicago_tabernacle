@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   FlatList,
   RefreshControl,
   View,
   StyleSheet,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 import SermonCard from './components/sermon-card.component';
 import { getAllArticles } from '../../utils/api';
+import SermonListHeader from './components/sermon-list-header.component';
 
 function SermonsListTab({ navigation }) {
-  const [refreshing] = React.useState(false);
+  const [refreshing] = useState(false);
+
   // empty object(including id) in the initial state is needed for the first render
   // till useEffect runs and fetches the data from API
-  const [sermons, setSermons] = React.useState({
+  const [sermons, setSermons] = useState({
     items: [{ image: { url: '' }, id: '1' }],
   });
 
   // Fetch all articles
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const fetchedData = await getAllArticles();
       setSermons(fetchedData.data);
@@ -27,7 +28,7 @@ function SermonsListTab({ navigation }) {
     fetchData();
   }, []);
 
-  const renderSermon = React.useCallback(
+  const renderSermon = useCallback(
     (sermon) => (
       <SermonCard sermon={sermon} navigation={navigation} />
     ),
@@ -41,13 +42,10 @@ function SermonsListTab({ navigation }) {
           <View style={{ height: 1.5 }} />
         )}
         ListHeaderComponent={
-          <FastImage
-            source={{
-              uri: `${sermons.items[0].image.url}`,
-              priority: FastImage.priority.normal,
-            }}
-            style={styles.image}
-            resizeMode={FastImage.resizeMode.contain}
+          <SermonListHeader
+            navigation={navigation}
+            sermonUrl={sermons.items[0].image.url}
+            sermonId={sermons.items[0].id}
           />
         }
         ListHeaderComponentStyle={styles.imageContainer}
@@ -77,5 +75,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: { width: '100%', height: 250 },
-  image: { flex: 1 },
 });
