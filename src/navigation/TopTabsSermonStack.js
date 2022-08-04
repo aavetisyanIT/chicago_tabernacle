@@ -9,14 +9,20 @@ import { AppContext } from '../context/app.context';
 
 const { Navigator, Screen } = createMaterialTopTabNavigator();
 
-function TopTabsSermonStack() {
+function TopTabsSermonStack({ route }) {
   const [state] = React.useContext(AppContext);
   const { isFullScreenVideo } = state;
+
+  const isDevoContent =
+    route.params.params.article.devoContent.length !== 0;
+
   return (
     // Hide header when video player is fullscreen mode
     <Navigator
       tabBar={(props) =>
-        isFullScreenVideo ? null : <SermonTabBar {...props} />
+        isFullScreenVideo || !isDevoContent ? null : (
+          <SermonTabBar {...props} />
+        )
       }
     >
       <Screen
@@ -26,7 +32,7 @@ function TopTabsSermonStack() {
         lazyPlaceholder={() => <LazyPlaceholder />}
       />
       {/* Disable swiping to the left in fullscreen mode */}
-      {isFullScreenVideo ? null : (
+      {isFullScreenVideo || !isDevoContent ? null : (
         <Screen
           name="DEVOTIONAL"
           component={DevotionalTab}
