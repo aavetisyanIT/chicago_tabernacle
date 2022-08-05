@@ -54,9 +54,10 @@ const SermonNote = ({
       <HiddenText text={item.text} hiddenText={item.actionString} />
     );
     // remove "%@" and add hidden text when open custom-add-note-modal for hidden-text component
-    PARAGRAPHHTML = `${PARAGRAPHHTML.slice(0, -2)} ${
-      item.actionString
-    }`;
+    PARAGRAPHHTML = PARAGRAPHHTML.replace(
+      '%@',
+      ` ${item.actionString} `,
+    );
   } else if (item.type === 'image') {
     paragraphContent = <CustomImage url={item.mediaObject.url} />;
   }

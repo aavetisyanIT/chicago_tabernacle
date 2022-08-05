@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 
 function HiddenText({ text, hiddenText }) {
   const [isHiddenTextVisible, setIsHiddenTextVisible] =
-    React.useState(false);
+    useState(false);
+
+  const signStartPosition = text.indexOf('%@');
+  const textStart = text.slice(0, signStartPosition);
+  const textEnd = text.slice(signStartPosition + 2);
+
   const showHiddenText = () => setIsHiddenTextVisible(true);
   return (
     <Pressable onPress={showHiddenText}>
       <View style={styles.container}>
         <Text style={styles.text}>
-          {/* Remove "%@" from shown text  */}
-          {text.slice(0, -2)}
           {isHiddenTextVisible ? (
-            <Text style={styles.hiddenText}>{hiddenText}</Text>
+            <>
+              <Text>{textStart}</Text>
+              <Text style={styles.hiddenText}>{hiddenText}</Text>
+              <Text>{textEnd}</Text>
+            </>
           ) : (
-            <View style={styles.textBlocker(hiddenText.length)} />
+            <>
+              <Text>{textStart}</Text>
+              <View style={styles.textBlocker(hiddenText.length)} />
+              <Text>{textEnd}</Text>
+            </>
           )}
         </Text>
       </View>
