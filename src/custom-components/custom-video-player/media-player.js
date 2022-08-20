@@ -68,7 +68,7 @@ function MediaPlayer() {
           articleVideoUrl ||
           'https://player.vimeo.com/external/535955445.m3u8?s=9b15c3f1d9565e47615953db6c46c27b79c686fb',
       }}
-      resizeMode="cover"
+      resizeMode="contain"
       posterResizeMode="cover"
       poster={
         articleImageUrl ||
